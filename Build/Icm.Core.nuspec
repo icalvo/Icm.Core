@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>Icm.Core</id>
-    <version>1.0.0-alpha</version>
-    <title>Core Class Library</title>
+    <version>1.0.0-alpha06</version>
+    <title>ICM Core Class Library</title>
     <authors>Ignacio Calvo</authors>
     <owners>Ignacio Calvo</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,7 +16,7 @@
     <language>en-US</language>
     <tags>basic classes</tags>
     <dependencies>
-      <dependency id="Ninject" version="3.0.1.10" />
+      <dependency id="Ninject" version="3.0" />
     </dependencies>
   </metadata>
 </package>

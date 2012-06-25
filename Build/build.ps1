@@ -1,12 +1,12 @@
 ﻿properties { 
-  $zipFileName = "Icm.Core.1.0.0-alpha.zip"
+  $zipFileName = "Icm.Core.1.0.0.zip"
   $majorVersion = "1.0"
   $majorWithReleaseVersion = "1.0.0"
   $version = GetVersion $majorWithReleaseVersion
   $signAssemblies = $false
   $signKeyPath = "D:\Development\Releases\icm.snk"
   $buildDocumentation = $false
-  $buildNuGet = $false
+  $buildNuGet = $true
   
   $baseDir  = resolve-path ..
   $buildDir = "$baseDir\Build"
@@ -92,7 +92,7 @@ task Package -depends Build {
       }
     }
   
-    exec { .\Tools\NuGet\NuGet.exe pack $workingDir\NuGet\Icm.Core.nuspec -Symbols }
+    exec { .\Tools\NuGet\NuGet.exe pack $workingDir\NuGet\Icm.Core.nuspec }
     move -Path .\*.nupkg -Destination $workingDir\NuGet
   }
   
@@ -120,6 +120,13 @@ task Package -depends Build {
   
   exec { .\Tools\7-zip\7za.exe a -tzip $workingDir\$zipFileName $workingDir\Package\* } "Error zipping"
 }
+
+
+# Optional build documentation, add files to final zip
+task NugetPush -depends Package {
+  gci $workingDir\NuGet\*.nupkg | % -process { exec { .\Tools\NuGet\NuGet.exe push $_.fullname } }
+}
+
 
 # Unzip package to a location
 task Deploy -depends Package {
