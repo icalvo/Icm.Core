@@ -14,7 +14,9 @@ syntax: glob
 bin
 obj
 nunitbin
-*.resharperoptions
+[Ww]orking
+TestResults
+AppPackages/*.resharperoptions
 *.db
 *.bak
 *_ReSharper*

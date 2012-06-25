@@ -172,9 +172,9 @@ Public Class ObjectReflectionExtensionsTest
     Public Sub SetProp_FailsOnWrongTypeTest()
         Dim obj As New MyExample
 
-        Assert.Throws(Of ArgumentException)(
+        Assert.Throws(Of InvalidCastException)(
             Sub()
-                obj.SetProp("MyProp", 345)
+                obj.SetProp("MyProp", New List(Of Integer))
             End Sub)
     End Sub
 
@@ -191,8 +191,8 @@ Public Class ObjectReflectionExtensionsTest
 
         obj = Nothing
 
-        Assert.IsTrue(obj.HasProp("MyProp"))
-        Assert.IsFalse(obj.HasProp("myother"))
+        Assert.DoesNotThrow(Sub() obj.HasProp("MyProp"))
+        Assert.DoesNotThrow(Sub() obj.HasProp("myother"))
     End Sub
 
     <Test()>
@@ -203,4 +203,11 @@ Public Class ObjectReflectionExtensionsTest
         Assert.IsFalse(obj.HasProp("myother"))
     End Sub
 
+    <Test()>
+    Public Sub TypeHasPropTest()
+        Dim obj As New MyExample
+
+        Assert.IsTrue(TypeHasProp(Of MyExample)("MyProp"))
+        Assert.IsFalse(TypeHasProp(Of MyExample)("myother"))
+    End Sub
 End Class

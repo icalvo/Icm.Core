@@ -221,7 +221,7 @@ Namespace Icm.Reflection
         ''' <param name="propName"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function HasProp(Of T)(ByVal propName As String) As Boolean
+        Public Function TypeHasProp(Of T)(ByVal propName As String) As Boolean
             Dim pi = GetType(T).GetProperty(propName)
             Return pi IsNot Nothing
         End Function
