@@ -39,6 +39,15 @@ Namespace Icm
             End If
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="TObject"></typeparam>
+        ''' <typeparam name="TResult"></typeparam>
+        ''' <param name="o"></param>
+        ''' <param name="act"></param>
+        ''' <returns>If o is not null, act applied to o; otherwise null.</returns>
+        ''' <remarks></remarks>
         <Extension()>
         Public Function GetIfAny(Of TObject, TResult)(ByVal o As TObject, ByVal act As Func(Of TObject, TResult)) As TResult
             If o Is Nothing Then
@@ -48,6 +57,12 @@ Namespace Icm
             End If
         End Function
 
+        ''' <summary>
+        ''' Abbreviation of "IsNot Nothing".
+        ''' </summary>
+        ''' <param name="o"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         <Extension()>
         Function IsSomething(ByVal o As Object) As Boolean
             Return o IsNot Nothing

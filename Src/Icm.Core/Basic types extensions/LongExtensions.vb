@@ -4,6 +4,14 @@ Imports System.Globalization
 Namespace Icm
     Public Module LongExtensions
 
+        ''' <summary>
+        ''' Exponent prefix in the International System
+        ''' </summary>
+        ''' <param name="exponent"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 
+        ''' </remarks>
         Private Function Long1000ExponentPrefix(ByVal exponent As Integer) As String
             Dim units As String
             Select Case exponent
@@ -170,12 +178,51 @@ Namespace Icm
               ByVal bigUnitNames As Boolean,
               ByVal format As String) As String
 
+            Return HumanUnit(bytes, 0, decimalUnits, bigUnitNames, "B", "byte", "bytes", format)
+        End Function
+
+
+        ''' <summary>
+        '''   Returns a human-readable representation of a quantity with units.
+        ''' </summary>
+        ''' <param name="mantissa"></param>
+        ''' <param name="addedExponent">If you want to multiply the mantissa by 1000 (or 1024 if
+        ''' decimalUnits is False) powers this quantity.
+        ''' It is the way to go for quantities between 0 and 1, using negative exponents.</param>
+        ''' <param name="decimalUnits">Does the function use decimal powers (e.g. 1 Km =
+        '''  1000 m) or binary powers (1 KiB = 1024 B)? By default it is True (decimal)
+        ''' </param>
+        ''' <param name="bigUnitNames">Does the function add the abbreviated unit symbol (mm)
+        ''' or the complete unit name (millimeter)? By default it is False (abbr.)</param>
+        ''' <param name="smallUnitName">Abbreviated unit symbol (e.g. m)</param>
+        ''' <param name="bigUnitNameSingular">Unit name, singular (e.g. meter)</param>
+        ''' <param name="bigUnitNamePlural">Unit name, singular (e.g. meters)</param>
+        ''' <param name="numberFormat">Format string for the number. Use it to limit precision
+        ''' or adjust other formatting options. By default, it is "0.00".</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        '''     <para></para>
+        ''' </remarks>
+        ''' <history>
+        ''' 	[icalvo]	14/11/2005	Created
+        ''' </history>
+        <Extension()>
+        Public Function HumanUnit(
+              ByVal mantissa As Long,
+              addedExponent As Integer,
+              ByVal decimalUnits As Boolean,
+              ByVal bigUnitNames As Boolean,
+              smallUnitName As String,
+              bigUnitNameSingular As String,
+              bigUnitNamePlural As String,
+              ByVal numberFormat As String) As String
+
             Dim formattedNumber As String
             Dim units As String
             Dim prefix As String
 
-            If bytes < 0 Then
-                Throw New ArgumentOutOfRangeException("bytes", bytes, "bytes should be a positive number")
+            If mantissa < 0 Then
+                Throw New ArgumentOutOfRangeException("quantity", mantissa, "quantity should be a positive number")
             End If
 
             Dim divisor As Integer
@@ -187,22 +234,22 @@ Namespace Icm
                 divisor = 1024
             End If
 
-            If bytes = 0 Then
+            If mantissa = 0 Then
                 exponent = 0
-                formattedNumber = (0).ToString(format, CultureInfo.CurrentCulture)
+                formattedNumber = (0).ToString(numberFormat, CultureInfo.CurrentCulture)
             Else
-                exponent = CInt(System.Math.Floor(System.Math.Log(bytes) / System.Math.Log(divisor)))
-                formattedNumber = (bytes / divisor ^ Math.Min(8, exponent)).ToString(format, CultureInfo.CurrentCulture)
+                exponent = CInt(Math.Floor(Math.Log(mantissa) / Math.Log(divisor))) + addedExponent
+                formattedNumber = (mantissa / divisor ^ Math.Min(8, exponent)).ToString(numberFormat, CultureInfo.CurrentCulture)
             End If
 
             If bigUnitNames Then
                 If formattedNumber = "1" Then
-                    units = "byte"
+                    units = bigUnitNameSingular
                 Else
-                    units = "bytes"
+                    units = bigUnitNamePlural
                 End If
             Else
-                units = "B"
+                units = smallUnitName
             End If
 
             If bigUnitNames Then
@@ -221,6 +268,7 @@ Namespace Icm
 
             Return String.Format("{0} {1}{2}", formattedNumber, prefix, units)
         End Function
+
 
         ''' <summary>
         '''   Returns a human-readable representation of a byte quantity.

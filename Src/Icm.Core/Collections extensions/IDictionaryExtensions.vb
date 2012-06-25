@@ -50,7 +50,7 @@ Namespace Icm.Collections.Generic
         ''' <param name="ifdonot"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension()> _
+        <Extension()>
         Function ItemOrDefault(Of K, V)(ByVal o As IDictionary(Of K, V), ByVal key As K, ByVal ifdonot As V) As V
             If o.ContainsKey(key) Then
                 Return o(key)

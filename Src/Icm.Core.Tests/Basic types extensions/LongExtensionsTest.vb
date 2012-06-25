@@ -65,7 +65,6 @@ Public Class LongExtensionsTest
 
     End Sub
 
-
     <Test(), Category("Icm")>
     Public Sub HumanFileSizeTest_ExtremeCases()
         Dim expected As String

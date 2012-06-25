@@ -46,7 +46,7 @@ Namespace Icm.Collections
         ''' 	[icalvo]	19/08/2004	Created
         ''' 	[icalvo]	07/03/2006	Documented
         ''' </history>
-        <Extension()> _
+        <Extension()>
         Public Function JoinStr(ByVal l As IEnumerable(Of String), ByVal separator As String) As String
             Return String.Join(separator, l.ToArray)
         End Function
@@ -78,7 +78,7 @@ Namespace Icm.Collections
         ''' 	[icalvo]	07/03/2006	Created
         ''' 	[icalvo]	07/03/2006	Documented
         ''' </history>
-        <Extension()> _
+        <Extension()>
         Public Function JoinStr(ByVal l As IEnumerable(Of String), ByVal globalprefix As String, ByVal separator As String, ByVal globalsuffix As String) As String
             If l.Count = 0 Then
                 Return ""
@@ -128,7 +128,7 @@ Namespace Icm.Collections
         ''' 	[icalvo]	07/03/2006	Documented
         '''     [icalvo]    17/03/2006  BUG: first itemprefix and last itemsuffix added
         ''' </history>
-        <Extension()> _
+        <Extension()>
         Public Function JoinStr(ByVal l As IEnumerable(Of String), ByVal globalprefix As String, ByVal itemprefix As String, ByVal itemsuffix As String, ByVal globalsuffix As String) As String
             If l.Count = 0 Then
                 Return ""
@@ -185,7 +185,7 @@ Namespace Icm.Collections
         ''' 	[icalvo]	17/03/2006	Created
         ''' 	[icalvo]	17/03/2006	Documented
         ''' </history>
-        <Extension()> _
+        <Extension()>
         Public Function JoinStr(ByVal l As IEnumerable(Of String), ByVal globalprefix As String, ByVal itemprefix As String, ByVal separator As String, ByVal itemsuffix As String, ByVal globalsuffix As String) As String
             If l.Count = 0 Then
                 Return ""
@@ -241,7 +241,7 @@ Namespace Icm.Collections
         ''' <param name="conv"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension()> _
+        <Extension()>
         Public Function JoinStr(Of T)(ByVal l As ICollection, ByVal sep As String, ByVal conv As Func(Of T, String)) As String
             Dim sb As New StringBuilder
             Dim i As Integer = 0

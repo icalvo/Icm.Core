@@ -119,7 +119,7 @@ Namespace Icm
         ''' 	[icalvo]	26/11/2004	Created
         '''     [icalvo]    31/03/2005  Documented
         ''' </history>
-        <Extension()> _
+        <Extension()>
         Public Function Repeat(ByVal s As String, ByVal count As Integer) As String
             If count = 0 Then
                 Return ""
@@ -143,7 +143,7 @@ Namespace Icm
         ''' 	[icalvo]	19/08/2004	Created
         '''     [icalvo]    31/03/2005  Documented
         ''' </history>
-        <Extension()> _
+        <Extension()>
         Public Function ToUpperFirst(ByVal s As String) As String
             If s = Nothing OrElse s = "" Then
                 Return ""

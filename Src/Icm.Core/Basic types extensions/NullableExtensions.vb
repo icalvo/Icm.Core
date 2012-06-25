@@ -35,7 +35,7 @@ Namespace Icm
 
 
         ''' <summary>
-        ''' If a Nullable is nothing, returns a substitution.
+        ''' If a Nullable has value, the value; otherwise, a provided substitution.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="o"></param>

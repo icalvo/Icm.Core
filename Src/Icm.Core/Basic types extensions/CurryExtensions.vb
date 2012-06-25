@@ -1,5 +1,10 @@
 ﻿Imports System.Runtime.CompilerServices
 
+''' <summary>
+''' Set of currying functions. They follow the pattern:
+''' CurryX(T1, ..., TN, TResult)(fn As Func(Of T1,...TN, TResult), vx As TX) As Func(Of T1, ...all minus TX..., TN, TResult)
+''' </summary>
+''' <remarks></remarks>
 Public Module CurryExtensions
 
     <Extension()>

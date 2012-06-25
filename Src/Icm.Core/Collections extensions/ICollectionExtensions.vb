@@ -11,7 +11,7 @@ Namespace Icm.Collections
         ''' <param name="c"></param>
         ''' <param name="item"></param>
         ''' <remarks></remarks>
-        <Extension()> _
+        <Extension()>
         Sub ForceRemove(Of T)(ByVal c As ICollection(Of T), ByVal item As T)
             If c.Contains(item) Then
                 c.Remove(item)

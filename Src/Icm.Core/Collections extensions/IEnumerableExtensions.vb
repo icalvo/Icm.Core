@@ -12,7 +12,7 @@ Namespace Icm.Collections
         ''' <param name="e"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension()> _
+        <Extension()>
         Function TryToCast(Of T1, T2 As T1)(ByVal e As IEnumerable(Of T1)) As IEnumerable(Of T2)
             Dim res As New List(Of T2)
 

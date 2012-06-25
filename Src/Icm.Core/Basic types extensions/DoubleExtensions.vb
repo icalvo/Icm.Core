@@ -4,7 +4,14 @@ Namespace Icm
 
     Public Module DoubleExtensions
 
-        <Extension()> _
+        ''' <summary>
+        ''' Changes precision of a double number.
+        ''' </summary>
+        ''' <param name="num"></param>
+        ''' <param name="precision"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        <Extension()>
         Public Function ChangePrecision(ByVal num As Double, ByVal precision As Integer) As Double
             Dim result As Double
             result = num * (10 ^ precision)
@@ -17,23 +24,23 @@ Namespace Icm
         ''' <summary>
         ''' Converts degrees to radians
         ''' </summary>
-        ''' <param name="angle"></param>
-        ''' <returns></returns>
+        ''' <param name="angle">Angle in degrees</param>
+        ''' <returns>Angle in radians</returns>
         ''' <remarks></remarks>
-        <Extension()> _
+        <Extension()>
         Public Function Deg2Rad(ByVal angle As Double) As Double
-            Deg2Rad = (angle * System.Math.PI) / 180
+            Deg2Rad = (angle * Math.PI) / 180
         End Function
 
         ''' <summary>
         ''' Converts radians to degrees
         ''' </summary>
-        ''' <param name="radians"></param>
-        ''' <returns></returns>
+        ''' <param name="angle">Angle in radians</param>
+        ''' <returns>Angle in degrees</returns>
         ''' <remarks></remarks>
-        <Extension()> _
-        Public Function Rad2Deg(ByVal radians As Double) As Double
-            Rad2Deg = (radians * 180) / System.Math.PI
+        <Extension()>
+        Public Function Rad2Deg(ByVal angle As Double) As Double
+            Rad2Deg = (angle * 180) / Math.PI
         End Function
 
     End Module

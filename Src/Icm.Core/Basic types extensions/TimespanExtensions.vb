@@ -5,17 +5,17 @@ Namespace Icm
     Public Module TimespanExtensions
 
 
-        <Extension()> _
+        <Extension()>
         Function DividedBy(ByVal t As TimeSpan, ByVal divisor As Double) As TimeSpan
             Return New TimeSpan(CLng(t.Ticks / divisor))
         End Function
 
-        <Extension()> _
+        <Extension()>
         Function IsZero(ByVal t As TimeSpan) As Boolean
             Return t = TimeSpan.Zero
         End Function
 
-        <Extension()> _
+        <Extension()>
         Function IsNotZero(ByVal t As TimeSpan) As Boolean
             Return t <> TimeSpan.Zero
         End Function
@@ -55,7 +55,7 @@ Namespace Icm
         ''' <param name="ts"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension()> _
+        <Extension()>
         Public Function Tommssttt(ByVal ts As TimeSpan) As String
             Return String.Format("{0:00}:{1:00}.{2:000}", Fix(ts.TotalMinutes), Math.Abs(ts.Seconds), Math.Abs(ts.Milliseconds))
         End Function
@@ -66,7 +66,7 @@ Namespace Icm
         ''' <param name="ts"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension()> _
+        <Extension()>
         Public Function ToHHmmssttt(ByVal ts As TimeSpan) As String
             Return String.Format("{0:00}:{1:00}:{2:00}.{3:000}", Fix(ts.TotalHours), Math.Abs(ts.Minutes), Math.Abs(ts.Seconds), Math.Abs(ts.Milliseconds))
         End Function

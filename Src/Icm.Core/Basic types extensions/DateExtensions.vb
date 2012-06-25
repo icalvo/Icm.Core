@@ -2,10 +2,6 @@
 
 Namespace Icm
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <remarks></remarks>
     Public Module DateExtensions
 
         Public Enum Seasons As Integer
@@ -16,12 +12,12 @@ Namespace Icm
         End Enum
 
         ''' <summary>
-        ''' Season.
+        ''' Season of a given date.
         ''' </summary>
         ''' <param name="d"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension()> _
+        <Extension()>
         Function Season(ByVal d As Date) As Seasons
             Dim monthDay As Integer = d.Month * 100 + d.Day
             If monthDay >= 101 AndAlso monthDay < 321 Then
@@ -44,7 +40,7 @@ Namespace Icm
         ''' <param name="dur">Duration to add</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension()> _
+        <Extension()>
         Public Function AddS(ByVal d As Date, ByVal dur As TimeSpan) As Date
             If dur = TimeSpan.MaxValue Then
                 Return Date.MaxValue
