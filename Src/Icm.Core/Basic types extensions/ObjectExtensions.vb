@@ -40,7 +40,7 @@ Namespace Icm
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' If o is not null, act applied to o; otherwise null.
         ''' </summary>
         ''' <typeparam name="TObject"></typeparam>
         ''' <typeparam name="TResult"></typeparam>
@@ -90,6 +90,21 @@ Namespace Icm
         <Extension()>
         Function [As](Of T)(ByVal o As Object) As T
             Return DirectCast(o, T)
+        End Function
+
+        ''' <summary>
+        ''' Is the first parameter one of the rest of parameters?
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <param name="sa"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        <Extension()>
+        Public Function IsOneOf(Of T)(ByVal s As T, ByVal ParamArray sa As T()) As Boolean
+            If sa Is Nothing Then
+                Return False
+            End If
+            Return sa.Contains(s)
         End Function
 
     End Module

@@ -12,13 +12,19 @@ Namespace Icm.Reflection
     ''' <para>In contrast to <see cref="ActivatorTools"></see>, the list autoupdates each 
     ''' time a new assembly is loaded in the current AppDomain.</para>
     ''' <para>However it has a limitation in that it only creates types with a default
-    ''' constructor (no arguments).</para>
+    ''' constructor (no arguments), because it cannot be provided with the necesary arguments.</para>
     ''' </remarks>
     Public Class ImplementorInstanceProvider(Of T)
         ''' <summary>
         ''' A list of instance providers that are available.
         ''' </summary>
-        Private ReadOnly implementorInstances_ As Dictionary(Of String, T) = Initialize()
+        Private ReadOnly implementorInstances_ As Dictionary(Of String, T)
+
+        Public Sub New()
+            implementorInstances_ = New Dictionary(Of String, T)
+            CreateList()
+            AddHandler AppDomain.CurrentDomain.AssemblyLoad, New AssemblyLoadEventHandler(AddressOf AssemblyLoaded)
+        End Sub
 
         ReadOnly Property ImplementorsInstances As List(Of T)
             Get
@@ -32,32 +38,28 @@ Namespace Icm.Reflection
         ''' <param name="sender">The object that sent the event.</param>
         ''' <param name="args">The event arguments.</param>
         Private Sub AssemblyLoaded(ByVal sender As Object, ByVal args As AssemblyLoadEventArgs)
-            UpdateList(args.LoadedAssembly, implementorInstances_)
+            UpdateList(args.LoadedAssembly)
         End Sub
         ''' <summary>
-        ''' Initializes the list of instance providers.
+        ''' Fills the list with currently loaded assemblies.
         ''' </summary>
-        ''' <returns>A list of instance providers that are used by the Copyable framework.</returns>
-        Private Function Initialize() As Dictionary(Of String, T)
-            Dim providers As New Dictionary(Of String, T)
+        Private Sub CreateList()
             For Each assembly As Assembly In AppDomain.CurrentDomain.GetAssemblies()
-                UpdateList(assembly, providers)
+                UpdateList(assembly)
             Next
-            AddHandler AppDomain.CurrentDomain.AssemblyLoad, New AssemblyLoadEventHandler(AddressOf AssemblyLoaded)
-            Return providers
-        End Function
+        End Sub
 
         ''' <summary>
         ''' Updates the list of instance providers with the ones found in the given assembly.
         ''' </summary>
         ''' <param name="assembly">The assembly with which the list of instance providers will be updated.</param>
-        Private Sub UpdateList(ByVal assembly As Assembly, ByVal instanceList As Dictionary(Of String, T))
+        Private Sub UpdateList(ByVal assembly As Assembly)
             Dim newInstances = GetInstanceDictionaryOfAllImplementors(Of T)(assembly)
             For Each inst In newInstances
-                If instanceList.ContainsKey(inst.Key) Then
-                    instanceList(inst.Key) = inst.Value
+                If implementorInstances_.ContainsKey(inst.Key) Then
+                    implementorInstances_(inst.Key) = inst.Value
                 Else
-                    instanceList.Add(inst.Key, inst.Value)
+                    implementorInstances_.Add(inst.Key, inst.Value)
                 End If
             Next
         End Sub

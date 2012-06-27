@@ -169,19 +169,19 @@ Public Class TimespanExtensionsTest
         'Caso 1
         ts = New TimeSpan(2, 14, 18, 25)
         expected = 224305000000
-        actual = TimespanExtensions.ToMicroseconds(ts)
+        actual = ts.TotalMicroseconds()
         Assert.AreEqual(expected, actual)
 
         'Caso 2
         ts = New TimeSpan(0, 0, 0, 2)
         expected = 2000000
-        actual = TimespanExtensions.ToMicroseconds(ts)
+        actual = ts.TotalMicroseconds()
         Assert.AreEqual(expected, actual)
 
         'Caso 2
         ts = New TimeSpan(-5, 14, 18)
         expected = -17142000000
-        actual = TimespanExtensions.ToMicroseconds(ts)
+        actual = ts.TotalMicroseconds()
         Assert.AreEqual(expected, actual)
 
     End Sub

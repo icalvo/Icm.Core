@@ -125,40 +125,6 @@ Public Class StringExtensionsTest
 
     End Sub
 
-    '''<summary>
-    '''A test for IsOneOf
-    '''</summary>
-    <Test(), Category("Icm")>
-    Public Sub IsOneOfTest()
-        Dim s As String = String.Empty
-
-        Dim expected As Boolean = False
-        Dim actual As Boolean
-
-        'Caso 1
-        Dim sa As String() = {"hola", "maria", "pato", "perro"}
-        s = "hola"
-        expected = True
-        actual = StringExtensions.IsOneOf(s, sa)
-        Assert.AreEqual(expected, actual)
-        sa = Nothing
-
-        'Caso 2
-        s = "adios"
-        sa = {"hola", "maria", "pato", "perro"}
-        expected = False
-        actual = StringExtensions.IsOneOf(s, sa)
-        Assert.AreEqual(expected, actual)
-        sa = Nothing
-
-        'Caso3
-        s = Nothing
-        sa = {"hola", "maria", "pato", "perro"}
-        expected = False
-        actual = StringExtensions.IsOneOf(s, sa)
-        Assert.AreEqual(expected, actual)
-
-    End Sub
 
     '''<summary>
     '''A test for Left

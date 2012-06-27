@@ -4,6 +4,14 @@ Imports System.Runtime.CompilerServices
 Namespace Icm.Reflection
 
     Public Module ExpressionExtensions
+
+        ''' <summary>
+        ''' Gets the name of a class member invoked in a expression.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="action"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         <Extension()>
         Public Function GetInfo(Of T As Class)(action As Expression(Of Func(Of T, Object))) As String
             Dim expression = GetMemberInfo(action)

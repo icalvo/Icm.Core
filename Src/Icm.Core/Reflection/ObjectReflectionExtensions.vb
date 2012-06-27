@@ -19,6 +19,7 @@ Namespace Icm.Reflection
             If fi Is Nothing Then Throw New ArgumentException(String.Format(My.Resources.Reflection.FieldX0DoesNotExistInTypeX1, fieldName, obj.GetType.Name), "fieldName")
             Return DirectCast(fi.GetValue(obj), TField)
         End Function
+
         ''' <summary>
         ''' Sets a field of an object, given the field name
         ''' </summary>
@@ -34,6 +35,7 @@ Namespace Icm.Reflection
             If fi Is Nothing Then Throw New ArgumentException(String.Format(My.Resources.Reflection.FieldX0DoesNotExistInTypeX1, fieldName, GetType(T).Name), "fieldName")
             fi.SetValue(obj, value)
         End Sub
+
         ''' <summary>
         ''' Has the object a field with the given name?
         ''' </summary>
@@ -42,10 +44,17 @@ Namespace Icm.Reflection
         ''' <returns></returns>
         ''' <remarks></remarks>
         <Extension()>
-        Public Function HasField(Of T)(ByVal obj As T, ByVal fieldName As String) As Boolean
-            Return HasField(Of T)(fieldName)
+        Public Function HasField(ByVal obj As Object, ByVal fieldName As String) As Boolean
+            Dim fi = obj.GetType.GetField(fieldName)
+            Return fi IsNot Nothing
         End Function
 
+        ''' <summary>
+        ''' Has the type a field with the given name?
+        ''' </summary>
+        ''' <param name="fieldName"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Public Function HasField(Of T)(ByVal fieldName As String) As Boolean
             Dim fi = GetType(T).GetField(fieldName)
             Return fi IsNot Nothing
@@ -299,9 +308,9 @@ Namespace Icm.Reflection
         Public Function CallFunc(Of T)(ByVal obj As T, ByVal funcName As String, ParamArray params As Object()) As Object
             ' TODO: Allow overloads. The same algorithm for method call matching
             ' TODO: Allow shared funcs
-            If obj Is Nothing Then Throw New ArgumentNullException("No se puede obtener un método de un objeto nulo")
+            If obj Is Nothing Then Throw New ArgumentNullException("Cannot obtain a method from a null object")
             Dim mi = obj.GetType.GetMethod(funcName)
-            If mi Is Nothing Then Throw New ArgumentException(String.Format("El método {0} no existe en el tipo {1}", funcName, obj.GetType.Name))
+            If mi Is Nothing Then Throw New ArgumentException(String.Format("Method {0} does not exist in type {1}", funcName, obj.GetType.Name))
             Return mi.Invoke(obj, params)
         End Function
     End Module

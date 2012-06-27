@@ -49,7 +49,8 @@ Public Class PlainStringGeneratorTest
         Dim target As PlainStringGenerator = New PlainStringGenerator(s)
         Dim expected As String = "HOLA"
         Dim actual As String
-        actual = target.Generate
+        target.MoveNext()
+        actual = target.Current
         Assert.AreEqual(expected, actual)
 
     End Sub

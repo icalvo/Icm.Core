@@ -10,13 +10,13 @@ Namespace Icm.Text
     ''' tagged strings (that is, limited by configurable start and end tags)
     ''' "on the fly", that is, reading from an input stream and writing
     ''' to an output stream. Replacements can be simple strings and
-    ''' also StringGenerator descendants. For example, one can create
-    ''' a "CounterGenerator" descendant of StringGenerator, that generates
+    ''' also IEnumerator(Of String) instances. For example, one can create
+    ''' a <see cref="AutoNumberGenerator"></see>, that produces
     ''' consecutive numbers, and replace each apparition of "__COUNTER__"
     ''' with consecutive numbers.</para>
-    ''' <para>Warning: this class does NOT open nor close the streams nor changes
-    ''' the position (except for forward reading and writing), it
-    ''' is the responsibility of clients to provide Replacer with
+    ''' <para>Warning: this class does NOT open the streams and only
+    ''' performs forward reading and writing; it
+    ''' is the responsibility of clients to pass to the constructor 
     ''' appropriately configured streams. Otherwise, I/O exceptions
     ''' will occur.</para>
     ''' </remarks>
@@ -30,7 +30,7 @@ Namespace Icm.Text
         End Enum
 
 #Region " Attributes "
-        Private ReadOnly replacements_ As New Dictionary(Of String, StringGenerator)()
+        Private ReadOnly replacements_ As New Dictionary(Of String, IEnumerator(Of String))()
         Private tagStart_ As String
         Private tagEnd_ As String
 #End Region
@@ -75,21 +75,49 @@ Namespace Icm.Text
         Property Output() As TextWriter
 
         Public Sub AddReplacement(ByVal search As String, ByVal replacement As String)
-            replacements_.Add(search, New PlainStringGenerator(replacement))
+            AddReplacement(search, New PlainStringGenerator(replacement))
         End Sub
 
-        Public Sub AddReplacement(ByVal search As String, ByVal replacement As StringGenerator)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="search"></param>
+        ''' <param name="replacement"></param>
+        ''' <remarks>
+        ''' Warning: the IEnumerator is assumed to be pointing before the first element to be
+        ''' used for replacement.
+        ''' If you want to start with the first element of the enumeration, pass a freshly created 
+        ''' IEnumerator or call IEnumerator.Reset before passing.
+        ''' </remarks>
+        Public Sub AddReplacement(ByVal search As String, ByVal replacement As IEnumerator(Of String))
+            replacement.MoveNext()
             replacements_.Add(search, replacement)
         End Sub
 
         Public Sub ModifyReplacement(ByVal search As String, ByVal replacement As String)
-            replacements_(search) = New PlainStringGenerator(replacement)
+            ModifyReplacement(search, New PlainStringGenerator(replacement))
         End Sub
 
-        Public Sub ModifyReplacement(ByVal search As String, ByVal replacement As StringGenerator)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="search"></param>
+        ''' <param name="replacement"></param>
+        ''' <remarks>
+        ''' Warning: the IEnumerator is assumed to be pointing before the first element to be
+        ''' used for replacement.
+        ''' If you want to start with the first element of the enumeration, pass a freshly created 
+        ''' IEnumerator or call IEnumerator.Reset before passing.
+        ''' </remarks>
+        Public Sub ModifyReplacement(ByVal search As String, ByVal replacement As IEnumerator(Of String))
+            replacement.MoveNext()
             replacements_(search) = replacement
         End Sub
 
+        ''' <summary>
+        ''' Performs replacement and leaves the streams opened.
+        ''' </summary>
+        ''' <remarks></remarks>
         Public Sub ReplaceAndLeaveOpen()
             Dim tagStartP As Integer = 0
             Dim tagEndP As Integer = 0
@@ -132,7 +160,8 @@ Namespace Icm.Text
                         If lastchar = tagEnd_.Chars(0) Then
                             If tagEnd_.Length = 1 Then
                                 If replacements_.ContainsKey(bufferTag.ToString) Then
-                                    Output.Write(replacements_(bufferTag.ToString).Generate)
+                                    replacements_(bufferTag.ToString).MoveNext()
+                                    Output.Write(replacements_(bufferTag.ToString).Current)
                                 Else
                                     Output.Write(tagStart_)
                                     Output.Write(bufferTag.ToString)
@@ -154,7 +183,8 @@ Namespace Icm.Text
                             tagEndP += 1
                             If tagEndP = tagEnd_.Length Then
                                 If replacements_.ContainsKey(bufferTag.ToString) Then
-                                    Output.Write(replacements_(bufferTag.ToString).Generate)
+                                    replacements_(bufferTag.ToString).MoveNext()
+                                    Output.Write(replacements_(bufferTag.ToString).Current)
                                 Else
                                     Output.Write(tagStart_)
                                     Output.Write(bufferTag.ToString)
@@ -170,11 +200,19 @@ Namespace Icm.Text
             Loop
         End Sub
 
+        ''' <summary>
+        ''' Performs replacement and closes the streams.
+        ''' </summary>
+        ''' <remarks></remarks>
         Public Sub ReplaceAndClose()
             ReplaceAndLeaveOpen()
             Close()
         End Sub
 
+        ''' <summary>
+        ''' Closes both streams.
+        ''' </summary>
+        ''' <remarks></remarks>
         Public Sub Close()
             Input.Close()
             Output.Close()

@@ -16,9 +16,9 @@ Namespace Icm
         ''' <summary>
         ''' Substring function with PHP <a href="http://php.net/manual/es/function.substr.php">substr</a> syntax.
         ''' </summary>
-        ''' <param name="s"></param>
-        ''' <param name="startIdx"></param>
-        ''' <param name="length"></param>
+        ''' <param name="s">Original string</param>
+        ''' <param name="startIdx">Start index, that can be negative.</param>
+        ''' <param name="length">Length, that can be negative.</param>
         ''' <returns></returns>
         ''' <remarks>Where PHP's substr returns FALSE, this function throws an ArgumentOutOfRangeException</remarks>
         <Extension()>
@@ -153,20 +153,12 @@ Namespace Icm
         End Function
 
         ''' <summary>
-        ''' 
+        ''' If string is String.Empty, return a substitution
         ''' </summary>
         ''' <param name="s"></param>
-        ''' <param name="sa"></param>
+        ''' <param name="emptyString"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension()>
-        Public Function IsOneOf(Of T)(ByVal s As T, ByVal ParamArray sa As T()) As Boolean
-            If sa Is Nothing Then
-                Return False
-            End If
-            Return sa.Contains(s)
-        End Function
-
         <Extension()>
         Public Function IfEmpty(ByVal s As String, ByVal emptyString As String) As String
             If s = "" Then
@@ -175,6 +167,13 @@ Namespace Icm
                 Return s
             End If
         End Function
+
+        ''' <summary>
+        ''' Is the string equal to String.Empty?
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         <Extension()>
         Public Function IsEmpty(ByVal s As String) As Boolean
             If s = "" Then

@@ -4,17 +4,35 @@ Namespace Icm
 
     Public Module TimespanExtensions
 
-
+        ''' <summary>
+        ''' Division of a Timespan by a number
+        ''' </summary>
+        ''' <param name="t"></param>
+        ''' <param name="divisor"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         <Extension()>
         Function DividedBy(ByVal t As TimeSpan, ByVal divisor As Double) As TimeSpan
             Return New TimeSpan(CLng(t.Ticks / divisor))
         End Function
 
+        ''' <summary>
+        ''' Is the timespan equal to Timespan.Zero?
+        ''' </summary>
+        ''' <param name="t"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         <Extension()>
         Function IsZero(ByVal t As TimeSpan) As Boolean
             Return t = TimeSpan.Zero
         End Function
 
+        ''' <summary>
+        ''' Is the timespan not equal to Timespan.Zero?
+        ''' </summary>
+        ''' <param name="t"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         <Extension()>
         Function IsNotZero(ByVal t As TimeSpan) As Boolean
             Return t <> TimeSpan.Zero
@@ -100,7 +118,7 @@ Namespace Icm
         ''' <returns></returns>
         ''' <remarks>Don't expect much precision</remarks>
         <Extension()>
-        Public Function ToMicroseconds(ByVal ts As TimeSpan) As Long
+        Public Function TotalMicroseconds(ByVal ts As TimeSpan) As Long
             Return 1000 * ts.Ticks \ TimeSpan.TicksPerMillisecond
         End Function
 
@@ -112,7 +130,7 @@ Namespace Icm
         ''' <remarks></remarks>
         <Extension()>
         Public Function ToMillisecondsAndOne(ByVal ts As TimeSpan) As String
-            Return (ts.Ticks / TimeSpan.TicksPerMillisecond).ToString("#0.0")
+            Return ts.TotalMilliseconds.ToString("#0.0")
         End Function
 
     End Module

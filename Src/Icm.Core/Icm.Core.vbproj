@@ -297,7 +297,6 @@
     </Compile>
     <Compile Include="AI Search\ForcedDictionary.vb" />
     <Compile Include="Collections extensions\SortedListExtensions.vb" />
-    <Compile Include="Search and Replace\StringGenerator.vb" />
     <Compile Include="Search and Replace\TextReaderFactory.vb" />
     <Compile Include="Search and Replace\TextWriterFactory.vb" />
     <Compile Include="SharedCounter.vb" />
@@ -352,7 +351,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Icm.Core.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
