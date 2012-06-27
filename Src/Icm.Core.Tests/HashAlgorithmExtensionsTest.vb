@@ -89,37 +89,6 @@ Public Class HashAlgorithmExtensionsTest
         Catch ex As Exception
             Assert.Fail("NullReferenceException: Empty string")
         End Try
-
-
-    End Sub
-
-    '''<summary>
-    '''A test for Match
-    '''</summary>
-    <Test(), Category("Icm")>
-    Public Sub MatchTest()
-
-        'Caso 1
-        Dim target As New MD5CryptoServiceProvider
-        'Dim fs1 As Stream = Nothing
-        Dim fs2 As Stream = Nothing
-        Dim expected As Boolean = False
-        Dim actual As Boolean
-
-        Dim fs1 As New MemoryStream({7, 14, 255})
-        fs2 = New MemoryStream({7, 14, 255})
-
-        expected = True
-        actual = target.Match(fs1, fs2)
-        Assert.AreEqual(expected, actual)
-
-        'Caso 2
-        expected = False
-        fs1 = New MemoryStream({7, 14, 255})
-        fs2 = New MemoryStream({1, 1, 1})
-        actual = target.Match(fs1, fs2)
-        Assert.AreEqual(expected, actual)
-
     End Sub
 
     '''<summary>
@@ -133,7 +102,7 @@ Public Class HashAlgorithmExtensionsTest
         Dim hash() As Byte = {}
         Dim expected As String = ""
         Dim actual As String
-        actual = target.ByteToString(hash)
+        actual = hash.ToHex
         Assert.AreEqual(expected, actual)
 
     End Sub
@@ -151,62 +120,20 @@ Public Class HashAlgorithmExtensionsTest
         Dim s As String = "hola hola hola"
         Dim expected(15) As Byte
         Dim actual() As Byte
-        actual = target.ByteHash(s)
+        actual = target.ComputeHash(s)
         Assert.AreEqual(expected.Length, actual.Length)
 
         'Caso2
         s = Nothing
         ReDim expected(14)
         Try
-            actual = target.ByteHash(s)
+            actual = target.ComputeHash(s)
             Assert.Fail("NullReferenceException: Empty string")
         Catch ex As NullReferenceException
 
         Catch ex As Exception
             Assert.Fail("NullReferenceException: Empty string")
         End Try
-
-    End Sub
-
-    '''<summary>
-    '''A test for ByteHash
-    '''</summary>
-    <Test(), Category("Icm")>
-    Public Sub ByteHashTest1()
-
-        Dim target As New MD5CryptoServiceProvider
-        Dim data() As Byte = {1}
-        Dim expected(15) As Byte
-        Dim actual() As Byte
-        actual = target.ByteHash(data)
-        Assert.AreEqual(expected.Length, actual.Length)
-
-        'Caso2
-        Array.Clear(data, 0, 1)
-        data(0) = Nothing
-        ReDim expected(15)
-        actual = target.ByteHash(data)
-        Assert.AreEqual(expected.Length, actual.Length)
-
-
-
-
-    End Sub
-
-    '''<summary>
-    '''A test for ByteHash
-    '''</summary>
-    <Test(), Category("Icm")>
-    Public Sub ByteHashTest()
-
-        Dim target As New MD5CryptoServiceProvider
-        Dim fs As Stream = Nothing
-        fs = New MemoryStream({7, 14, 255})
-        Dim expected() As Byte = {0}
-        Dim actual() As Byte
-        actual = target.ByteHash(fs)
-        ReDim expected(15)
-        Assert.AreEqual(expected.Length, actual.Length)
 
     End Sub
 

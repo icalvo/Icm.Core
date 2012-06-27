@@ -14,7 +14,7 @@ Namespace Icm.Collections
     Public Module StringListExtensions
 
         ''' <summary>
-        '''     This method appends a formatted string to the end of the collection,
+        '''     Appends a formatted string to the end of the collection,
         ''' which is built from a format string and its corresponding parameters.
         ''' </summary>
         ''' <param name="fmt"></param>
@@ -31,7 +31,7 @@ Namespace Icm.Collections
         End Sub
 
         ''' <summary>
-        '''     This method appends a formatted string to the end of the collection,
+        '''     Appends a formatted string to the end of the collection,
         ''' which is built from a format provider, a format string and its corresponding parameters.
         ''' </summary>
         ''' <param name="fp"></param>
@@ -49,7 +49,7 @@ Namespace Icm.Collections
         End Sub
 
         ''' <summary>
-        '''     This method prepends a formatted string to the start of the collection,
+        '''     Prepends a formatted string to the start of the collection,
         ''' which is built from a format string and its corresponding parameters.
         ''' </summary>
         ''' <param name="fmt"></param>
@@ -66,7 +66,7 @@ Namespace Icm.Collections
         End Sub
 
         ''' <summary>
-        '''     This method prepends a formatted string to the start of the collection,
+        '''     Prepends a formatted string to the start of the collection,
         ''' which is built from a format provider, a format string and its corresponding parameters.
         ''' </summary>
         ''' <param name="fp"></param>
@@ -84,7 +84,7 @@ Namespace Icm.Collections
         End Sub
 
         ''' <summary>
-        '''     This method inserts a formatted string on a given position of the collection,
+        '''     Inserts a formatted string on a given position of the collection,
         ''' which is built from a format string and its corresponding parameters.
         ''' </summary>
         ''' <param name="idx"></param>
@@ -102,7 +102,7 @@ Namespace Icm.Collections
         End Sub
 
         ''' <summary>
-        '''     This method inserts a formatted string on a given position of the collection,
+        '''     Inserts a formatted string on a given position of the collection,
         ''' which is built from a format provider, a format string and its corresponding parameters.
         ''' </summary>
         ''' <param name="idx"></param>

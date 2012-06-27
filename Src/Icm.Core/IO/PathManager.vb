@@ -3,34 +3,15 @@
 Namespace Icm.IO
 
     ''' <summary>
-    ''' 
+    ''' PathManager is an enhanced manager for joining paths.
     ''' </summary>
     ''' <remarks>
-    ''' <para>Use: Get an singleton with PathManager.Get().
-    ''' PathManager.Get(sep) gets an instance which uses sep as separator.
-    ''' PathManager.Get() gets an instance with the separator of the current system.</para>
-    ''' 
     ''' <para>With the instance you can combine path chunks. You can pass to Combine()
-    ''' more than two path chunks.</para>
+    ''' more than two path chunks. Doesn't matter if the chunks end with the separator or
+    ''' not, Combine will add the separator when necessary.</para>
+    ''' <para>Combine returns String.Empty if no paths are provided.</para>
     ''' </remarks>
     Public Class PathManager
-
-        Private Shared ReadOnly managers_ As New Dictionary(Of String, PathManager)()
-
-        Public Shared Function [Get]() As PathManager
-            Return [Get](Path.DirectorySeparatorChar)
-        End Function
-
-        Public Shared Function [Get](ByVal sep As Char) As PathManager
-            Dim result As PathManager
-            If Not managers_.ContainsKey(sep) Then
-                result = New PathManager(sep)
-                managers_.Add(sep, result)
-            Else
-                result = managers_(sep)
-            End If
-            Return result
-        End Function
 
         Private Sub New(ByVal sep As Char)
             Separator = sep

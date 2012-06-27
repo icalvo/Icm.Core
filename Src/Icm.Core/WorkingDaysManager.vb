@@ -34,7 +34,7 @@
         '''  
         ''' </summary>
         ''' <remarks>
-        ''' Stablishes saturdays and sundays as holidays.
+        ''' 
         ''' </remarks>
         ''' <history>
         ''' 	[icalvo]	20/04/2005	Created
@@ -75,10 +75,22 @@
             End Get
         End Property
 
+        ''' <summary>
+        ''' Is the given date a working day?
+        ''' </summary>
+        ''' <param name="d"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Public Function IsWorking(ByVal d As Date) As Boolean
             Return Not dayHolidays_.Contains(d) And Not weeklyHolidays_.Contains(d.DayOfWeek)
         End Function
 
+        ''' <summary>
+        ''' Get the next working day greater OR EQUAL to the given date.
+        ''' </summary>
+        ''' <param name="d"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Public Function NextWorkingDay(ByVal d As Date) As Date
             Dim result As Date
             result = d
@@ -95,7 +107,7 @@
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Get the previous working day less OR EQUAL to the given date.
         ''' </summary>
         ''' <param name="d">Day</param>
         ''' <returns></returns>

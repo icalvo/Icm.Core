@@ -3,6 +3,10 @@ Imports System.Text
 
 Namespace Icm.IO
 
+    ''' <summary>
+    ''' Class to write an Excel-type CSV (comma-separated values) file
+    ''' </summary>
+    ''' <remarks></remarks>
     Public Class CSVWriter
         Implements IDisposable
 

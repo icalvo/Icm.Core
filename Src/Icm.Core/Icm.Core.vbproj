@@ -183,7 +183,6 @@
     <Compile Include="Configuration\Settings.vb" />
     <Compile Include="Configuration\TypedDictionarySectionHandler.vb" />
     <Compile Include="IO\DirectoryInfoExtensions.vb" />
-    <Compile Include="IO\FileSystemEnumerator.vb" />
     <Compile Include="IO\MovementEventArgs.vb" />
     <Compile Include="IO\TextWriterExtensions.vb" />
     <Compile Include="Constants.vb" />
@@ -233,9 +232,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Basic types extensions\BooleanExtensions.vb" />
-    <Compile Include="IO\FileSystemEnumerable.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Functions\Enumerations\ThresholdTypeExtensions.vb" />
     <Compile Include="Functions\MathFunction.vb" />
     <Compile Include="Functions\BaseKeyedMathFunction.vb" />
@@ -256,7 +252,7 @@
     <Compile Include="Collections extensions\IListExtensions.vb" />
     <Compile Include="INamed.vb" />
     <Compile Include="DateTimeInterval.vb" />
-    <Compile Include="LocalizationKeyManager.vb" />
+    <Compile Include="ILocalizationRepository.vb" />
     <Compile Include="Basic types extensions\LongExtensions.vb" />
     <Compile Include="MailTextWriter.vb" />
     <Compile Include="Math\LimitedQueue.vb" />
@@ -289,7 +285,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Collections\PriorityQueue.vb" />
-    <Compile Include="RegExConstants.vb" />
     <Compile Include="Search and Replace\AutoNumberGenerator.vb" />
     <Compile Include="Search and Replace\PlainStringGenerator.vb" />
     <Compile Include="Search and Replace\Replacer.vb">

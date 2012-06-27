@@ -12,13 +12,11 @@ Namespace Icm.Compilation
     Public Class VBCompiledFunction(Of T)
         Inherits CompiledFunction(Of T)
 
-        Private ReadOnly Namespaces As New List(Of String)()
-
-
         Public Sub New()
             Dim providerOptions As New Dictionary(Of String, String)
+
             providerOptions.Add("CompilerVersion", "v4.0")
-            oCodeProvider = New VBCodeProvider(providerOptions)
+            CodeProvider = New VBCodeProvider(providerOptions)
 
             AddNamespace("System", "system.dll")
             AddNamespace("System.Xml", "system.xml.dll")
@@ -26,31 +24,19 @@ Namespace Icm.Compilation
             AddNamespace("System.Linq", "system.core.dll")
             AddNamespace("Microsoft.VisualBasic", "system.dll")
 
-            oCParams.CompilerOptions = "/t:library"
-            oCParams.GenerateInMemory = True
-        End Sub
-
-        Public Sub AddNamespace(ByVal nspace As String, ByVal assm As String)
-            If Not oCParams.ReferencedAssemblies.Contains(assm) Then
-                oCParams.ReferencedAssemblies.Add(assm)
-            End If
-            Namespaces.Add(nspace)
-
+            CompilerParameters.CompilerOptions = "/t:library"
+            CompilerParameters.GenerateInMemory = True
         End Sub
 
         Public Overrides Function GeneratedCode() As String
-            ' Setup the Compiler Parameters  
-            ' Add any referenced assemblies
-
-            ' Generate the Code Framework
             Dim sb As New StringBuilder
 
+            ' Add Imports
             For Each ns In Namespaces
                 sb.AppendLine(String.Format("Imports {0}", ns))
             Next
 
             ' Build a little wrapper code, with our passed in code in the middle 
-
             sb.AppendLine("Namespace dValuate")
             sb.AppendLine(" Class EvalRunTime ")
 

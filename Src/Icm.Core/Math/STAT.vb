@@ -1,7 +1,7 @@
 Namespace Icm.MathTools
     ''' <summary>
     '''  Module for easy statistical data generation. Not safe for multithreading,
-    ''' though, you should use one StatisticsGenerator for each thread in order to
+    ''' though, you should use one <see cref="StatisticsGenerator"></see> for each thread in order to
     ''' avoid problems.
     ''' </summary>
     ''' <remarks></remarks>

@@ -21,15 +21,31 @@ Namespace Icm.Compilation
     ''' previamente configurados.
     ''' </remarks>
     Public MustInherit Class CompiledFunction(Of T)
+        Implements IDisposable
 
-        Protected oCParams As New CompilerParameters
-        Protected oCodeProvider As CodeDomProvider
-        Protected oExecInstance As Object
-        Protected oMethodInfo As MethodInfo
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Shared ReadOnly _instances As New Dictionary(Of String, Object)()
 
-        Public ReadOnly Parameters As New List(Of CompiledParameterInfo)
-        Public Code As String
-        Public ReadOnly CompilerErrors As New List(Of System.CodeDom.Compiler.CompilerError)
+        Protected Property CompilerParameters As New CompilerParameters
+        Protected Property CodeProvider As CodeDomProvider
+        Protected ReadOnly Namespaces As New List(Of String)()
+
+        Private _execInstance As Object
+        Private _MethodInfo As MethodInfo
+
+        Private ReadOnly _parameters As New List(Of CompiledParameterInfo)
+        Private ReadOnly _compilerErrors As New List(Of CompilerError)
+
+        ReadOnly Property Parameters As List(Of CompiledParameterInfo)
+            Get
+                Return _parameters
+            End Get
+        End Property
+
+        Property Code As String
 
         Public Shared Function CreateCompiledFunction(ByVal lang As String) As CompiledFunction(Of T)
             Select Case lang
@@ -40,33 +56,19 @@ Namespace Icm.Compilation
             End Select
         End Function
 
-        Public Sub AddParameter(ByVal n As String, ByVal t As String)
-            Parameters.Add(New CompiledParameterInfo(n, t))
+        Public Sub AddParameter(Of TParam)(ByVal n As String)
+            Parameters.Add(New CompiledParameterInfo(Of TParam)(n))
+        End Sub
+
+        Public Sub AddNamespace(ByVal nspace As String, ByVal assm As String)
+            If Not CompilerParameters.ReferencedAssemblies.Contains(assm) Then
+                CompilerParameters.ReferencedAssemblies.Add(assm)
+            End If
+            Namespaces.Add(nspace)
+
         End Sub
 
         Public MustOverride Function GeneratedCode() As String
-
-        Public Function Evaluate(ByVal ParamArray args() As Object) As T
-            Dim oRetObj As T
-
-            Try
-                oRetObj = CType(oMethodInfo.Invoke(oExecInstance, args), T)
-                Return oRetObj
-            Catch ex As TargetInvocationException
-                Debug.WriteLine(ex.InnerException.Message)
-                Throw New InvalidOperationException(String.Format("{0}: {1}", Code, ex.InnerException.Message), ex.InnerException)
-            Catch ex As Exception
-                ' Compile Time Errors Are Caught Here
-                ' Some other weird error 
-                Debug.WriteLine(ex.Message)
-                Throw ex
-            End Try
-
-            Return oRetObj
-
-        End Function
-
-        Private Shared ReadOnly instancias As New Dictionary(Of String, Object)()
 
         ''' <summary>
         '''  Code is used as an VB expression that the compiled function will
@@ -74,44 +76,98 @@ Namespace Icm.Compilation
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub CompileAsExpression()
-            Dim oCResults As CompilerResults
-            Dim oAssy As Assembly
-            Dim oType As Type
+            Dim compilerResults As CompilerResults
+            Dim assembly As Assembly
+            Dim type As Type
+            Dim code As String
 
-            Dim genCode As String
-
-            genCode = GeneratedCode()
+            code = GeneratedCode()
 
             CompilerErrors.Clear()
 
-            If instancias.ContainsKey(Code) Then
-                oExecInstance = instancias(Code)
-                oType = oExecInstance.GetType
-                oMethodInfo = oType.GetMethod("EvaluateIt")
+            If _instances.ContainsKey(Code) Then
+                _execInstance = _instances(Code)
+                type = _execInstance.GetType
+                _MethodInfo = type.GetMethod("EvaluateIt")
             Else
 
                 ' Compile and get results 
-                oCResults = oCodeProvider.CompileAssemblyFromSource(oCParams, genCode)
+                compilerResults = CodeProvider.CompileAssemblyFromSource(CompilerParameters, code)
 
                 ' Check for compile time errors 
-                If oCResults.Errors.Count <> 0 Then
-                    For Each compileError As CompilerError In oCResults.Errors
+                If compilerResults.Errors.Count <> 0 Then
+                    For Each compileError As CompilerError In compilerResults.Errors
                         CompilerErrors.Add(compileError)
                     Next
 
-                    Throw New CompileException(oCResults.Errors, Nothing)
+                    Throw New CompileException(compilerResults.Errors, Nothing)
                 Else
                     ' No Errors On Compile, so continue to process...
 
-                    oAssy = oCResults.CompiledAssembly
-                    oExecInstance = oAssy.CreateInstance("dValuate.EvalRunTime")
-                    instancias.Add(Code, oExecInstance)
-                    oType = oExecInstance.GetType
-                    oMethodInfo = oType.GetMethod("EvaluateIt")
+                    assembly = compilerResults.CompiledAssembly
+                    _execInstance = assembly.CreateInstance("dValuate.EvalRunTime")
+                    _instances.Add(Code, _execInstance)
+                    type = _execInstance.GetType
+                    _MethodInfo = type.GetMethod("EvaluateIt")
                 End If
             End If
+        End Sub
 
+        ''' <summary>
+        ''' Compilation errors.
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        ReadOnly Property CompilerErrors As List(Of CompilerError)
+            Get
+                Return _compilerErrors
+            End Get
+        End Property
 
+        ''' <summary>
+        ''' Evaluate the compiled function.
+        ''' </summary>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' You must call CompileAsExpression before.
+        ''' </remarks>
+        Public Function Evaluate(ByVal ParamArray args() As Object) As T
+            Dim oRetObj As T
+
+            Try
+                oRetObj = CType(_MethodInfo.Invoke(_execInstance, args), T)
+                Return oRetObj
+            Catch ex As TargetInvocationException
+                ' Runtime exception caused by the compiled code
+                Debug.WriteLine(ex.InnerException.Message)
+                Throw New InvalidOperationException(String.Format("{0}: {1}", Code, ex.InnerException.Message), ex.InnerException)
+            Catch ex As Exception
+                ' Some other weird error 
+                Debug.WriteLine(ex.Message)
+                Throw ex
+            End Try
+
+            Return oRetObj
+        End Function
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            Dispose(True)
+            GC.SuppressFinalize(Me)
+        End Sub
+
+        Protected Overridable Sub Dispose(ByVal disposing As Boolean)
+            If disposing Then
+                If CodeProvider IsNot Nothing Then
+                    CodeProvider.Dispose()
+                    CodeProvider = Nothing
+                End If
+            End If
+        End Sub
+
+        Protected Overrides Sub Finalize()
+            Dispose(False)
         End Sub
 
     End Class

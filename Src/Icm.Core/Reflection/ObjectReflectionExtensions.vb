@@ -45,6 +45,7 @@ Namespace Icm.Reflection
         ''' <remarks></remarks>
         <Extension()>
         Public Function HasField(ByVal obj As Object, ByVal fieldName As String) As Boolean
+            If obj Is Nothing Then Return False
             Dim fi = obj.GetType.GetField(fieldName)
             Return fi IsNot Nothing
         End Function

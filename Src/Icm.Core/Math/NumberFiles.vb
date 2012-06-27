@@ -3,6 +3,13 @@ Imports System.Globalization
 Namespace Icm.MathTools
     Public Class NumberFiles
 
+        ''' <summary>
+        ''' Reads a simple text file of real numbers with the usual
+        ''' (invariant culture) admitted formats. Ignores line comments starting with "#".
+        ''' </summary>
+        ''' <param name="fn"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Public Shared Function ReadArrayFile(ByVal fn As String) As Double()
             Dim sr As New System.IO.StreamReader(fn)
             Dim line As String

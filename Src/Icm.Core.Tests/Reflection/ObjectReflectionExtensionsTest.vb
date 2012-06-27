@@ -94,7 +94,7 @@ Public Class ObjectReflectionExtensionsTest
 
         obj = Nothing
 
-        Assert.IsTrue(obj.HasField("myfield"))
+        Assert.IsFalse(obj.HasField("myfield"))
         Assert.IsFalse(obj.HasField("myother"))
     End Sub
 

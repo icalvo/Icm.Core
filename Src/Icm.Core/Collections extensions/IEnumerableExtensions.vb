@@ -165,8 +165,6 @@ Namespace Icm.Collections
             Return New Pair(Of List(Of T), Integer)(resultList, minValue)
         End Function
 
-
-
         ''' <summary>
         ''' First item that reaches a minimum.
         ''' </summary>

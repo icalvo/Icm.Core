@@ -4,12 +4,14 @@ Imports Icm.Compilation
 <TestFixture(), Category("Icm")>
 Public Class CompiledFunctionTest
 
+    Private ReadOnly Namespaces As New List(Of String)()
+
     <Test(), Category("Icm")>
     Public Sub CompileOkTest()
         Dim Funct As CompiledFunction(Of Integer)
         Funct = New VBCompiledFunction(Of Integer)
-        Funct.AddParameter("x", "Integer")
-        Funct.AddParameter("y", "Integer")
+        Funct.AddParameter(Of Integer)("x")
+        Funct.AddParameter(Of Integer)("y")
         Funct.Code = "x+y"
         Funct.CompileAsExpression()
         Assert.IsTrue(Funct.CompilerErrors.Count = 0)
@@ -19,8 +21,8 @@ Public Class CompiledFunctionTest
     Public Sub EvaluateTest()
         Dim Funct As CompiledFunction(Of Integer)
         Funct = New VBCompiledFunction(Of Integer)
-        Funct.AddParameter("x", "Integer")
-        Funct.AddParameter("y", "Integer")
+        Funct.AddParameter(Of Integer)("x")
+        Funct.AddParameter(Of Integer)("y")
         Funct.Code = "x+y"
         Funct.CompileAsExpression()
         Assert.AreEqual(10, Funct.Evaluate(5, 5))
@@ -29,10 +31,9 @@ Public Class CompiledFunctionTest
     <Test(), Category("Icm")>
     Public Sub CompileSyntaxErrorTest()
 
-        Dim Funct As CompiledFunction(Of Integer)
-        Funct = New VBCompiledFunction(Of Integer)
-        Funct.AddParameter("x", "Integer")
-        Funct.AddParameter("y", "Integer")
+        Dim Funct As New VBCompiledFunction(Of Integer)
+        Funct.AddParameter(Of Integer)("x")
+        Funct.AddParameter(Of Integer)("y")
         Funct.Code = "x..y"
 
         Assert.Throws(Of CompileException)(Sub()

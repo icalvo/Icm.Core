@@ -101,6 +101,16 @@ Namespace Icm.Collections.Generic
             End If
         End Function
 
+        ''' <summary>
+        ''' Returns the previous key, but NOT the same key if it already exists. Returns Nothing if there
+        ''' isn't previous key. Returns a <see cref="Nullable2(Of T)"></see>.
+        ''' </summary>
+        ''' <typeparam name="K"></typeparam>
+        ''' <typeparam name="V"></typeparam>
+        ''' <param name="sl"></param>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         <Extension()>
         Public Function PrevKey2(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K) As Nullable2(Of K)
             Dim index As Integer

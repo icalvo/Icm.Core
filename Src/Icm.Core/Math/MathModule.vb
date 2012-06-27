@@ -1,3 +1,4 @@
+Imports System.Runtime.CompilerServices
 Namespace Icm.MathTools
 
     Public Module MathModule
@@ -52,11 +53,11 @@ Namespace Icm.MathTools
             Return ((fx2 - fx1) * (x3 - x1) / (fx3 - fx1)) + x1
         End Function
 
-        Function Max3(ByVal a As Double, ByVal b As Double, ByVal c As Double) As Double
+        Function Max(ByVal a As Double, ByVal b As Double, ByVal c As Double) As Double
             Return Math.Max(a, Math.Max(b, c))
         End Function
 
-        Function Min3(ByVal a As Double, ByVal b As Double, ByVal c As Double) As Double
+        Function Min(ByVal a As Double, ByVal b As Double, ByVal c As Double) As Double
             Return Math.Min(a, Math.Min(b, c))
         End Function
 
@@ -70,7 +71,7 @@ Namespace Icm.MathTools
             Return max
         End Function
 
-        <System.Runtime.CompilerServices.Extension()> _
+        <Extension()>
         Function NearEqual(ByVal d1 As Double, ByVal d2 As Double, ByVal precission As Double) As Boolean
             Return d1 - d2 <= (10 ^ precission)
         End Function
@@ -125,11 +126,11 @@ Namespace Icm.MathTools
             Return ((fx2 - fx1) * (x3 - x1) \ (fx3 - fx1)) + x1
         End Function
 
-        Function Max3(ByVal a As Long, ByVal b As Long, ByVal c As Long) As Long
+        Function Max(ByVal a As Long, ByVal b As Long, ByVal c As Long) As Long
             Return Math.Max(a, Math.Max(b, c))
         End Function
 
-        Function Min3(ByVal a As Long, ByVal b As Long, ByVal c As Long) As Long
+        Function Min(ByVal a As Long, ByVal b As Long, ByVal c As Long) As Long
             Return Math.Min(a, Math.Min(b, c))
         End Function
 
@@ -141,11 +142,6 @@ Namespace Icm.MathTools
                 End If
             Next
             Return CLng(max)
-        End Function
-
-        <System.Runtime.CompilerServices.Extension()> _
-        Function NearEqual(ByVal d1 As Long, ByVal d2 As Long, ByVal precission As Long) As Boolean
-            Return d1 - d2 <= (10 ^ precission)
         End Function
     End Module
 
