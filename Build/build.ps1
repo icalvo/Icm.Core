@@ -1,7 +1,7 @@
 ﻿properties { 
-  $zipFileName = "Icm.Core.1.0.0.zip"
   $majorVersion = "1.0"
-  $majorWithReleaseVersion = "1.0.0"
+  $majorWithReleaseVersion = $majorVersion + ".0"
+  $zipFileName = "Icm.Core." + $majorWithReleaseVersion + ".zip"
   $version = GetVersion $majorWithReleaseVersion
   $signAssemblies = $false
   $signKeyPath = "D:\Development\Releases\icm.snk"
@@ -23,6 +23,10 @@
     # signed SL/WP
     
   )
+
+  $mainBuildName = "Icm.Core"
+  $nugetSpec = "Icm.Core.nuspec"
+
 }
 
 $framework = '4.0x86'
@@ -66,39 +70,39 @@ task Build -depends Clean {
 task Package -depends Build {
   foreach ($build in $builds)
   {
-    $name = $build.TestsName
+    $name = $build.Name
     $finalDir = $build.FinalDir
     
-    robocopy "$sourceDir\Icm.Core\bin\Release\$finalDir" $workingDir\Package\Bin\$finalDir /NP /XO /XF *.pri
+    robocopy "$sourceDir\$name\bin\Release\$finalDir" $workingDir\Package\Bin\$finalDir /NP /XO /XF *.pri
   }
   
   if ($buildNuGet)
   {
     New-Item -Path $workingDir\NuGet -ItemType Directory
-    Copy-Item -Path "$buildDir\Icm.Core.nuspec" -Destination $workingDir\NuGet\Icm.Core.nuspec -recurse
+    Copy-Item -Path "$buildDir\$nugetSpec" -Destination $workingDir\NuGet\$nugetSpec -recurse
     
     foreach ($build in $builds)
     {
       if ($build.NuGetDir -ne $null)
       {
-        $name = $build.TestsName
+        $name = $build.Name
         $finalDir = $build.FinalDir
         $frameworkDirs = $build.NuGetDir.Split(",")
         
         foreach ($frameworkDir in $frameworkDirs)
         {
-          robocopy "$sourceDir\Icm.Core\bin\Release\$finalDir" $workingDir\NuGet\lib\$frameworkDir /NP /XO /XF *.pri
+          robocopy "$sourceDir\$name\bin\Release\$finalDir" $workingDir\NuGet\lib\$frameworkDir /NP /XO /XF *.pri
         }
       }
     }
   
-    exec { .\Tools\NuGet\NuGet.exe pack $workingDir\NuGet\Icm.Core.nuspec }
+    exec { .\Tools\NuGet\NuGet.exe pack $workingDir\NuGet\$nugetSpec }
     move -Path .\*.nupkg -Destination $workingDir\NuGet
   }
   
   if ($buildDocumentation)
   {
-    $mainBuild = $builds | where { $_.Name -eq "Icm.Core" } | select -first 1
+    $mainBuild = $builds | where { $_.Name -eq $mainBuildName } | select -first 1
     $mainBuildFinalDir = $mainBuild.FinalDir
     $documentationSourcePath = "$workingDir\Package\Bin\$mainBuildFinalDir"
     Write-Host -ForegroundColor Green "Building documentation from $documentationSourcePath"
@@ -145,13 +149,13 @@ task Test -depends Deploy {
         
         Write-Host -ForegroundColor Green "Copying test assembly $name to deployed directory"
         Write-Host
-        robocopy ".\Src\Icm.Core.Tests\bin\Release\$finalDir" $workingDir\Deployed\Bin\$finalDir /NP /XO /XF LinqBridge.dll
+        robocopy ".\Src\$name\bin\Release\$finalDir" $workingDir\Deployed\Bin\$finalDir /NP /XO /XF LinqBridge.dll
         
-        Copy-Item -Path ".\Src\Icm.Core.Tests\bin\Release\$finalDir\Icm.Core.Tests.dll" -Destination $workingDir\Deployed\Bin\$finalDir\
+        Copy-Item -Path ".\Src\$name\bin\Release\$finalDir\$name.dll" -Destination $workingDir\Deployed\Bin\$finalDir\
 
         Write-Host -ForegroundColor Green "Running tests " $name
         Write-Host
-        exec { .\Tools\NUnit\nunit-console.exe "$workingDir\Deployed\Bin\$finalDir\Icm.Core.Tests.dll" /framework=$framework /xml:$workingDir\$name.xml } "Error running $name tests"
+        exec { .\Tools\NUnit\nunit-console.exe "$workingDir\Deployed\Bin\$finalDir\$name.dll" /framework=$framework /xml:$workingDir\$name.xml } "Error running $name tests"
     }
   }
 }
@@ -187,7 +191,7 @@ function Update-AssemblyInfoFiles ([string] $sourceDir, [string] $assemblyVersio
     $assemblyVersion = 'AssemblyVersion("' + $assemblyVersionNumber + '")';
     $fileVersion = 'AssemblyFileVersion("' + $fileVersionNumber + '")';
     
-    Get-ChildItem -Path $sourceDir -r -filter AssemblyInfo.cs | ForEach-Object {
+    Get-ChildItem -Path $sourceDir -r -filter AssemblyInfo.vb | ForEach-Object {
         
         $filename = $_.Directory.ToString() + '\' + $_.Name
         Write-Host $filename

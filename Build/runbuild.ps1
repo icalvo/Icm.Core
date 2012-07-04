@@ -1,5 +1,8 @@
 ﻿cls
-
+$parms = @{
+	'buildFile'='.\build.ps1';
+	'taskList'=$args[0];
+}
 Import-Module '..\Tools\PSake\psake.psm1'
-Invoke-psake '.\build.ps1' Test -framework 3.5
+Invoke-psake @parms
 Remove-Module psake
