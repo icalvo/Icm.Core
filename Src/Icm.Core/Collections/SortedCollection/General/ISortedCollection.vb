@@ -28,8 +28,8 @@
         Function ToString() As String
 
         ' Key navigation
-        Function [Next](ByVal key As TKey) As Nullable2(Of TKey)
-        Function Previous(ByVal key As TKey) As Nullable2(Of TKey)
+        Function NextKey(ByVal key As TKey) As Nullable2(Of TKey)
+        Function PreviousKey(ByVal key As TKey) As Nullable2(Of TKey)
         Function KeyOrNext(ByVal key As TKey) As Nullable2(Of TKey)
         Function KeyOrPrev(ByVal key As TKey) As Nullable2(Of TKey)
 

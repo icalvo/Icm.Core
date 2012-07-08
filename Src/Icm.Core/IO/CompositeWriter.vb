@@ -14,30 +14,37 @@ Namespace Icm.IO
     Public Class CompositeWriter
         Inherits TextWriter
 
-        Protected textWriters As New Generic.List(Of TextWriter)
+        Private ReadOnly _textWriters As New List(Of TextWriter)()
+
+        Protected ReadOnly Property textWriters() As IList(Of TextWriter)
+            Get
+                Return _textWriters
+            End Get
+        End Property
 
         Public Sub New(ByVal ParamArray tws() As TextWriter)
+            MyBase.New(CultureInfo.CurrentCulture)
             Add(tws)
         End Sub
 
         Public Shadows Sub Add(ByVal ParamArray tws() As TextWriter)
             For Each tw In tws
                 If tw Is Nothing Then
-                    Throw New ArgumentNullException("No se pueden pasar textwriter nulos")
+                    Throw New ArgumentNullException("tws")
                 End If
                 textWriters.Add(tw)
             Next
         End Sub
 
-        Public Overloads Overrides Sub Write(ByVal c As Char)
+        Public Overloads Overrides Sub Write(ByVal value As Char)
             For Each tw As TextWriter In textWriters
-                tw.Write(c)
+                tw.Write(value)
             Next
         End Sub
 
-        Public Overloads Overrides Sub Write(ByVal s As String)
+        Public Overloads Overrides Sub Write(ByVal value As String)
             For Each tw As TextWriter In textWriters
-                tw.Write(s)
+                tw.Write(value)
             Next
         End Sub
 
@@ -53,9 +60,9 @@ Namespace Icm.IO
             Next
         End Sub
 
-        Public Overloads Overrides Sub WriteLine(ByVal s As String)
+        Public Overloads Overrides Sub WriteLine(ByVal value As String)
             For Each tw As TextWriter In textWriters
-                tw.WriteLine(s)
+                tw.WriteLine(value)
             Next
         End Sub
 

@@ -174,7 +174,7 @@ Namespace Icm.MathTools
 
             Else
 
-                Throw New ArgumentOutOfRangeException()
+                Throw New ArgumentOutOfRangeException("p", "Probability must be > 0 and < 1")
 
             End If
 

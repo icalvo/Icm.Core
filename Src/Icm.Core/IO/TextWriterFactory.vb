@@ -42,7 +42,7 @@ Namespace Icm.IO
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function FromBuilder(ByVal sb As StringBuilder) As TextWriter
-            Return New StringWriter(sb)
+            Return New StringWriter(sb, CultureInfo.CurrentCulture)
         End Function
 
     End Class

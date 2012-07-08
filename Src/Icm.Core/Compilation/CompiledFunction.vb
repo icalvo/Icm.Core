@@ -1,5 +1,6 @@
 Imports System.CodeDom.Compiler
 Imports System.Reflection
+Imports System.Globalization
 
 Namespace Icm.Compilation
 
@@ -23,6 +24,7 @@ Namespace Icm.Compilation
     Public MustInherit Class CompiledFunction(Of T)
         Implements IDisposable
 
+        Private _namespaces As IList(Of String) = New List(Of String)()
         ''' <summary>
         ''' 
         ''' </summary>
@@ -31,7 +33,12 @@ Namespace Icm.Compilation
 
         Protected Property CompilerParameters As New CompilerParameters
         Protected Property CodeProvider As CodeDomProvider
-        Protected ReadOnly Namespaces As New List(Of String)()
+
+        Protected ReadOnly Property Namespaces() As IList(Of String)
+            Get
+                Return _namespaces
+            End Get
+        End Property
 
         Private _execInstance As Object
         Private _MethodInfo As MethodInfo
@@ -39,7 +46,7 @@ Namespace Icm.Compilation
         Private ReadOnly _parameters As New List(Of CompiledParameterInfo)
         Private ReadOnly _compilerErrors As New List(Of CompilerError)
 
-        ReadOnly Property Parameters As List(Of CompiledParameterInfo)
+        ReadOnly Property Parameters As IList(Of CompiledParameterInfo)
             Get
                 Return _parameters
             End Get
@@ -47,14 +54,6 @@ Namespace Icm.Compilation
 
         Property Code As String
 
-        Public Shared Function CreateCompiledFunction(ByVal lang As String) As CompiledFunction(Of T)
-            Select Case lang
-                Case "VisualBasic"
-                    Return New VBCompiledFunction(Of T)
-                Case Else
-                    Throw New ArgumentException(String.Format("Language {0} not supported", lang))
-            End Select
-        End Function
 
         Public Sub AddParameter(Of TParam)(ByVal n As String)
             Parameters.Add(New CompiledParameterInfo(Of TParam)(n))
@@ -85,8 +84,8 @@ Namespace Icm.Compilation
 
             CompilerErrors.Clear()
 
-            If _instances.ContainsKey(Code) Then
-                _execInstance = _instances(Code)
+            If _instances.ContainsKey(code) Then
+                _execInstance = _instances(code)
                 type = _execInstance.GetType
                 _MethodInfo = type.GetMethod("EvaluateIt")
             Else
@@ -106,7 +105,7 @@ Namespace Icm.Compilation
 
                     assembly = compilerResults.CompiledAssembly
                     _execInstance = assembly.CreateInstance("dValuate.EvalRunTime")
-                    _instances.Add(Code, _execInstance)
+                    _instances.Add(code, _execInstance)
                     type = _execInstance.GetType
                     _MethodInfo = type.GetMethod("EvaluateIt")
                 End If
@@ -119,7 +118,7 @@ Namespace Icm.Compilation
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ReadOnly Property CompilerErrors As List(Of CompilerError)
+        ReadOnly Property CompilerErrors As IList(Of CompilerError)
             Get
                 Return _compilerErrors
             End Get
@@ -142,11 +141,11 @@ Namespace Icm.Compilation
             Catch ex As TargetInvocationException
                 ' Runtime exception caused by the compiled code
                 Debug.WriteLine(ex.InnerException.Message)
-                Throw New InvalidOperationException(String.Format("{0}: {1}", Code, ex.InnerException.Message), ex.InnerException)
+                Throw New InvalidOperationException(String.Format(CultureInfo.CurrentCulture, "{0}: {1}", Code, ex.InnerException.Message), ex.InnerException)
             Catch ex As Exception
                 ' Some other weird error 
                 Debug.WriteLine(ex.Message)
-                Throw ex
+                Throw
             End Try
 
             Return oRetObj
@@ -172,4 +171,16 @@ Namespace Icm.Compilation
 
     End Class
 
+    Public Module CompiledFunctionFactories
+
+        Public Function CreateCompiledFunction(Of T)(ByVal lang As String) As CompiledFunction(Of T)
+            Select Case lang
+                Case "VisualBasic"
+                    Return New VBCompiledFunction(Of T)
+                Case Else
+                    Throw New ArgumentException(String.Format(CultureInfo.CurrentCulture, "Language {0} not supported", lang))
+            End Select
+        End Function
+
+    End Module
 End Namespace

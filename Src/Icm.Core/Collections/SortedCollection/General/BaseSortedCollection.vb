@@ -4,12 +4,11 @@ Namespace Icm.Collections.Generic.General
 
 #Region " Attributes "
 
-
-        Private _totalOrder As ITotalOrder(Of TKey)
+        Private ReadOnly _totalOrder As ITotalOrder(Of TKey)
 
 #End Region
 
-        Public Sub New(ByVal otkey As ITotalOrder(Of TKey))
+        Protected Sub New(ByVal otkey As ITotalOrder(Of TKey))
             _totalOrder = otkey
         End Sub
 
@@ -20,17 +19,15 @@ Namespace Icm.Collections.Generic.General
         Private Class RangePointIterator
             Implements IEnumerator(Of Tuple(Of TKey, Nullable2(Of TValue))), IEnumerable(Of Tuple(Of TKey, Nullable2(Of TValue)))
 
-            Private f_ As ISortedCollection(Of TKey, TValue)
-            Private rangeStart_ As TKey
-            Private rangeEnd_ As TKey
-            Private current_ As Tuple(Of TKey, Nullable2(Of TValue))
-
-            Private idx_ As Date
+            Private ReadOnly _f As ISortedCollection(Of TKey, TValue)
+            Private ReadOnly _rangeStart As TKey
+            Private ReadOnly _rangeEnd As TKey
+            Private _current As Tuple(Of TKey, Nullable2(Of TValue))
 
             Public Sub New(ByVal f As ISortedCollection(Of TKey, TValue), ByVal rangeStart As Nullable2(Of TKey), ByVal rangeEnd As Nullable2(Of TKey))
-                rangeStart_ = f.TotalOrder.LstIfNull(rangeStart)
-                rangeEnd_ = f.TotalOrder.GstIfNull(rangeEnd)
-                f_ = f
+                _rangeStart = f.TotalOrder.LstIfNull(rangeStart)
+                _rangeEnd = f.TotalOrder.GstIfNull(rangeEnd)
+                _f = f
             End Sub
 
             Public Sub New(ByVal f As ISortedCollection(Of TKey, TValue), ByVal intf As Vector2(Of Nullable2(Of TKey)))
@@ -39,45 +36,45 @@ Namespace Icm.Collections.Generic.General
 
             Public ReadOnly Property Current() As Tuple(Of TKey, Nullable2(Of TValue)) Implements IEnumerator(Of Tuple(Of TKey, Nullable2(Of TValue))).Current
                 Get
-                    If current_ Is Nothing Then
+                    If _current Is Nothing Then
                         Throw New InvalidOperationException("Enumerator has not been reset")
                     End If
-                    Return current_
+                    Return _current
                 End Get
             End Property
 
             Public ReadOnly Property Current1() As Object Implements System.Collections.IEnumerator.Current
                 Get
-                    If current_ Is Nothing Then
+                    If _current Is Nothing Then
                         Throw New InvalidOperationException("Enumerator has not been reset")
                     End If
-                    Return current_
+                    Return _current
                 End Get
             End Property
 
-            Public Function MoveNext() As Boolean Implements System.Collections.IEnumerator.MoveNext
-                If current_ Is Nothing Then
-                    current_ = Pair(rangeStart_)
-                ElseIf current_.Item1.Equals(rangeEnd_) Then
-                    current_ = Nothing
+            Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
+                If _current Is Nothing Then
+                    _current = Pair(_rangeStart)
+                ElseIf _current.Item1.Equals(_rangeEnd) Then
+                    _current = Nothing
                     Return False
                 Else
-                    Dim sig = f_.Next(current_.Item1)
+                    Dim sig = _f.NextKey(_current.Item1)
 
 
                     If sig.HasValue Then
-                        If sig.Value.CompareTo(rangeEnd_) > 0 Then
-                            current_ = Pair(rangeEnd_)
+                        If sig.Value.CompareTo(_rangeEnd) > 0 Then
+                            _current = Pair(_rangeEnd)
                             Return False
                         Else
-                            current_ = Pair(sig.Value)
+                            _current = Pair(sig.Value)
                         End If
                     Else
-                        If current_.Item1.CompareTo(rangeEnd_) < 0 Then
-                            current_ = Pair(rangeEnd_)
+                        If _current.Item1.CompareTo(_rangeEnd) < 0 Then
+                            _current = Pair(_rangeEnd)
                         Else
                             ' NO DEBERÍA SUCEDER
-                            Throw New Exception
+                            Throw New InvalidOperationException
                         End If
                     End If
                 End If
@@ -87,8 +84,8 @@ Namespace Icm.Collections.Generic.General
 
             ReadOnly Property Pair(ByVal key As TKey) As Tuple(Of TKey, Nullable2(Of TValue))
                 Get
-                    If f_.ContainsKey(key) Then
-                        Return New Tuple(Of TKey, Nullable2(Of TValue))(key, f_(key))
+                    If _f.ContainsKey(key) Then
+                        Return New Tuple(Of TKey, Nullable2(Of TValue))(key, _f(key))
                     Else
                         Return New Tuple(Of TKey, Nullable2(Of TValue))(key, Nothing)
                     End If
@@ -96,7 +93,7 @@ Namespace Icm.Collections.Generic.General
             End Property
 
             Public Sub Reset() Implements IEnumerator.Reset
-                current_ = Nothing
+                _current = Nothing
             End Sub
 
             Private disposedValue As Boolean = False        ' To detect redundant calls
@@ -127,7 +124,7 @@ Namespace Icm.Collections.Generic.General
                 Return Me
             End Function
 
-            Public Function GetEnumerator1() As IEnumerator Implements System.Collections.IEnumerable.GetEnumerator
+            Public Function GetEnumerator1() As IEnumerator Implements IEnumerable.GetEnumerator
                 Return Me
             End Function
         End Class
@@ -153,9 +150,9 @@ Namespace Icm.Collections.Generic.General
 
         Default Public MustOverride Property Item(ByVal key As TKey) As TValue Implements ISortedCollection(Of TKey, TValue).Item
 
-        Public MustOverride Function [Next](ByVal key As TKey) As Nullable2(Of TKey) Implements ISortedCollection(Of TKey, TValue).Next
+        Public MustOverride Function NextKey(ByVal key As TKey) As Nullable2(Of TKey) Implements ISortedCollection(Of TKey, TValue).NextKey
 
-        Public MustOverride Function Previous(ByVal key As TKey) As Nullable2(Of TKey) Implements ISortedCollection(Of TKey, TValue).Previous
+        Public MustOverride Function PreviousKey(ByVal key As TKey) As Nullable2(Of TKey) Implements ISortedCollection(Of TKey, TValue).PreviousKey
 
         Public Overrides Function ToString() As String Implements ISortedCollection(Of TKey, TValue).ToString
             Return ToString(TotalOrder.Least, TotalOrder.Greatest)
@@ -166,18 +163,18 @@ Namespace Icm.Collections.Generic.General
         ''' Devuelve una representación de cadena de un intervalo de la línea de tiempo.
         ''' Para imprimir los elementos se recurrirá a la función <see cref="ToString"></see>.
         ''' </summary>
-        ''' <param name="f1">Fecha inicial.</param>
-        ''' <param name="f2">Fecha final.</param>
+        ''' <param name="fromKey">Fecha inicial.</param>
+        ''' <param name="toKey">Fecha final.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overridable Overloads Function ToString(ByVal f1 As TKey, ByVal f2 As TKey) As String Implements ISortedCollection(Of TKey, TValue).ToString
+        Public Overridable Overloads Function ToString(ByVal fromKey As TKey, ByVal toKey As TKey) As String Implements ISortedCollection(Of TKey, TValue).ToString
             Dim result As New System.Text.StringBuilder
 
-            For Each element In PointEnumerable(f1, f2)
+            For Each element In PointEnumerable(fromKey, toKey)
                 If element.Item2.HasValue Then
                     result.AppendFormat("-> {0:yyyy-MM-dd HH:mm:ss} {1}" & vbCrLf, element.Item1, element.Item2.Value.ToString)
                 Else
-                    result.AppendFormat("NC {0:yyyy-MM-dd HH:mm:ss} ---" & vbCrLf, f1)
+                    result.AppendFormat("NC {0:yyyy-MM-dd HH:mm:ss} ---" & vbCrLf, fromKey)
                 End If
             Next
 
@@ -203,19 +200,19 @@ Namespace Icm.Collections.Generic.General
 
         Public MustOverride Function Count() As Integer Implements ISortedCollection(Of TKey, TValue).Count
 
-        Public Function PointEnumerable(ByVal intStart As Nullable2(Of TKey), ByVal intEnd As Nullable2(Of TKey)) As System.Collections.Generic.IEnumerable(Of System.Tuple(Of TKey, Nullable2(Of TValue))) Implements ISortedCollection(Of TKey, TValue).PointEnumerable
+        Public Function PointEnumerable(ByVal intStart As Nullable2(Of TKey), ByVal intEnd As Nullable2(Of TKey)) As IEnumerable(Of System.Tuple(Of TKey, Nullable2(Of TValue))) Implements ISortedCollection(Of TKey, TValue).PointEnumerable
             Return New RangePointIterator(Me, intStart, intEnd)
         End Function
 
-        Public Function PointEnumerable(ByVal intf As Vector2(Of Nullable2(Of TKey))) As System.Collections.Generic.IEnumerable(Of System.Tuple(Of TKey, Nullable2(Of TValue))) Implements ISortedCollection(Of TKey, TValue).PointEnumerable
+        Public Function PointEnumerable(ByVal intf As Vector2(Of Nullable2(Of TKey))) As IEnumerable(Of System.Tuple(Of TKey, Nullable2(Of TValue))) Implements ISortedCollection(Of TKey, TValue).PointEnumerable
             Return PointEnumerable(intf.Item1, intf.Item2)
         End Function
 
-        Public Function IntervalEnumerable() As System.Collections.Generic.IEnumerable(Of Vector2(Of System.Tuple(Of TKey, Nullable2(Of TValue)))) Implements ISortedCollection(Of TKey, TValue).IntervalEnumerable
+        Public Function IntervalEnumerable() As IEnumerable(Of Vector2(Of System.Tuple(Of TKey, Nullable2(Of TValue)))) Implements ISortedCollection(Of TKey, TValue).IntervalEnumerable
             Return IntervalEnumerable(Nothing, Nothing)
         End Function
 
-        Public Function PointEnumerable() As System.Collections.Generic.IEnumerable(Of System.Tuple(Of TKey, Nullable2(Of TValue))) Implements ISortedCollection(Of TKey, TValue).PointEnumerable
+        Public Function PointEnumerable() As IEnumerable(Of System.Tuple(Of TKey, Nullable2(Of TValue))) Implements ISortedCollection(Of TKey, TValue).PointEnumerable
             Return PointEnumerable(Nothing, Nothing)
         End Function
     End Class

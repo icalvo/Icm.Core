@@ -1,4 +1,4 @@
-﻿Imports System.Reflection
+Imports System.Reflection
 Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("ICM Console MVC library")> 

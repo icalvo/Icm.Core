@@ -26,7 +26,7 @@ Namespace Icm.IO
             End If
             pathResult = paths(0)
             For i As Integer = 1 To paths.Length - 1
-                If pathResult.EndsWith(Separator) Then
+                If pathResult.EndsWith(Separator, StringComparison.Ordinal) Then
                     pathResult &= paths(i)
                 Else
                     pathResult &= Separator & paths(i)

@@ -8,11 +8,8 @@ Namespace Icm.IO
     ''' 	[icalvo]	05/04/2005	Created for FormatFile
     ''' 	[icalvo]	05/04/2005	Documentation
     ''' </history>
-    Public NotInheritable Class FileTools
+    Public Module FileTools
 
-        Private Sub New()
-
-        End Sub
 
         ''' <summary>
         '''  Uses a file as a format template for String.Format.
@@ -30,17 +27,18 @@ Namespace Icm.IO
         ''' 	[icalvo]	05/04/2005	Removed from Icm.Tools
         ''' 	[icalvo]	05/04/2005	Documentation
         ''' </history>
-        Public Shared Function FormatFile(ByVal templatefn As String, ByVal ParamArray args() As Object) As String
+        Public Function FormatFile(ByVal templatefn As String, ByVal ParamArray args() As Object) As String
             Dim sr = File.OpenText(templatefn)
             Return FormatFile(sr, args)
         End Function
 
-        Public Shared Function FormatFile(ByVal tr As TextReader, ByVal ParamArray args() As Object) As String
+        Public Function FormatFile(ByVal tr As TextReader, ByVal ParamArray args() As Object) As String
             Dim template = tr.ReadToEnd
             tr.Close()
-            Return String.Format(template, args)
+            Return String.Format(CultureInfo.CurrentCulture, template, args)
         End Function
 
-    End Class
+    End Module
+
 End Namespace
 

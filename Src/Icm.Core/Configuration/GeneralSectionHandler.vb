@@ -25,11 +25,11 @@ Namespace Icm.Configuration
                 Case "hash"
                     Return BuildHash(section)
                 Case Else
-                    Throw New Exception(section.Attributes("type").Value & ": Not valid element type")
+                    Throw New InvalidOperationException(section.Attributes("type").Value & ": Not valid element type")
             End Select
         End Function
 
-        Function BuildArray(ByVal section As System.Xml.XmlNode) As Generic.List(Of Object)
+        Function BuildArray(ByVal section As System.Xml.XmlNode) As IList(Of Object)
             Dim lo As New Generic.List(Of Object)
 
             For Each child As Xml.XmlNode In section.ChildNodes
@@ -43,14 +43,14 @@ Namespace Icm.Configuration
                     Case "#comment"
                         ' Ignore comments
                     Case Else
-                        Throw New Exception("<" & child.Name & ">: Not valid in an array")
+                        Throw New InvalidOperationException("<" & child.Name & ">: Not valid in an array")
                 End Select
             Next
 
             Return lo
         End Function
 
-        Function BuildHash(ByVal section As System.Xml.XmlNode) As Generic.Dictionary(Of String, Object)
+        Function BuildHash(ByVal section As System.Xml.XmlNode) As IDictionary(Of String, Object)
             Dim ht As New Generic.Dictionary(Of String, Object)
             For Each child As Xml.XmlNode In section.ChildNodes
                 Select Case child.Name
@@ -65,7 +65,7 @@ Namespace Icm.Configuration
                     Case "#comment"
                         ' Ignore comments
                     Case Else
-                        Throw New Exception("<" & child.Name & ">: Not valid in a hashtable")
+                        Throw New InvalidOperationException("<" & child.Name & ">: Not valid in a hashtable")
                 End Select
             Next
 

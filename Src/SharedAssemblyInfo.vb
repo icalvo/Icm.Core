@@ -11,7 +11,7 @@ Imports System.Runtime.InteropServices
 <Assembly: System.Resources.NeutralResourcesLanguage("en-US")> 
 
 <Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyInformationalVersion("1.0.0-alpha")>   ' a.k.a. "Product version"
+<Assembly: AssemblyInformationalVersion("1.0.0")>    ' a.k.a. "Product version"
 
 #If DEBUG Then
 <Assembly: AssemblyConfiguration("Debug")> 

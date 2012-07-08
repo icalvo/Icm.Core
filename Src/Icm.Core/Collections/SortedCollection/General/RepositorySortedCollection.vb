@@ -52,7 +52,7 @@ Namespace Icm.Collections.Generic.General
 
 #Region " BaseSortedCollection "
 
-        Public Overrides Function [Next](ByVal key As TKey) As Nullable2(Of TKey)
+        Public Overrides Function NextKey(ByVal key As TKey) As Nullable2(Of TKey)
             ' 1. If the key has a corresponding bucket:
             '    1. If the next element is in that bucket we return it.
             '    2. Else, we go looking at the following consecutive buckets after the current.
@@ -77,11 +77,11 @@ Namespace Icm.Collections.Generic.General
                 End If
             End If
 
-            [Next] = repository_.GetNext(key)
-            GetBucket([Next])
+            NextKey = repository_.GetNext(key)
+            GetBucket(NextKey)
         End Function
 
-        Public Overrides Function Previous(ByVal key As TKey) As Nullable2(Of TKey)
+        Public Overrides Function PreviousKey(ByVal key As TKey) As Nullable2(Of TKey)
             ' 1. If the key has a corresponding bucket:
             '    1. If the prev element is in that bucket we return it.
             '    2. Else, we go looking at the previous consecutive buckets before the current.
@@ -106,8 +106,8 @@ Namespace Icm.Collections.Generic.General
                 End If
             End If
 
-            Previous = repository_.GetPrevious(key)
-            GetBucket(Previous)
+            PreviousKey = repository_.GetPrevious(key)
+            GetBucket(PreviousKey)
         End Function
 
         Public Overrides Function ContainsKey(ByVal key As TKey) As Boolean
@@ -185,7 +185,7 @@ Namespace Icm.Collections.Generic.General
             If ContainsKey(key) Then
                 Return key
             Else
-                Return [Next](key)
+                Return NextKey(key)
             End If
         End Function
 
@@ -193,7 +193,7 @@ Namespace Icm.Collections.Generic.General
             If ContainsKey(key) Then
                 Return key
             Else
-                Return Previous(key)
+                Return PreviousKey(key)
             End If
         End Function
 

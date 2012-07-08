@@ -7,17 +7,17 @@ Namespace Icm.Collections
         ''' <summary>
         ''' String join function that accepts a ParamArray of strings.
         ''' </summary>
+        ''' <param name="list"></param>
         ''' <param name="separator">Regular separator, separates words except the two last ones.</param>
         ''' <param name="finalSeparator">Final separator, separates the two last ones.</param>
-        ''' <param name="strs"></param>
         ''' <returns></returns>
         ''' <remarks>Ignores null and empty strings.</remarks>
         <Extension()>
-        Public Function JoinStr(strs As IEnumerable(Of String), ByVal separator As String, ByVal finalSeparator As String) As String
+        Public Function JoinStr(list As IEnumerable(Of String), ByVal separator As String, ByVal finalSeparator As String) As String
             Dim sb As New StringBuilder
-            Dim i As Integer = strs.Count
+            Dim i As Integer = list.Count
 
-            Dim nonEmpty = strs.Where(Function(s) Not String.IsNullOrEmpty(s))
+            Dim nonEmpty = list.Where(Function(s) Not String.IsNullOrEmpty(s))
 
             If nonEmpty.Count >= 1 Then
                 sb.Append(nonEmpty(0))
@@ -38,6 +38,7 @@ Namespace Icm.Collections
         ''' <summary>
         '''   Usual string join, with separator.
         ''' </summary>
+        ''' <param name="list"></param>
         ''' <param name="separator">Separator string</param>
         ''' <returns>The joined string.</returns>
         ''' <remarks>
@@ -47,13 +48,14 @@ Namespace Icm.Collections
         ''' 	[icalvo]	07/03/2006	Documented
         ''' </history>
         <Extension()>
-        Public Function JoinStr(ByVal l As IEnumerable(Of String), ByVal separator As String) As String
-            Return String.Join(separator, l.ToArray)
+        Public Function JoinStr(ByVal list As IEnumerable(Of String), ByVal separator As String) As String
+            Return String.Join(separator, list.ToArray)
         End Function
 
         ''' <summary>
         '''   Extended join, with separator and global prefix/suffix.
         ''' </summary>
+        ''' <param name="list"></param>
         ''' <param name="globalprefix">Global prefix</param>
         ''' <param name="separator">Separator string</param>
         ''' <param name="globalsuffix">Global suffix</param>
@@ -79,17 +81,18 @@ Namespace Icm.Collections
         ''' 	[icalvo]	07/03/2006	Documented
         ''' </history>
         <Extension()>
-        Public Function JoinStr(ByVal l As IEnumerable(Of String), ByVal globalprefix As String, ByVal separator As String, ByVal globalsuffix As String) As String
-            If l.Count = 0 Then
+        Public Function JoinStr(ByVal list As IEnumerable(Of String), ByVal globalprefix As String, ByVal separator As String, ByVal globalsuffix As String) As String
+            If list.Count = 0 Then
                 Return ""
             Else
-                Return globalprefix & l.JoinStr(separator) & globalsuffix
+                Return globalprefix & list.JoinStr(separator) & globalsuffix
             End If
         End Function
 
         ''' <summary>
         '''   Extended join, with item prefixes/suffixes, and global prefix/suffix.
         ''' </summary>
+        ''' <param name="list"></param>
         ''' <param name="globalprefix">Global prefix</param>
         ''' <param name="itemprefix">Item prefix</param>
         ''' <param name="itemsuffix">Item suffix</param>
@@ -129,14 +132,14 @@ Namespace Icm.Collections
         '''     [icalvo]    17/03/2006  BUG: first itemprefix and last itemsuffix added
         ''' </history>
         <Extension()>
-        Public Function JoinStr(ByVal l As IEnumerable(Of String), ByVal globalprefix As String, ByVal itemprefix As String, ByVal itemsuffix As String, ByVal globalsuffix As String) As String
-            If l.Count = 0 Then
+        Public Function JoinStr(ByVal list As IEnumerable(Of String), ByVal globalprefix As String, ByVal itemprefix As String, ByVal itemsuffix As String, ByVal globalsuffix As String) As String
+            If list.Count = 0 Then
                 Return ""
             Else
                 Return _
                     globalprefix & _
                     itemprefix & _
-                    l.JoinStr(itemsuffix & itemprefix) & _
+                    list.JoinStr(itemsuffix & itemprefix) & _
                     itemsuffix & _
                     globalsuffix
             End If
@@ -145,6 +148,7 @@ Namespace Icm.Collections
         ''' <summary>
         '''   Extended join, with item prefixes/suffixes, separators and global prefix/suffix.
         ''' </summary>
+        ''' <param name="list"></param>
         ''' <param name="globalprefix">Global prefix</param>
         ''' <param name="itemprefix">Item prefix</param>
         ''' <param name="separator">Separator</param>
@@ -186,11 +190,11 @@ Namespace Icm.Collections
         ''' 	[icalvo]	17/03/2006	Documented
         ''' </history>
         <Extension()>
-        Public Function JoinStr(ByVal l As IEnumerable(Of String), ByVal globalprefix As String, ByVal itemprefix As String, ByVal separator As String, ByVal itemsuffix As String, ByVal globalsuffix As String) As String
-            If l.Count = 0 Then
+        Public Function JoinStr(ByVal list As IEnumerable(Of String), ByVal globalprefix As String, ByVal itemprefix As String, ByVal separator As String, ByVal itemsuffix As String, ByVal globalsuffix As String) As String
+            If list.Count = 0 Then
                 Return ""
             Else
-                Return globalprefix & itemprefix & l.JoinStr(itemsuffix & separator & itemprefix) & itemsuffix & globalsuffix
+                Return globalprefix & itemprefix & list.JoinStr(itemsuffix & separator & itemprefix) & itemsuffix & globalsuffix
             End If
         End Function
 
@@ -199,13 +203,13 @@ Namespace Icm.Collections
         ''' String join extension function for lists of strings. It also
         ''' accepts a mapping function for the strings.
         ''' </summary>
-        ''' <param name="l"></param>
+        ''' <param name="list"></param>
         ''' <param name="sep"></param>
         ''' <param name="conv"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <Extension()>
-        Public Function JoinStr(Of T)(ByVal l As IEnumerable(Of T), ByVal sep As String, Optional ByVal conv As Func(Of T, String) = Nothing) As String
+        Public Function JoinStr(Of T)(ByVal list As IEnumerable(Of T), ByVal sep As String, Optional ByVal conv As Func(Of T, String) = Nothing) As String
             Dim sb As New StringBuilder
             Dim i As Integer = 0
             Dim firstOne As Boolean = True
@@ -213,16 +217,16 @@ Namespace Icm.Collections
                 conv = Function(obj) obj.ToString
             End If
             Do
-                If i > l.Count - 1 Then
+                If i > list.Count - 1 Then
                     Return sb.ToString
-                ElseIf String.IsNullOrEmpty(conv(l(i))) Then
+                ElseIf String.IsNullOrEmpty(conv(list(i))) Then
                     i += 1
                 Else
                     If firstOne Then
-                        sb.Append(conv(l(i)))
+                        sb.Append(conv(list(i)))
                         firstOne = False
                     Else
-                        sb.Append(sep & conv(l(i)))
+                        sb.Append(sep & conv(list(i)))
                     End If
                     i += 1
                 End If
@@ -236,20 +240,20 @@ Namespace Icm.Collections
         ''' String join extension function for collections of strings. It also
         ''' accepts a mapping function for the strings.
         ''' </summary>
-        ''' <param name="l"></param>
+        ''' <param name="list"></param>
         ''' <param name="sep"></param>
         ''' <param name="conv"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <Extension()>
-        Public Function JoinStr(Of T)(ByVal l As ICollection, ByVal sep As String, ByVal conv As Func(Of T, String)) As String
+        Public Function JoinStr(Of T)(ByVal list As ICollection, ByVal sep As String, ByVal conv As Func(Of T, String)) As String
             Dim sb As New StringBuilder
             Dim i As Integer = 0
 
             Dim firstOne As Boolean = True
             Do
-                Dim item = DirectCast(l(i), T)
-                If i > l.Count - 1 Then
+                Dim item = DirectCast(list(i), T)
+                If i > list.Count - 1 Then
                     Return sb.ToString
                 ElseIf String.IsNullOrEmpty(conv(item)) Then
                     i += 1

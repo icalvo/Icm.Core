@@ -32,8 +32,7 @@
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>Icm.Core</AssemblyName>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Icm.pfx</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
@@ -54,7 +53,7 @@
     </SccAuxPath>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <OldToolsVersion>3.5</OldToolsVersion>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <IsWebBootstrapper>true</IsWebBootstrapper>
@@ -142,6 +141,7 @@
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Diagnostics" />
+    <Import Include="System.Globalization" />
     <Import Include="System.Linq" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +151,7 @@
     <Compile Include="Basic types extensions\CurryExtensions.vb" />
     <Compile Include="Basic types extensions\TimespanExtensions.vb" />
     <Compile Include="Collections extensions\JoinStrExtensions.vb" />
+    <Compile Include="Collections extensions\ExtremeElements.vb" />
     <Compile Include="Collections\SortedCollection\General\BaseSortedCollection.vb" />
     <Compile Include="Collections\SortedCollection\General\ISortedCollection.vb" />
     <Compile Include="Collections\SortedCollection\General\ISortedCollectionRepository.vb" />
@@ -247,14 +248,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Collections extensions\IDictionaryExtensions.vb" />
-    <Compile Include="Ieee.vb" />
+    <Compile Include="Math\Ieee.vb" />
     <Compile Include="Collections extensions\ArrayExtensions.vb" />
     <Compile Include="Collections extensions\IListExtensions.vb" />
     <Compile Include="INamed.vb" />
     <Compile Include="DateTimeInterval.vb" />
     <Compile Include="ILocalizationRepository.vb" />
     <Compile Include="Basic types extensions\LongExtensions.vb" />
-    <Compile Include="MailTextWriter.vb" />
+    <Compile Include="IO\MailTextWriter.vb" />
     <Compile Include="Math\LimitedQueue.vb" />
     <Compile Include="Math\MathModule.vb">
       <SubType>Code</SubType>
@@ -270,7 +271,7 @@
     </Compile>
     <Compile Include="Basic types extensions\NullableExtensions.vb" />
     <Compile Include="Ninject\KernelContainer.vb" />
-    <Compile Include="NullWriter.vb" />
+    <Compile Include="IO\NullWriter.vb" />
     <Compile Include="Basic types extensions\ObjectExtensions.vb" />
     <Compile Include="Collections\OrderedDictionary.vb" />
     <Compile Include="Reflection\Reflection.Designer.vb">
@@ -281,9 +282,6 @@
     <Compile Include="Tuples\ModifiableTuplesFactory.vb" />
     <Compile Include="Tuples\Pair.vb" />
     <Compile Include="IO\PathManager.vb" />
-    <Compile Include="Persistance.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Collections\PriorityQueue.vb" />
     <Compile Include="Search and Replace\AutoNumberGenerator.vb" />
     <Compile Include="Search and Replace\PlainStringGenerator.vb" />
@@ -292,8 +290,8 @@
     </Compile>
     <Compile Include="AI Search\ForcedDictionary.vb" />
     <Compile Include="Collections extensions\SortedListExtensions.vb" />
-    <Compile Include="Search and Replace\TextReaderFactory.vb" />
-    <Compile Include="Search and Replace\TextWriterFactory.vb" />
+    <Compile Include="IO\TextReaderFactory.vb" />
+    <Compile Include="IO\TextWriterFactory.vb" />
     <Compile Include="SharedCounter.vb" />
     <Compile Include="Collections\SortedCollection\IPeriodManager.vb" />
     <Compile Include="Collections\SortedCollection\StructKeyStructValue\ISortedCollection.vb" />
@@ -346,6 +344,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Icm.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -25,7 +25,7 @@ Namespace Icm.IO
 
         Public Sub AddHeaderPart(ByVal ParamArray fields() As String)
             For Each field In fields
-                _tw.Write(field & ";")
+                _tw.Write("{0};", field)
             Next
         End Sub
 
@@ -34,25 +34,25 @@ Namespace Icm.IO
         End Sub
 
         Public Sub AddNumber(ByVal val As Integer)
-            _tw.Write(val & ";")
+            _tw.Write("{0};", val)
         End Sub
 
         Public Sub AddNumber(ByVal val As Double)
-            _tw.Write(val & ";")
+            _tw.Write("{0};", val)
         End Sub
 
         Public Sub AddDate(ByVal val As Date)
             If val = Date.MinValue Then
                 AddNull()
             Else
-                _tw.Write(val.ToString("dd/MM/yyyy HH:mm:ss") & ";")
+                _tw.Write("{0:dd/MM/yyyy HH:mm:ss};", val)
             End If
         End Sub
         Public Sub AddDate(ByVal val As Date, format As String)
             If val = Date.MinValue Then
                 AddNull()
             Else
-                _tw.Write(val.ToString(format) & ";")
+                _tw.Write(String.Format(CultureInfo.InvariantCulture, "{{0:{0}}};", format), val)
             End If
         End Sub
         Public Sub AddNull()

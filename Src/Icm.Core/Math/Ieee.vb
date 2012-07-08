@@ -76,11 +76,11 @@ Namespace Extreme.FloatingPoint
     ''' <summary>
     ''' Summary description for Ieee.
     ''' </summary>
-    Public Module FloatingPoint
+    Public Module FloatingPointModule
 #Region "Private instance members"
 
         'Private   ReadOnly NegativeZero As Double = BitConverter.Int64BitsToDouble(8 * &H1000000000000000)
-        Private Const MinDouble As [Double] = 4.94065645841247E-324
+        Private Const MinDouble As [Double] = 4.9406564584124654E-324
 
         Private Const _signMask As Long = -1 - &H7FFFFFFFFFFFFFFF
         Private Const _signClearMask As Long = &H7FFFFFFFFFFFFFFF

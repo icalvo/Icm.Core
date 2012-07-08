@@ -143,7 +143,7 @@ Namespace Icm.Collections
         '''     [icalvo]    07/03/2006  Documented
         ''' </history>
         <Extension()>
-        Public Function Subrange(Of T)(ByVal l As IList(Of T), ByVal start As Integer) As List(Of T)
+        Public Function Subrange(Of T)(ByVal l As IList(Of T), ByVal start As Integer) As IList(Of T)
             Dim r As New List(Of T)
             For i As Integer = start To l.Count - 1
                 r.Add(l(i))

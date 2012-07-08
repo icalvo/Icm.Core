@@ -18,7 +18,7 @@ Namespace Icm.MathTools
             line = sr.ReadLine()
 
             Do Until line Is Nothing
-                If Not line.StartsWith("#") Then
+                If Not line.StartsWith("#", StringComparison.Ordinal) Then
                     If Double.TryParse(line, _
                             NumberStyles.Float, _
                             CultureInfo.InvariantCulture, _
@@ -51,7 +51,7 @@ Namespace Icm.MathTools
             line = sr.ReadLine()
 
             Do Until line Is Nothing
-                If Not line.StartsWith("#") Then
+                If Not line.StartsWith("#", StringComparison.Ordinal) Then
                     lineList.Clear()
                     splitted = line.Split(numbersep)
                     For Each ds As String In splitted

@@ -1,6 +1,6 @@
 Imports Microsoft.CSharp
-Imports System
 Imports System.Text
+Imports System.Globalization
 
 Namespace Icm.Compilation
 
@@ -33,23 +33,23 @@ Namespace Icm.Compilation
 
             ' Imports
             For Each ns In Namespaces
-                sb.AppendLine(String.Format("import {0}", ns))
+                sb.AppendLine(String.Format(CultureInfo.InvariantCulture, "import {0}", ns))
             Next
 
             ' Build a little wrapper code, with our passed in code in the middle 
             sb.AppendLine("namespace dValuate {")
             sb.AppendLine(" class EvalRunTime {")
 
-            sb.AppendLine(String.Format("  {0} EvaluateIt(", GetType(T).Name))
+            sb.AppendLine(String.Format(CultureInfo.InvariantCulture, "  {0} EvaluateIt(", GetType(T).Name))
 
             For Each p In Parameters.Take(Parameters.Count - 1)
-                sb.AppendLine(String.Format("   {1} {0},", p.Name, p.ArgType))
+                sb.AppendLine(String.Format(CultureInfo.InvariantCulture, "   {1} {0},", p.Name, p.ArgType))
             Next
             With Parameters.Last
-                sb.AppendLine(String.Format("   {1} {0}", .Name, .ArgType))
+                sb.AppendLine(String.Format(CultureInfo.InvariantCulture, "   {1} {0}", .Name, .ArgType))
             End With
             sb.AppendLine("  )")
-            sb.AppendLine(String.Format("    return {0};", Code))
+            sb.AppendLine(String.Format(CultureInfo.InvariantCulture, "    return {0};", Code))
             sb.AppendLine("  }")
             sb.AppendLine(" }")
             sb.AppendLine("}")

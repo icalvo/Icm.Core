@@ -1,6 +1,7 @@
 Imports Microsoft.VisualBasic
 Imports System
 Imports System.Text
+Imports System.Globalization
 
 Namespace Icm.Compilation
 
@@ -33,7 +34,7 @@ Namespace Icm.Compilation
 
             ' Add Imports
             For Each ns In Namespaces
-                sb.AppendLine(String.Format("Imports {0}", ns))
+                sb.AppendLine(String.Format(CultureInfo.InvariantCulture, "Imports {0}", ns))
             Next
 
             ' Build a little wrapper code, with our passed in code in the middle 
@@ -43,13 +44,13 @@ Namespace Icm.Compilation
             sb.AppendLine("  Public Function EvaluateIt( _")
 
             For Each p In Parameters.Take(Parameters.Count - 1)
-                sb.AppendLine(String.Format("   ByVal {0} As {1}, _", p.Name, p.ArgType))
+                sb.AppendLine(String.Format(CultureInfo.InvariantCulture, "   ByVal {0} As {1}, _", p.Name, p.ArgType))
             Next
             With Parameters.Last
-                sb.AppendLine(String.Format("   ByVal {0} As {1} _", .Name, .ArgType))
+                sb.AppendLine(String.Format(CultureInfo.InvariantCulture, "   ByVal {0} As {1} _", .Name, .ArgType))
             End With
-            sb.AppendLine(String.Format("  ) As {0}", GetType(T).Name))
-            sb.AppendLine(String.Format("    Return {0}", Code))
+            sb.AppendLine(String.Format(CultureInfo.InvariantCulture, "  ) As {0}", GetType(T).Name))
+            sb.AppendLine(String.Format(CultureInfo.InvariantCulture, "    Return {0}", Code))
             sb.AppendLine("  End Function")
             sb.AppendLine(" End Class ")
             sb.AppendLine("End Namespace")

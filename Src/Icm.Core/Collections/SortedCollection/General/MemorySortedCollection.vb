@@ -44,11 +44,11 @@ Namespace Icm.Collections.Generic.General
             Return sl_.KeyOrPrev(key).ToNullable2
         End Function
 
-        Public Overrides Function [Next](ByVal key As TKey) As Nullable2(Of TKey)
+        Public Overrides Function NextKey(ByVal key As TKey) As Nullable2(Of TKey)
             Return sl_.NextKey(key).ToNullable2
         End Function
 
-        Public Overrides Function Previous(ByVal key As TKey) As Nullable2(Of TKey)
+        Public Overrides Function PreviousKey(ByVal key As TKey) As Nullable2(Of TKey)
             Return sl_.PrevKey(key).ToNullable2
         End Function
 

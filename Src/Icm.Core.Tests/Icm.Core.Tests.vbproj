@@ -113,7 +113,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Nullable2\Nullable2Test.vb" />
-    <Compile Include="PersistentTest.vb" />
     <Compile Include="Reflection\MethodInfoExtensionsTest.vb" />
     <Compile Include="Reflection\ObjectReflectionExtensionsTest.vb" />
     <Compile Include="Search and Replace\PlainStringGeneratorTest.vb" />

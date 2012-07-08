@@ -17,7 +17,7 @@ Namespace Icm.IO
         Inherits TextWriter
 
         Protected Sub New()
-
+            MyBase.New(CultureInfo.InvariantCulture)
         End Sub
 
         Protected Sub New(ByVal formatProvider As IFormatProvider)

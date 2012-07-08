@@ -5,17 +5,17 @@ Namespace Icm.IO
     Public Class EnhancedFileSystemWatcher
         Inherits FileSystemWatcher
 
-        Protected Property ÚltimoBorrado() As FileSystemEventArgs
+        Protected Property LastDeletion() As FileSystemEventArgs
 
-        Protected Property FechaÚltimoBorrado() As Date
+        Protected Property LastDeletionDate() As Date
 
         Protected Property Ahora() As Date
 
-        Public Event Creado(ByVal sender As Object, ByVal e As FileSystemEventArgs)
-        Public Event Modificado(ByVal sender As Object, ByVal e As FileSystemEventArgs)
-        Public Event Borrado(ByVal sender As Object, ByVal e As FileSystemEventArgs)
-        Public Event Renombrado(ByVal sender As Object, ByVal e As RenamedEventArgs)
-        Public Event Movido(ByVal sender As Object, ByVal e As MovementEventArgs)
+        Public Event Creado As EventHandler(Of FileSystemEventArgs)
+        Public Event Modificado As EventHandler(Of FileSystemEventArgs)
+        Public Event Borrado As EventHandler(Of FileSystemEventArgs)
+        Public Event Renombrado As EventHandler(Of RenamedEventArgs)
+        Public Event Movido As EventHandler(Of MovementEventArgs)
 
         Public Sub New(ByVal path As String)
             MyBase.New(path)
@@ -43,9 +43,9 @@ Namespace Icm.IO
         Private ReadOnly tBorrado_ As System.Timers.Timer
 
         Private Sub ChequearÚltimoBorrado(ByVal s As Object, ByVal e As System.Timers.ElapsedEventArgs)
-            If Not ÚltimoBorrado Is Nothing Then
-                RaiseEvent Borrado(Me, ÚltimoBorrado)
-                ÚltimoBorrado = Nothing
+            If Not LastDeletion Is Nothing Then
+                RaiseEvent Borrado(Me, LastDeletion)
+                LastDeletion = Nothing
             End If
         End Sub
 
@@ -56,26 +56,26 @@ Namespace Icm.IO
                     ' Si tenemos otro borrado deberemos lanzar
                     ' el evento del mismo (aunque eso suponga perder
                     ' un posible movimiento).
-                    If Not ÚltimoBorrado Is Nothing Then
-                        RaiseEvent Borrado(Me, ÚltimoBorrado)
+                    If Not LastDeletion Is Nothing Then
+                        RaiseEvent Borrado(Me, LastDeletion)
                     End If
                     ' Ahora anotamos el evento de borrado actual
-                    ÚltimoBorrado = e
-                    FechaÚltimoBorrado = Now
+                    LastDeletion = e
+                    LastDeletionDate = Now
                     ' Ponemos en marcha el temporizador. Si se trata
                     ' realmente de un borrado, se disparará.
                     tBorrado_.Start()
                 Case WatcherChangeTypes.Created
                     tBorrado_.Stop()
-                    If Ahora.Subtract(FechaÚltimoBorrado).Milliseconds < 10 Then
-                        If Not ÚltimoBorrado Is Nothing Then
-                            RaiseEvent Movido(Me, New MovementEventArgs(ÚltimoBorrado.FullPath, e.FullPath))
+                    If Ahora.Subtract(LastDeletionDate).Milliseconds < 10 Then
+                        If Not LastDeletion Is Nothing Then
+                            RaiseEvent Movido(Me, New MovementEventArgs(LastDeletion.FullPath, e.FullPath))
                         End If
-                        ÚltimoBorrado = Nothing
+                        LastDeletion = Nothing
                     Else
-                        If Not ÚltimoBorrado Is Nothing Then
-                            RaiseEvent Borrado(Me, ÚltimoBorrado)
-                            ÚltimoBorrado = Nothing
+                        If Not LastDeletion Is Nothing Then
+                            RaiseEvent Borrado(Me, LastDeletion)
+                            LastDeletion = Nothing
                         End If
                         RaiseEvent Creado(Me, e)
                     End If

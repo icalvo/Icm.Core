@@ -148,7 +148,7 @@ Namespace Icm.Collections
         ''' entities that carry the minimum value, along with the minimum value.</para>
         ''' </remarks>
         <Extension()>
-        Public Function MinListPair(Of T)(ByVal list As IEnumerable(Of T), ByVal eval As Func(Of T, Integer)) As Pair(Of List(Of T), Integer)
+        Public Function MinListPair(Of T)(ByVal list As IEnumerable(Of T), ByVal eval As Func(Of T, Integer)) As ExtremeElements(Of T, Integer)
             Dim minValue As Integer = Integer.MaxValue
             Dim resultList As New List(Of T)
             For Each el In list
@@ -162,7 +162,7 @@ Namespace Icm.Collections
                 End If
             Next
 
-            Return New Pair(Of List(Of T), Integer)(resultList, minValue)
+            Return New ExtremeElements(Of T, Integer)(resultList, minValue)
         End Function
 
         ''' <summary>
@@ -204,7 +204,7 @@ Namespace Icm.Collections
         ''' <param name="eval"></param>
         ''' <returns></returns>
         ''' <remarks>
-        ''' <para>The framework overloads of the function Max return the maximum value but not
+        ''' <para>The .NET Framework overloads of the function Max return the maximum value but not
         ''' the entity or entities that had the maximum. This function return the first
         ''' entity that carries the maximum value, along with the maximum value.</para>
         ''' <para>The implementation is a little less efficient than MaxEntity, because of
@@ -249,12 +249,12 @@ Namespace Icm.Collections
         ''' <param name="eval"></param>
         ''' <returns></returns>
         ''' <remarks>
-        ''' <para>The framework overloads of the function Max return the maximum value but not
+        ''' <para>The .NET Framework overloads of the function Max return the maximum value but not
         ''' the entity or entities that had the maximum. This function return all the
         ''' entities that carries the maximum value, along with the maximum value.</para>
         ''' </remarks>
         <Extension()>
-        Public Function MaxListPair(Of T)(ByVal list As IEnumerable(Of T), ByVal eval As Func(Of T, Integer)) As Pair(Of List(Of T), Integer)
+        Public Function MaxListPair(Of T)(ByVal list As IEnumerable(Of T), ByVal eval As Func(Of T, Integer)) As ExtremeElements(Of T, Integer)
             Dim maxValue As Integer = Integer.MinValue
             Dim resultList As New List(Of T)
             For Each el In list
@@ -268,7 +268,7 @@ Namespace Icm.Collections
                 End If
             Next
 
-            Return New Pair(Of List(Of T), Integer)(resultList, maxValue)
+            Return New ExtremeElements(Of T, Integer)(resultList, maxValue)
         End Function
 
     End Module
