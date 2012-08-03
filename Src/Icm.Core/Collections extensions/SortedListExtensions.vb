@@ -7,14 +7,14 @@ Namespace Icm.Collections.Generic
         ''' <summary>
         ''' Enhanced "Item" method that prints the key in the exception message.
         ''' </summary>
-        ''' <typeparam name="K"></typeparam>
-        ''' <typeparam name="V"></typeparam>
+        ''' <typeparam name="TKey"></typeparam>
+        ''' <typeparam name="TValue"></typeparam>
         ''' <param name="dic"></param>
         ''' <param name="key"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <Extension()>
-        Public Function It(Of K, V)(ByVal dic As Dictionary(Of K, V), ByVal key As K) As V
+        Public Function It(Of TKey, TValue)(ByVal dic As Dictionary(Of TKey, TValue), ByVal key As TKey) As TValue
             If dic.ContainsKey(key) Then
                 Return dic.Item(key)
             Else
@@ -26,14 +26,14 @@ Namespace Icm.Collections.Generic
         '''  Returns the key or, if the key does not exist, the index in which the key would be inserted
         ''' if you add it to the list. It can also be interpreted as the index of the next greater key on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <returns></returns>
         ''' <remarks>Result will be sl.Count if the key is greater than the greatest key of the list.</remarks>
         <Extension()>
-        Public Function KeyOrNext(Of K As Structure, V)(ByVal sl As SortedList(Of K, V), ByVal key As K) As K?
+        Public Function KeyOrNext(Of TKey As Structure, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey) As TKey?
             Dim index As Integer
 
             index = sl.IndexOfKeyOrNext(key)
@@ -49,14 +49,14 @@ Namespace Icm.Collections.Generic
         ''' Returns the next key. Never returns the same key if it already exists. Returns Nothing if there
         ''' isn't next key.
         ''' </summary>
-        ''' <typeparam name="K"></typeparam>
-        ''' <typeparam name="V"></typeparam>
+        ''' <typeparam name="TKey"></typeparam>
+        ''' <typeparam name="TValue"></typeparam>
         ''' <param name="sl"></param>
         ''' <param name="key"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <Extension()>
-        Public Function NextKey(Of K As Structure, V)(ByVal sl As SortedList(Of K, V), ByVal key As K) As K?
+        Public Function NextKey(Of TKey As Structure, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey) As TKey?
             Dim index As Integer
             index = sl.IndexOfNextKey(key)
 
@@ -68,7 +68,7 @@ Namespace Icm.Collections.Generic
         End Function
 
         <Extension()>
-        Public Function NextKey2(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K) As Nullable2(Of K)
+        Public Function NextKey2(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey) As Nullable2(Of TKey)
             Dim index As Integer
             index = sl.IndexOfNextKey(key)
 
@@ -83,14 +83,14 @@ Namespace Icm.Collections.Generic
         ''' Returns the previous key. Never returns the same key if it already exists. Returns Nothing if there
         ''' isn't previous key.
         ''' </summary>
-        ''' <typeparam name="K"></typeparam>
-        ''' <typeparam name="V"></typeparam>
+        ''' <typeparam name="TKey"></typeparam>
+        ''' <typeparam name="TValue"></typeparam>
         ''' <param name="sl"></param>
         ''' <param name="key"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <Extension()>
-        Public Function PrevKey(Of K As Structure, V)(ByVal sl As SortedList(Of K, V), ByVal key As K) As K?
+        Public Function PrevKey(Of TKey As Structure, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey) As TKey?
             Dim index As Integer
             index = sl.IndexOfPrevKey(key)
 
@@ -105,14 +105,14 @@ Namespace Icm.Collections.Generic
         ''' Returns the previous key, but NOT the same key if it already exists. Returns Nothing if there
         ''' isn't previous key. Returns a <see cref="Nullable2(Of T)"></see>.
         ''' </summary>
-        ''' <typeparam name="K"></typeparam>
-        ''' <typeparam name="V"></typeparam>
+        ''' <typeparam name="TKey"></typeparam>
+        ''' <typeparam name="TValue"></typeparam>
         ''' <param name="sl"></param>
         ''' <param name="key"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <Extension()>
-        Public Function PrevKey2(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K) As Nullable2(Of K)
+        Public Function PrevKey2(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey) As Nullable2(Of TKey)
             Dim index As Integer
             index = sl.IndexOfPrevKey(key)
 
@@ -126,14 +126,14 @@ Namespace Icm.Collections.Generic
         ''' <summary>
         '''  Returns the key or, if the key does not exist, the index of the former lesser key on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <returns></returns>
         ''' <remarks>Result will be -1 if the key is less than the least key of the list.</remarks>
         <Extension()>
-        Public Function KeyOrPrev(Of K As Structure, V)(ByVal sl As SortedList(Of K, V), ByVal key As K) As K?
+        Public Function KeyOrPrev(Of TKey As Structure, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey) As TKey?
             Dim index As Integer
 
             index = sl.IndexOfKeyOrPrev(key)
@@ -149,14 +149,14 @@ Namespace Icm.Collections.Generic
         '''  Returns the index of the key or, if the key does not exist, the index in which the key would be inserted
         ''' if you add it to the list. It can also be interpreted as the index of the next greater or equal key on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <returns></returns>
         ''' <remarks>Result will be sl.Count if the key is greater than the greatest key of the list.</remarks>
         <Extension()>
-        Public Function IndexOfKeyOrNext(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K) As Integer
+        Public Function IndexOfKeyOrNext(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey) As Integer
             Dim index As Integer
 
             index = sl.Keys.Search(key)
@@ -172,14 +172,14 @@ Namespace Icm.Collections.Generic
         ''' <summary>
         '''  Returns the index of the next key. It can also be interpreted as the index of the next greater key on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <returns></returns>
         ''' <remarks>Result will be sl.Count if the key is greater than the greatest key of the list.</remarks>
         <Extension()>
-        Public Function IndexOfNextKey(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K) As Integer
+        Public Function IndexOfNextKey(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey) As Integer
             Dim index As Integer
 
             index = sl.Keys.Search(key)
@@ -194,14 +194,14 @@ Namespace Icm.Collections.Generic
         ''' <summary>
         '''  Returns the index of the key or, if the key does not exist, the index of the former lesser key on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <returns></returns>
         ''' <remarks>Result will be -1 if the key is less than the least key of the list.</remarks>
         <Extension()>
-        Public Function IndexOfKeyOrPrev(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K) As Integer
+        Public Function IndexOfKeyOrPrev(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey) As Integer
             Dim index As Integer
 
             index = sl.Keys.Search(key)
@@ -216,14 +216,14 @@ Namespace Icm.Collections.Generic
         ''' <summary>
         '''  Returns the index of the previous key. It can also be interpreted as the index of the former lesser key on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <returns></returns>
         ''' <remarks>Result will be -1 if the key is less than the least key of the list.</remarks>
         <Extension()>
-        Public Function IndexOfPrevKey(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K) As Integer
+        Public Function IndexOfPrevKey(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey) As Integer
             Dim index As Integer
 
             index = sl.Keys.Search(key)
@@ -238,14 +238,14 @@ Namespace Icm.Collections.Generic
         ''' <summary>
         '''  Returns the value at the key or, if the key does not exist, the value of the former element on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <returns></returns>
         ''' <remarks>Result will be Nothing if the key is less than the least key of the list.</remarks>
         <Extension()>
-        Public Function ValueOfKeyOrPrev(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K) As V
+        Public Function ValueOfKeyOrPrev(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey) As TValue
             Dim index As Integer
 
             index = sl.IndexOfKeyOrPrev(key)
@@ -260,14 +260,14 @@ Namespace Icm.Collections.Generic
         ''' <summary>
         '''  Returns the value at the key or, if the key does not exist, the value of the next element on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <returns></returns>
         ''' <remarks>Result will be null (Nothing) if the key is greater than the greatest key of the list.</remarks>
         <Extension()>
-        Public Function ValueOfKeyOrNext(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K) As V
+        Public Function ValueOfKeyOrNext(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey) As TValue
             Dim index As Integer
 
             index = sl.IndexOfKeyOrNext(key)
@@ -283,14 +283,14 @@ Namespace Icm.Collections.Generic
         '''  Returns the key or, if the key does not exist, the index in which the key would be inserted
         ''' if you add it to the list. It can also be interpreted as the index of the next greater key on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <returns></returns>
         ''' <remarks>Result will be sl.Count if the key is greater than the greatest key of the list.</remarks>
         <Extension()>
-        Public Function KeyOrNext(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K, ByVal cond As Func(Of K, V, Boolean)) As K
+        Public Function KeyOrNext(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey, ByVal cond As Func(Of TKey, TValue, Boolean)) As TKey
             Dim index As Integer
 
             index = sl.IndexOfKeyOrNext(key)
@@ -308,14 +308,14 @@ Namespace Icm.Collections.Generic
         ''' <summary>
         '''  Returns the key or, if the key does not exist, the index of the former lesser key on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <returns></returns>
         ''' <remarks>Result will be -1 if the key is less than the least key of the list.</remarks>
         <Extension()>
-        Public Function KeyOrPrev(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K, ByVal cond As Func(Of K, V, Boolean)) As K
+        Public Function KeyOrPrev(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey, ByVal cond As Func(Of TKey, TValue, Boolean)) As TKey
             Dim index As Integer
 
             index = sl.IndexOfKeyOrPrev(key)
@@ -334,14 +334,14 @@ Namespace Icm.Collections.Generic
         '''  Returns the index of the key or, if the key does not exist, the index in which the key would be inserted
         ''' if you add it to the list. It can also be interpreted as the index of the next greater key on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <returns></returns>
         ''' <remarks>Result will be sl.Count if the key is greater than the greatest key of the list.</remarks>
         <Extension()>
-        Public Function IndexOfKeyOrNext(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K, ByVal cond As Func(Of K, V, Boolean)) As Integer
+        Public Function IndexOfKeyOrNext(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey, ByVal cond As Func(Of TKey, TValue, Boolean)) As Integer
             Dim index As Integer
 
             index = sl.IndexOfKeyOrNext(key)
@@ -359,14 +359,14 @@ Namespace Icm.Collections.Generic
         ''' <summary>
         '''  Returns the index of the key or, if the key does not exist, the index of the former lesser key on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <returns></returns>
         ''' <remarks>Result will be -1 if the key is less than the least key of the list.</remarks>
         <Extension()>
-        Public Function IndexOfKeyOrPrev(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K, ByVal cond As Func(Of K, V, Boolean)) As Integer
+        Public Function IndexOfKeyOrPrev(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey, ByVal cond As Func(Of TKey, TValue, Boolean)) As Integer
             Dim index As Integer
 
             index = sl.IndexOfKeyOrPrev(key)
@@ -384,15 +384,15 @@ Namespace Icm.Collections.Generic
         ''' <summary>
         '''  Returns the value at the key or, if the key does not exist, the value of the former element on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <param name="cond"></param>
         ''' <returns></returns>
         ''' <remarks>Result will be Nothing if the key is less than the least key of the list.</remarks>
         <Extension()>
-        Public Function ValueOfKeyOrPrev(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K, ByVal cond As Func(Of K, V, Boolean)) As V
+        Public Function ValueOfKeyOrPrev(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey, ByVal cond As Func(Of TKey, TValue, Boolean)) As TValue
             Dim index As Integer
 
             index = sl.IndexOfKeyOrPrev(key)
@@ -410,15 +410,15 @@ Namespace Icm.Collections.Generic
         ''' <summary>
         '''  Returns the value at the key or, if the key does not exist, the value of the next element on the list.
         ''' </summary>
-        ''' <typeparam name="K">Type of keys</typeparam>
-        ''' <typeparam name="V">Type of values</typeparam>
+        ''' <typeparam name="TKey">Type of keys</typeparam>
+        ''' <typeparam name="TValue">Type of values</typeparam>
         ''' <param name="sl">Sorted list</param>
         ''' <param name="key">Searched key</param>
         ''' <param name="cond"></param>
         ''' <returns></returns>
         ''' <remarks>Result will be null (Nothing) if the key is greater than the greatest key of the list.</remarks>
         <Extension()>
-        Public Function ValueOfKeyOrNext(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K, ByVal cond As Func(Of K, V, Boolean)) As V
+        Public Function ValueOfKeyOrNext(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey, ByVal cond As Func(Of TKey, TValue, Boolean)) As TValue
             Dim index As Integer
 
             index = sl.IndexOfKeyOrNext(key)
@@ -436,8 +436,8 @@ Namespace Icm.Collections.Generic
         ''' <summary>
         ''' Adds or modifies a value associated with a key.
         ''' </summary>
-        ''' <typeparam name="K"></typeparam>
-        ''' <typeparam name="V"></typeparam>
+        ''' <typeparam name="TKey"></typeparam>
+        ''' <typeparam name="TValue"></typeparam>
         ''' <param name="sl"></param>
         ''' <param name="key"></param>
         ''' <param name="value"></param>
@@ -447,7 +447,7 @@ Namespace Icm.Collections.Generic
         ''' semantics.</para>
         ''' </remarks>
         <Extension()>
-        Public Sub ForceAdd(Of K, V)(ByVal sl As SortedList(Of K, V), ByVal key As K, ByVal value As V)
+        Public Sub ForceAdd(Of TKey, TValue)(ByVal sl As SortedList(Of TKey, TValue), ByVal key As TKey, ByVal value As TValue)
             If Not sl.ContainsKey(key) Then
                 sl.Add(key, value)
             Else

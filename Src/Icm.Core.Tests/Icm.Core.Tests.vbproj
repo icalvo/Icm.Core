@@ -93,6 +93,7 @@
     <Compile Include="Collections\PriorityQueueTest.vb" />
     <Compile Include="Collections\RepositorySortedCollectionTest.vb" />
     <Compile Include="Collections\RepositoryTest.vb" />
+    <Compile Include="Collections\SortedCollection\BaseSortedCollectionTest.vb" />
     <Compile Include="Compilation\CompiledFunctionTest.vb" />
     <Compile Include="Compilation\CompileError.vb" />
     <Compile Include="CompositeWriterTest.vb" />

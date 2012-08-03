@@ -344,6 +344,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Icm.Core.nuspec" />
     <None Include="Icm.pfx" />
     <None Include="packages.config" />
   </ItemGroup>

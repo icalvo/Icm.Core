@@ -1,5 +1,5 @@
 Namespace Icm
-    Class LongTotalOrder
+    Public Class LongTotalOrder
         Inherits BaseTotalOrder(Of Long)
 
         Public Overrides Function Least() As Long
