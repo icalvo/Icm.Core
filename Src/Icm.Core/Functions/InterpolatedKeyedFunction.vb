@@ -205,30 +205,23 @@ Namespace Icm.Functions
         ''' </summary>
         ''' <param name="rangeStart"></param>
         ''' <param name="rangeEnd"></param>
-        ''' <param name="tumbral"></param>
-        ''' <param name="fnUmbral"></param>
+        ''' <param name="thrType"></param>
+        ''' <param name="fnThreshold"></param>
         ''' <returns></returns>
         ''' <remarks>La implementación actual no es del todo exacta puesto que sólo calcula el umbral en los
         ''' extremos de la línea temporal.</remarks>
-        Public Overrides Function FstXYu(ByVal rangeStart As TX, ByVal rangeEnd As TX, ByVal tumbral As ThresholdType, ByVal fnUmbral As Func(Of TX, TY)) As FunctionPoint(Of TX, TY)
+        Public Overrides Function FstXYu(ByVal rangeStart As TX, ByVal rangeEnd As TX, ByVal thrType As ThresholdType, ByVal fnThreshold As Func(Of TX, TY)) As FunctionPoint(Of TX, TY)
             Dim it As New RangeIterator(Of TX, TY)(Me, rangeStart, rangeEnd, includeExtremes:=True)
             Dim result As FunctionPoint(Of TX, TY) = Nothing
 
             For Each pp In it
                 Dim U1, U2 As TY
-                U1 = fnUmbral(pp.X1)
-                U2 = fnUmbral(pp.X2)
-                If Compare(pp.Y1, tumbral, U1) Then
+                U1 = fnThreshold(pp.X1)
+                U2 = fnThreshold(pp.X2)
+                If Compare(pp.Y1, thrType, U1) Then
                     result = pp.P1
                     Exit For
-                ElseIf Compare(pp.Y2, tumbral, U2) Then
-                    ' Hace falta
-
-                    Dim baseX As TX
-                    Dim baseY As TY
-                    baseX = pp.X1
-                    baseY = pp.Y1
-
+                ElseIf Compare(pp.Y2, thrType, U2) Then
                     Dim cruceEnX As TX
 
                     cruceEnX = Long2X(CruceX( _

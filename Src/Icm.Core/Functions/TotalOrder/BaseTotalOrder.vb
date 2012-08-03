@@ -20,9 +20,12 @@ Namespace Icm
             Dim result As T
 
             Do
-                result = Long2T(T2Long(t) + 1)
+                If val = Long.MaxValue Then
+                    Throw New ArgumentOutOfRangeException("t")
+                End If
                 val += 1
-            Loop Until t.CompareTo(result) > 0
+                result = Long2T(val)
+            Loop Until t.CompareTo(result) < 0
 
             Return result
         End Function
@@ -32,8 +35,11 @@ Namespace Icm
             Dim result As T
 
             Do
-                result = Long2T(T2Long(t) + 1)
+                If val = Long.MinValue Then
+                    Throw New ArgumentOutOfRangeException("t")
+                End If
                 val -= 1
+                result = Long2T(val)
             Loop Until t.CompareTo(result) > 0
 
             Return result

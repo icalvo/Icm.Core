@@ -10,12 +10,12 @@
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <remarks>
-    ''' Condiciones de validez:
+    ''' Invariant:
     ''' 
-    ''' Para todo t EN T / t LE Sup()
-    ''' Para todo t EN T / Ínf() LE t
-    ''' Para todo t1,t2 EN T / t1 LE t2 EQV T2Double(t1) LE T2Double(t2)
-    ''' Para todo t EN T / Double2T(T2Double(t)) = t
+    ''' For each t IN T / t LE Greatest()
+    ''' For each t IN T / Least() LE t
+    ''' For each t1,t2 IN T / t1 LE t2 EQV T2Double(t1) LE T2Double(t2)
+    ''' For each t IN T / Double2T(T2Double(t)) = t
     ''' </remarks>
     Public Interface ITotalOrder(Of T As IComparable(Of T))
         Inherits IComparer(Of T)
