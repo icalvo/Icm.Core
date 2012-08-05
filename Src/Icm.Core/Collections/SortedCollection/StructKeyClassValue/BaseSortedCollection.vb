@@ -164,11 +164,11 @@ Namespace Icm.Collections.Generic.StructKeyClassValue
 
 
         ''' <summary>
-        ''' Devuelve una representación de cadena de un intervalo de la línea de tiempo.
-        ''' Para imprimir los elementos se recurrirá a la función <see cref="ToString"></see>.
+        ''' String representation of an interval of the sorted collection.
+        ''' For printing values, ToString will be used.
         ''' </summary>
-        ''' <param name="f1">Fecha inicial.</param>
-        ''' <param name="f2">Fecha final.</param>
+        ''' <param name="f1">Initial key.</param>
+        ''' <param name="f2">Final key.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overridable Overloads Function ToString(ByVal f1 As TKey, ByVal f2 As TKey) As String Implements ISortedCollection(Of TKey, TValue).ToString
@@ -176,14 +176,13 @@ Namespace Icm.Collections.Generic.StructKeyClassValue
 
             For Each element In PointEnumerable(f1, f2)
                 If element.Item2 Is Nothing Then
-                    result.AppendFormat("NC {0:yyyy-MM-dd HH:mm:ss} ---" & vbCrLf, f1)
+                    result.AppendFormat("NC {0} ---" & vbCrLf, element.Item1)
                 Else
-                    result.AppendFormat("-> {0:yyyy-MM-dd HH:mm:ss} {1}" & vbCrLf, element.Item1, element.Item2.ToString)
+                    result.AppendFormat("-> {0} {1}" & vbCrLf, element.Item1, element.Item2.ToString)
                 End If
             Next
 
             Return result.ToString
-
         End Function
 
 
@@ -204,19 +203,19 @@ Namespace Icm.Collections.Generic.StructKeyClassValue
                   New RangePointIterator(Me, intStart, intEnd))
         End Function
 
-        Public Function PointEnumerable(ByVal intStart As TKey?, ByVal intEnd As TKey?) As IEnumerable(Of System.Tuple(Of TKey, TValue)) Implements ISortedCollection(Of TKey, TValue).PointEnumerable
-            Return PointEnumerable(intStart, intEnd)
+        Public Function PointEnumerable(ByVal intStart As TKey?, ByVal intEnd As TKey?) As IEnumerable(Of Tuple(Of TKey, TValue)) Implements ISortedCollection(Of TKey, TValue).PointEnumerable
+            Return New RangePointIterator(Me, intStart, intEnd)
         End Function
 
-        Public Function PointEnumerable(ByVal intf As Vector2(Of TKey?)) As IEnumerable(Of System.Tuple(Of TKey, TValue)) Implements ISortedCollection(Of TKey, TValue).PointEnumerable
+        Public Function PointEnumerable(ByVal intf As Vector2(Of TKey?)) As IEnumerable(Of Tuple(Of TKey, TValue)) Implements ISortedCollection(Of TKey, TValue).PointEnumerable
             Return PointEnumerable(intf.Item1, intf.Item2)
         End Function
 
-        Public Function IntervalEnumerable() As System.Collections.Generic.IEnumerable(Of Vector2(Of System.Tuple(Of TKey, TValue))) Implements ISortedCollection(Of TKey, TValue).IntervalEnumerable
+        Public Function IntervalEnumerable() As IEnumerable(Of Vector2(Of Tuple(Of TKey, TValue))) Implements ISortedCollection(Of TKey, TValue).IntervalEnumerable
             Return IntervalEnumerable(Nothing, Nothing)
         End Function
 
-        Public Function PointEnumerable() As System.Collections.Generic.IEnumerable(Of System.Tuple(Of TKey, TValue)) Implements ISortedCollection(Of TKey, TValue).PointEnumerable
+        Public Function PointEnumerable() As IEnumerable(Of Tuple(Of TKey, TValue)) Implements ISortedCollection(Of TKey, TValue).PointEnumerable
             Return PointEnumerable(Nothing, Nothing)
         End Function
     End Class

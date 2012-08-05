@@ -158,23 +158,22 @@ Namespace Icm.Collections.Generic.General
             Return ToString(TotalOrder.Least, TotalOrder.Greatest)
         End Function
 
-
         ''' <summary>
-        ''' Devuelve una representación de cadena de un intervalo de la línea de tiempo.
-        ''' Para imprimir los elementos se recurrirá a la función <see cref="ToString"></see>.
+        ''' String representation of an interval of the sorted collection.
+        ''' For printing values, ToString will be used.
         ''' </summary>
-        ''' <param name="fromKey">Fecha inicial.</param>
-        ''' <param name="toKey">Fecha final.</param>
+        ''' <param name="f1">Initial key.</param>
+        ''' <param name="f2">Final key.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overridable Overloads Function ToString(ByVal fromKey As TKey, ByVal toKey As TKey) As String Implements ISortedCollection(Of TKey, TValue).ToString
+        Public Overridable Overloads Function ToString(ByVal f1 As TKey, ByVal f2 As TKey) As String Implements ISortedCollection(Of TKey, TValue).ToString
             Dim result As New System.Text.StringBuilder
 
-            For Each element In PointEnumerable(fromKey, toKey)
+            For Each element In PointEnumerable(f1, f2)
                 If element.Item2.HasValue Then
-                    result.AppendFormat("-> {0:yyyy-MM-dd HH:mm:ss} {1}" & vbCrLf, element.Item1, element.Item2.Value.ToString)
+                    result.AppendFormat("-> {0} {1}" & vbCrLf, element.Item1, element.Item2.ToString)
                 Else
-                    result.AppendFormat("NC {0:yyyy-MM-dd HH:mm:ss} ---" & vbCrLf, fromKey)
+                    result.AppendFormat("NC {0} ---" & vbCrLf, element.Item1)
                 End If
             Next
 

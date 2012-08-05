@@ -159,27 +159,26 @@ Namespace Icm.Collections.Generic.StructKeyStructValue
 
 
         ''' <summary>
-        ''' Devuelve una representación de cadena de un intervalo de la línea de tiempo.
-        ''' Para imprimir los elementos se recurrirá a la función <see cref="ToString"></see>.
+        ''' String representation of an interval of the sorted collection.
+        ''' For printing values, ToString will be used.
         ''' </summary>
-        ''' <param name="f1">Fecha inicial.</param>
-        ''' <param name="f2">Fecha final.</param>
+        ''' <param name="f1">Initial key.</param>
+        ''' <param name="f2">Final key.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overridable Overloads Function ToString(ByVal f1 As TKey, ByVal f2 As TKey) As String Implements ISortedCollection(Of TKey, TValue).ToString
             Dim result As New System.Text.StringBuilder
 
             For Each element In PointEnumerable(f1, f2)
-                If element.Item2.HasValue Then
-                    result.AppendFormat("-> {0:yyyy-MM-dd HH:mm:ss} {1}" & vbCrLf, element.Item1, element.Item2.Value.ToString)
+                If element.Item2 Is Nothing Then
+                    result.AppendFormat("NC {0} ---" & vbCrLf, element.Item1)
                 Else
-                    result.AppendFormat("NC {0:yyyy-MM-dd HH:mm:ss} ---" & vbCrLf, f1)
+                    result.AppendFormat("-> {0} {1}" & vbCrLf, element.Item1, element.Item2.ToString)
                 End If
             Next
 
             Return result.ToString
         End Function
-
 
         Public MustOverride Function KeyOrNext(ByVal key As TKey) As TKey? Implements ISortedCollection(Of TKey, TValue).KeyOrNext
 
