@@ -16,17 +16,17 @@ Namespace Icm.Collections.Generic.StructKeyClassValue
         Private Class RangePointIterator
             Implements IEnumerator(Of Tuple(Of TKey, TValue)), IEnumerable(Of Tuple(Of TKey, TValue))
 
-            Private f_ As ISortedCollection(Of TKey, TValue)
-            Private rangeStart_ As TKey
-            Private rangeEnd_ As TKey
-            Private current_ As Tuple(Of TKey, TValue)
+            Private _collection As ISortedCollection(Of TKey, TValue)
+            Private _rangeStart As TKey
+            Private _rangeEnd As TKey
+            Private _current As Tuple(Of TKey, TValue)
 
             Private idx_ As Date
 
             Public Sub New(ByVal f As ISortedCollection(Of TKey, TValue), ByVal rangeStart As TKey?, ByVal rangeEnd As TKey?)
-                rangeStart_ = f.TotalOrder.LstIfNull(rangeStart)
-                rangeEnd_ = f.TotalOrder.GstIfNull(rangeEnd)
-                f_ = f
+                _rangeStart = f.TotalOrder.LstIfNull(rangeStart)
+                _rangeEnd = f.TotalOrder.GstIfNull(rangeEnd)
+                _collection = f
             End Sub
 
             Public Sub New(ByVal f As ISortedCollection(Of TKey, TValue), ByVal intf As Vector2(Of TKey?))
@@ -35,42 +35,42 @@ Namespace Icm.Collections.Generic.StructKeyClassValue
 
             Public ReadOnly Property Current() As Tuple(Of TKey, TValue) Implements IEnumerator(Of Tuple(Of TKey, TValue)).Current
                 Get
-                    If current_ Is Nothing Then
+                    If _current Is Nothing Then
                         Throw New InvalidOperationException("Enumerator has not been reset")
                     End If
-                    Return current_
+                    Return _current
                 End Get
             End Property
 
             Public ReadOnly Property Current1() As Object Implements System.Collections.IEnumerator.Current
                 Get
-                    If current_ Is Nothing Then
+                    If _current Is Nothing Then
                         Throw New InvalidOperationException("Enumerator has not been reset")
                     End If
-                    Return current_
+                    Return _current
                 End Get
             End Property
 
             Public Function MoveNext() As Boolean Implements System.Collections.IEnumerator.MoveNext
-                If current_ Is Nothing Then
-                    current_ = Pair(rangeStart_)
-                ElseIf current_.Item1.Equals(rangeEnd_) Then
-                    current_ = Nothing
+                If _current Is Nothing Then
+                    _current = Pair(_rangeStart)
+                ElseIf _current.Item1.Equals(_rangeEnd) Then
+                    _current = Nothing
                     Return False
                 Else
-                    Dim sig = f_.Next(current_.Item1)
+                    Dim sig = _collection.Next(_current.Item1)
 
 
                     If sig.HasValue Then
-                        If sig.Value.CompareTo(rangeEnd_) > 0 Then
-                            current_ = Pair(rangeEnd_)
+                        If sig.Value.CompareTo(_rangeEnd) > 0 Then
+                            _current = Pair(_rangeEnd)
                             Return False
                         Else
-                            current_ = Pair(sig.Value)
+                            _current = Pair(sig.Value)
                         End If
                     Else
-                        If current_.Item1.CompareTo(rangeEnd_) < 0 Then
-                            current_ = Pair(rangeEnd_)
+                        If _current.Item1.CompareTo(_rangeEnd) < 0 Then
+                            _current = Pair(_rangeEnd)
                         Else
                             ' NO DEBERÍA SUCEDER
                             Throw New Exception
@@ -83,8 +83,8 @@ Namespace Icm.Collections.Generic.StructKeyClassValue
 
             ReadOnly Property Pair(ByVal key As TKey) As Tuple(Of TKey, TValue)
                 Get
-                    If f_.ContainsKey(key) Then
-                        Return New Tuple(Of TKey, TValue)(key, f_(key))
+                    If _collection.ContainsKey(key) Then
+                        Return New Tuple(Of TKey, TValue)(key, _collection(key))
                     Else
                         Return New Tuple(Of TKey, TValue)(key, Nothing)
                     End If
@@ -92,7 +92,7 @@ Namespace Icm.Collections.Generic.StructKeyClassValue
             End Property
 
             Public Sub Reset() Implements IEnumerator.Reset
-                current_ = Nothing
+                _current = Nothing
             End Sub
 
             Private disposedValue As Boolean = False        ' To detect redundant calls
