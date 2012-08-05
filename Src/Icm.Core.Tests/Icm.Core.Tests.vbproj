@@ -77,6 +77,9 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.vb">
+      <Link>SharedAssemblyInfo.vb</Link>
+    </Compile>
     <Compile Include="Basic types extensions\BooleanExtensionsTest.vb" />
     <Compile Include="Basic types extensions\DateExtensionsTest.vb" />
     <Compile Include="Basic types extensions\DoubleExtensionsTest.vb" />
