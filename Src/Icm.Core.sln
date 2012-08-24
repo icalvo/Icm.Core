@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Icm.Core", "Icm.Core\Icm.Core.vbproj", "{347421A5-E5A1-4239-B6C9-5FCB7D524086}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Icm.Core.Tests", "Icm.Core.Tests\Icm.Core.Tests.vbproj", "{F6EDABF4-E1D7-4D91-B187-EBF057DDFB5C}"
