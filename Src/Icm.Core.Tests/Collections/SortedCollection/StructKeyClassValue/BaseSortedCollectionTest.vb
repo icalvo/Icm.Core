@@ -8,7 +8,7 @@ Public Class BaseSortedCollectionTest
     End Function
 
     <Test>
-    Public Sub GetFreeKey_ReturnsSameKeyWithEmptyCollection()
+    Public Sub GetFreeKey_WithEmptyCollection_ReturnsSameKey()
         Dim coll = GetNewCollection()
         Dim expected As Long = 13
 
@@ -19,7 +19,7 @@ Public Class BaseSortedCollectionTest
     End Sub
 
     <Test>
-    Public Sub GetFreeKey_ReturnsSameKeyIfNotPresent()
+    Public Sub GetFreeKey_IfKeyNotPresent_ReturnsSameKey()
         Dim coll = GetNewCollection()
         Dim expected As Long = 13
 
@@ -33,7 +33,7 @@ Public Class BaseSortedCollectionTest
     End Sub
 
     <Test>
-    Public Sub GetFreeKey_ReturnsNextAvailableKeyIfPresent()
+    Public Sub GetFreeKey_IfKeyPresent_ReturnsNextAvailableKey()
         Dim coll = GetNewCollection()
         Dim expected As Long = 15
 
@@ -49,7 +49,7 @@ Public Class BaseSortedCollectionTest
     End Sub
 
     <Test>
-    Public Sub GetFreeKey_ReturnsNothingIfRunsOutOfValues()
+    Public Sub GetFreeKey_IfRunsOutOfValues_ReturnsNothing()
         Dim coll = GetNewCollection()
         Dim expected As Long? = Nothing
 
