@@ -11,26 +11,26 @@ Public Class DictionaryExtensionsTestCases
 
     Shared converter As Converter(Of String, String) = Function(str) "-- " & str
 
-    ReadOnly Property GetCases As IEnumerable(Of TestCaseData)
+    Shared ReadOnly Property GetCases As IEnumerable(Of TestCaseData)
         Get
             Dim result As New List(Of TestCaseData)
             result.Add(New TestCaseData(dic, "doc", "DEFAULT").Returns("Doc word"))
-            result.Add(New TestCaseData(dic, "", "DEFAULT").Returns("No extension"))
-            result.Add(New TestCaseData(dic, "ppt", "DEFAULT").Returns("DEFAULT"))
-            result.Add(New TestCaseData(dic, "ppt", Nothing).Returns(Nothing))
+            result.Add(New TestCaseData(dic, "", "DEFAULT").Returns("No extension").SetName("EmptyKey"))
+            result.Add(New TestCaseData(dic, "ppt", "DEFAULT").Returns("DEFAULT").SetName("KeyNotFound"))
+            result.Add(New TestCaseData(dic, "ppt", Nothing).Returns(Nothing).SetName("KeyNotFoundDefaultNull"))
             result.Add(New TestCaseData(dic, Nothing, "DEFAULT").Throws(GetType(ArgumentNullException)))
 
             Return result
         End Get
     End Property
 
-    ReadOnly Property GetCases_WithConverter As IEnumerable(Of TestCaseData)
+    Shared ReadOnly Property GetCases_WithConverter As IEnumerable(Of TestCaseData)
         Get
             Dim result As New List(Of TestCaseData)
             result.Add(New TestCaseData(dic, "doc", converter, "DEFAULT").Returns("-- Doc word"))
-            result.Add(New TestCaseData(dic, "", converter, "DEFAULT").Returns("-- No extension"))
-            result.Add(New TestCaseData(dic, "ppt", converter, "DEFAULT").Returns("DEFAULT"))
-            result.Add(New TestCaseData(dic, "ppt", converter, Nothing).Returns(Nothing))
+            result.Add(New TestCaseData(dic, "", converter, "DEFAULT").Returns("-- No extension").SetName("EmptyKey"))
+            result.Add(New TestCaseData(dic, "ppt", converter, "DEFAULT").Returns("DEFAULT").SetName("KeyNotFound"))
+            result.Add(New TestCaseData(dic, "ppt", converter, Nothing).Returns(Nothing).SetName("KeyNotFoundDefaultNull"))
             result.Add(New TestCaseData(dic, Nothing, converter, "DEFAULT").Throws(GetType(ArgumentNullException)))
 
             Return result
