@@ -20,29 +20,32 @@ Namespace Icm.Collections
         ''' all the elements of the form A(2, 4, i, 6). To obtain those
         ''' elements we will do one of these calls:
         ''' <code>
-        '''   result = MultiGetRow(A, 2, New Integer() {2, 4, 6})
-        '''   result = MultiGetRow(A, 2, 2, 4, 6)
+        '''   result = A.MultiGetRow(2, New Integer() {2, 4, 6})
+        '''   result = A.MultiGetRow(2, 2, 4, 6)
         ''' </code>
         ''' When iterating a jagged array, it may be that some of the
-        ''' values of the iterated row are undefined. I
+        ''' values of the iterated row are undefined.
         ''' </remarks>
-        Function MultiGetRow(Of T)(ByVal a As Array, _
-            ByVal iteratingDimension As Integer, _
-            ByVal ParamArray fixedDimensionValues() As Integer) _
-        As t()
+        <Extension>
+        Function MultiGetRow(Of T)(
+            ByVal a As Array,
+            ByVal iteratingDimension As Integer,
+            ByVal ParamArray fixedDimensionValues() As Integer) As T()
 
             Dim indices(fixedDimensionValues.GetLength(0)) As Integer
+            Dim result(a.GetLength(iteratingDimension) - 1) As T
+
             For i = 0 To iteratingDimension - 1
                 indices(i) = fixedDimensionValues(i)
             Next
+
             For i = iteratingDimension + 1 To indices.GetUpperBound(0)
                 indices(i) = fixedDimensionValues(i - 1)
             Next
 
-            Dim result(a.GetLength(iteratingDimension) - 1) As t
-            For i As Integer = 0 To a.GetUpperBound(iteratingDimension)
+            For i = 0 To a.GetUpperBound(iteratingDimension)
                 indices(iteratingDimension) = i
-                result(i) = CType(a.GetValue(indices), T)
+                result(i) = DirectCast(a.GetValue(indices), T)
             Next
 
             Return result

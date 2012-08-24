@@ -17,7 +17,7 @@ Namespace Icm.Compilation
     ''' a function that returns the given code. This method returns False if
     ''' the compilation fails. Use property <see cref="CompiledFunction.CompilerErrors" />
     ''' to obtain the compilation errors.
-    ''' La función <see cref="CompiledFunction.Evaluate">CompileAsExpression</see> se utiliza para 
+    ''' La función  <see cref="CompiledFunction{T}.CompileAsExpression">CompileAsExpression</see> se utiliza para 
     ''' tomar la decisión, y se le deben pasar como argumentos los parámetros
     ''' previamente configurados.
     ''' </remarks>

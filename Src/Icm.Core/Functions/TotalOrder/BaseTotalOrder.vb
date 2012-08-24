@@ -16,30 +16,32 @@ Namespace Icm
         End Function
 
         Public Overridable Function [Next](ByVal t As T) As T Implements ITotalOrder(Of T).Next
-            Dim val As Long = T2Long(t)
+            Dim longVal As Long = T2Long(t)
+            Dim longGST As Long = T2Long(Greatest)
             Dim result As T
 
             Do
-                If val = Long.MaxValue Then
+                If longVal >= longGST Then
                     Throw New ArgumentOutOfRangeException("t")
                 End If
-                val += 1
-                result = Long2T(val)
+                longVal += 1
+                result = Long2T(longVal)
             Loop Until t.CompareTo(result) < 0
 
             Return result
         End Function
 
         Public Overridable Function Previous(ByVal t As T) As T Implements ITotalOrder(Of T).Previous
-            Dim val As Long = T2Long(t)
+            Dim longVal As Long = T2Long(t)
+            Dim longLST As Long = T2Long(Least)
             Dim result As T
 
             Do
-                If val = Long.MinValue Then
+                If longVal <= longLST Then
                     Throw New ArgumentOutOfRangeException("t")
                 End If
-                val -= 1
-                result = Long2T(val)
+                longVal -= 1
+                result = Long2T(longVal)
             Loop Until t.CompareTo(result) > 0
 
             Return result
