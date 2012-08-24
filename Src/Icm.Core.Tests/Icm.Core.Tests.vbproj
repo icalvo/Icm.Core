@@ -25,7 +25,9 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Icm.Core.Tests.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>
+    </NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,7 +36,9 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>Icm.Core.Tests.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>
+    </NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -43,7 +47,7 @@
     <OptionCompare>Binary</OptionCompare>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionStrict>Off</OptionStrict>
+    <OptionStrict>On</OptionStrict>
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
@@ -97,12 +101,14 @@
     <Compile Include="Collections\RepositorySortedCollectionTest.vb" />
     <Compile Include="Collections\RepositoryTest.vb" />
     <Compile Include="Collections\SortedCollection\StructKeyClassValue\BaseSortedCollectionTest.vb" />
+    <Compile Include="Collections\SortedCollection\StructKeyStructValue\BaseSortedCollectionTest.vb" />
     <Compile Include="Compilation\CompiledFunctionTest.vb" />
     <Compile Include="Compilation\CompileError.vb" />
     <Compile Include="CompositeWriterTest.vb" />
     <Compile Include="Configuration\GeneralSectionHandlerTest.vb" />
     <Compile Include="Configuration\SettingsTest.vb" />
     <Compile Include="Configuration\TypedDictionarySectionHandlerTest.vb" />
+    <Compile Include="Functions\TotalOrder\BaseTotalOrderTest.vb" />
     <Compile Include="HashAlgorithmExtensionsTest.vb" />
     <Compile Include="IO\FileToolsTest.vb" />
     <Compile Include="Math\STATTest.vb" />
@@ -143,9 +149,7 @@
       <Name>Icm.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Functions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

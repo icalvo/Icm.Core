@@ -85,7 +85,7 @@ Public Class GeneralSectionHandlerTest
         Dim target As GeneralSectionHandler = New GeneralSectionHandler ' TODO: Initialize to an appropriate value
         Dim section As XmlNode = Nothing ' TODO: Initialize to an appropriate value
         Dim expected As Dictionary(Of String, Object) = Nothing ' TODO: Initialize to an appropriate value
-        Dim actual As Dictionary(Of String, Object)
+        Dim actual As IDictionary(Of String, Object)
         actual = target.BuildHash(section)
         Assert.AreEqual(expected, actual)
         Assert.Inconclusive()
@@ -102,7 +102,7 @@ Public Class GeneralSectionHandlerTest
         Dim target As GeneralSectionHandler = New GeneralSectionHandler ' TODO: Initialize to an appropriate value
         Dim section As XmlNode = Nothing ' TODO: Initialize to an appropriate value
         Dim expected As List(Of Object) = Nothing ' TODO: Initialize to an appropriate value
-        Dim actual As List(Of Object)
+        Dim actual As IList(Of Object)
         actual = target.BuildArray(section)
         Assert.AreEqual(expected, actual)
         Assert.Inconclusive()

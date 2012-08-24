@@ -1,32 +1,56 @@
 ﻿Imports Icm.Collections.Generic
 
-'''<summary>
-'''This is a test class for DictionaryExtensions and is intended
-'''to contain all DictionaryExtensions Unit Tests
-'''</summary>
-<TestFixture(), Category("Icm")>
+Public Class DictionaryExtensionsTestCases
+
+    Shared dic As IDictionary(Of String, String) = New Dictionary(Of String, String) From {
+        {"doc", "Doc word"},
+        {"xls", "Excel"},
+        {"pdf", "Adobe PDF"},
+        {"", "No extension"}
+    }
+
+    Shared converter As Converter(Of String, String) = Function(str) "-- " & str
+
+    ReadOnly Property GetCases As IEnumerable(Of TestCaseData)
+        Get
+            Dim result As New List(Of TestCaseData)
+            result.Add(New TestCaseData(dic, "doc", "DEFAULT").Returns("Doc word"))
+            result.Add(New TestCaseData(dic, "", "DEFAULT").Returns("No extension"))
+            result.Add(New TestCaseData(dic, "ppt", "DEFAULT").Returns("DEFAULT"))
+            result.Add(New TestCaseData(dic, "ppt", Nothing).Returns(Nothing))
+            result.Add(New TestCaseData(dic, Nothing, "DEFAULT").Throws(GetType(ArgumentNullException)))
+
+            Return result
+        End Get
+    End Property
+
+    ReadOnly Property GetCases_WithConverter As IEnumerable(Of TestCaseData)
+        Get
+            Dim result As New List(Of TestCaseData)
+            result.Add(New TestCaseData(dic, "doc", converter, "DEFAULT").Returns("-- Doc word"))
+            result.Add(New TestCaseData(dic, "", converter, "DEFAULT").Returns("-- No extension"))
+            result.Add(New TestCaseData(dic, "ppt", converter, "DEFAULT").Returns("DEFAULT"))
+            result.Add(New TestCaseData(dic, "ppt", converter, Nothing).Returns(Nothing))
+            result.Add(New TestCaseData(dic, Nothing, converter, "DEFAULT").Throws(GetType(ArgumentNullException)))
+
+            Return result
+        End Get
+    End Property
+End Class
+
+<Category("Icm")>
+<TestFixture()>
 Public Class DictionaryExtensionsTest
 
-    <Test(), Category("Icm")>
-    Public Sub ItemOrDefaultTest()
+    <TestCaseSource(GetType(DictionaryExtensionsTestCases), "GetCases")>
+    Public Function ItemOrDefault(target As IDictionary(Of String, String), key As String, defaultResult As String) As String
+        Return target.ItemOrDefault(key, defaultResult)
+    End Function
 
-        'Caso 1 EXISTE
-        Dim actual As String
-        Dim dic As New Dictionary(Of String, String)
-        Dim expected As String
-
-        dic.Add("doc", "Doc word")
-        actual = dic.ItemOrDefault("doc", "Doc word")
-        expected = "Doc word"
-        Assert.AreEqual(expected, actual)
+    <TestCaseSource(GetType(DictionaryExtensionsTestCases), "GetCases_WithConverter")>
+    Public Function ItemOrDefault_WithConverter(target As IDictionary(Of String, String), key As String, converter As Converter(Of String, String), defaultResult As String) As String
+        Return target.ItemOrDefault(key, converter, defaultResult)
+    End Function
 
 
-        'Caso 2 NO EXISTE
-        dic.Add("bmp", "dibujo")
-        actual = dic.ItemOrDefault("bms", "No existe")
-        expected = "No existe"
-        Assert.AreEqual(expected, actual)
-
-
-    End Sub
 End Class
