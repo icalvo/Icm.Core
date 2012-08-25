@@ -1,74 +1,21 @@
 ﻿Imports Icm.Collections
 
-
-
-'''<summary>
-'''This is a test class for ICollectionExtensionsTest and is intended
-'''to contain all ICollectionExtensionsTest Unit Tests
-'''</summary>
-<TestFixture(), Category("Icm")>
+<Category("Icm")>
+<TestFixture()>
 Public Class ICollectionExtensionsTest
 
-
-#Region "Additional test attributes"
-    '
-    'You can use the following additional attributes as you write your tests:
-    '
-    'Use ClassInitialize to run code before running the first test in the class
-    '<ClassInitialize()>  _
-    'Public Shared Sub MyClassInitialize(ByVal testContext As TestContext)
-    'End Sub
-    '
-    'Use ClassCleanup to run code after all tests in a class have run
-    '<ClassCleanup()>  _
-    'Public Shared Sub MyClassCleanup()
-    'End Sub
-    '
-    'Use TestInitialize to run code before running each test
-    '<TestInitialize()>  _
-    'Public Sub MyTestInitialize()
-    'End Sub
-    '
-    'Use TestCleanup to run code after each test has run
-    '<TestCleanup()>  _
-    'Public Sub MyTestCleanup()
-    'End Sub
-    '
-#End Region
-
-
-    '''<summary>
-    '''A test for Join
-    '''</summary>
-    <Test(), Category("Icm")>
-    Public Sub JoinStrTest()
-        Dim col As IEnumerable(Of String) = {"a", "b", "c"}
-        Dim separator As String = String.Empty
-        Dim expected As String = String.Empty
+    <TestCase({"a", "b", "c"}, ";", "a;b;c")>
+    <TestCase({"a", "b", "c"}, "", "abc")>
+    <TestCase({"a", "b", "c"}, Nothing, "abc")>
+    <TestCase({"a", Nothing, "c"}, ";", "a;;c")>
+    <TestCase({"a", "", "c"}, ";", "a;;c")>
+    <TestCase({"asdf"}, ";", "asdf")>
+    <TestCase({}, ";", "")>
+    Public Sub JoinStrTest(col As IEnumerable(Of String), separator As String, expected As String)
         Dim actual As String
 
-        'Caso 1
-        separator = ";"
-        expected = "a;b;c"
         actual = col.JoinStr(separator)
-        Assert.AreEqual(expected, actual)
-
-
-        'Caso2
-        col = {"a", "1", "c"}
-        separator = {";"c}
-        expected = "a;1;c"
-        actual = col.JoinStr(separator)
-        Assert.AreEqual(expected, actual)
-
-
-        'Caso3
-        col = {"05/02/2010 05:10", "04/23/2010 10:25"}
-        separator = {";"c}
-        expected = "05/02/2010 05:10;04/23/2010 10:25"
-        actual = col.JoinStr(separator)
-        Assert.AreEqual(expected, actual)
-
+        Assert.That(expected, [Is].EqualTo(actual))
     End Sub
 
     <Test(), Category("Icm")>
