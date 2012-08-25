@@ -12,25 +12,10 @@ Namespace Icm.Collections
         ''' <param name="quantity"></param>
         ''' <remarks></remarks>
         <Extension()>
-        Public Sub InitializeNew(Of T As New)(ByVal list As IList(Of T), ByVal quantity As Integer)
+        Public Sub Initialize(Of T As New)(ByVal list As IList(Of T), ByVal quantity As Integer)
             list.Clear()
             For i As Integer = 1 To quantity
                 list.Add(New T)
-            Next
-        End Sub
-
-        ''' <summary>
-        ''' Clears the list and adds a given amount of null (Nothing) elements.
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="list"></param>
-        ''' <param name="elements"></param>
-        ''' <remarks></remarks>
-        <Extension()>
-        Public Sub Initialize(Of T As Structure)(ByVal list As IList(Of T), ByVal elements As Integer)
-            list.Clear()
-            For i As Integer = 1 To elements
-                list.Add(Nothing)
             Next
         End Sub
 

@@ -2,6 +2,7 @@ Imports System.Text
 Imports System.Runtime.CompilerServices
 
 Namespace Icm.Collections
+
     Public Module ICollectionExtensions
 
         ''' <summary>
@@ -19,4 +20,5 @@ Namespace Icm.Collections
         End Sub
 
     End Module
+
 End Namespace

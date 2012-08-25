@@ -1,63 +1,52 @@
 ﻿Imports System.Collections.Generic
-
-
 Imports Icm.Collections
 
-
-
-'''<summary>
-'''This is a test class for IListExtensionsTest and is intended
-'''to contain all IListExtensionsTest Unit Tests
-'''</summary>
-<TestFixture(), Category("Icm")>
+<Category("Icm")>
+<TestFixture()>
 Public Class IListExtensionsTest
 
-
-    <Test(), Category("Icm")>
-    Public Sub InicializarNewTest()
-        Dim list As New List(Of Integer) From {1, 2, 3}
-        Dim elementos As Integer = 5
-
-        'Caso 1
-        IListExtensions.InitializeNew(Of Integer)(list, elementos)
-        Assert.AreEqual(elementos, list.Count)
-        Assert.IsTrue(list.All(Function(e) e = 0))
-
-        'Caso 2
-        elementos = -2
-        IListExtensions.InitializeNew(Of Integer)(list, elementos)
-        Assert.AreNotEqual(elementos, list.Count)
-        Assert.IsTrue(list.All(Function(e) e = 0))
-
-        'Caso 3
-        elementos = 0
-        IListExtensions.InitializeNew(Of Integer)(list, elementos)
-        Assert.AreEqual(elementos, list.Count)
-        Assert.IsTrue(list.All(Function(e) e = 0))
+    <TestCase({1, 2, 3}, 5, 5)>
+    <TestCase({1, 2, 3}, -2, 0)>
+    <TestCase({1, 2, 3}, 0, 0)>
+    <TestCase(New Integer() {}, 5, 5)>
+    <TestCase(New Integer() {}, -2, 0)>
+    <TestCase(New Integer() {}, 0, 0)>
+    Public Sub Initialize_NormalTestInteger(data() As Integer, providedCount As Integer, expectedCount As Integer)
+        Dim originalList As New List(Of Integer)(data)
+        originalList.Initialize(providedCount)
+        Assert.That(originalList.Count, [Is].EqualTo(expectedCount))
+        Assert.IsTrue(originalList.All(Function(e) e = 0))
     End Sub
 
-    <Test(), Category("Icm")>
-    Public Sub InitializeTest()
-        Dim list As New List(Of Integer) From {1, 2, 3}
-        Dim elementos As Integer = 5
+    '<TestCase({EmptyClass.GetNew}, 5, 5)>
+    '<TestCase({1, 2, 3}, -2, 0)>
+    '<TestCase({1, 2, 3}, 0, 0)>
+    '<TestCase(New Integer() {}, 5, 5)>
+    '<TestCase(New Integer() {}, -2, 0)>
+    '<TestCase(New Integer() {}, 0, 0)>
+    'Public Sub Initialize_NormalTestEmptyClass(data() As EmptyClass, providedCount As Integer, expectedCount As Integer)
+    '    Dim originalList As New List(Of Integer)(data)
+    '    originalList.Initialize(providedCount)
+    '    Assert.That(expectedCount, [Is].EqualTo(originalList.Count))
+    '    Assert.IsTrue(originalList.All(Function(e) e = 0))
+    'End Sub
 
-
-        'Caso 1
-        IListExtensions.Initialize(Of Integer)(list, elementos)
-        Assert.AreEqual(elementos, list.Count)
-        Assert.IsTrue(list.All(Function(e) e = 0))
-
-        'Caso 2
-        elementos = -2
-        IListExtensions.Initialize(Of Integer)(list, elementos)
-        Assert.AreNotEqual(elementos, list.Count)
-        Assert.IsTrue(list.All(Function(e) e = 0))
-
-        'Caso 3
-        elementos = 0
-        IListExtensions.Initialize(Of Integer)(list, elementos)
-        Assert.AreEqual(elementos, list.Count)
-        Assert.IsTrue(list.All(Function(e) e = 0))
-
+    <Test>
+    Public Sub InitializeNew_WithNull_ThrowsNullReferenceException()
+        Dim originalList As List(Of Integer) = Nothing
+        Assert.That(Sub() originalList.Initialize(5), Throws.TypeOf(Of NullReferenceException))
     End Sub
+
+    <TestCase({4, 7, 2, 2, 6, 10}, 6, 4)>
+    <TestCase({4, 7, 2, 2, 6, 10}, 2, 3)>
+    <TestCase({4, 7, 2, 2, 6, 10}, 1, -1)>
+    <TestCase({4, 7, 2, 2, 6, 10}, 3, -1)>
+    <TestCase({4, 7, 2, 2, 6, 10}, 20, -1)>
+    Public Sub Search_NormalTest(data() As Integer, searchedElement As Integer, expectedIndex As Integer)
+        Dim list As IList(Of Integer) = New List(Of Integer)(data)
+
+        Dim actual = list.Search(searchedElement)
+        Assert.That(actual, [Is].EqualTo(expectedIndex))
+    End Sub
+
 End Class

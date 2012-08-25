@@ -4,53 +4,24 @@
 <TestFixture()>
 Public Class ICollectionExtensionsTest
 
-    <TestCase({"a", "b", "c"}, ";", "a;b;c")>
-    <TestCase({"a", "b", "c"}, "", "abc")>
-    <TestCase({"a", "b", "c"}, Nothing, "abc")>
-    <TestCase({"a", Nothing, "c"}, ";", "a;;c")>
-    <TestCase({"a", "", "c"}, ";", "a;;c")>
-    <TestCase({"asdf"}, ";", "asdf")>
-    <TestCase({}, ";", "")>
-    Public Sub JoinStrTest(col As IEnumerable(Of String), separator As String, expected As String)
-        Dim actual As String
-
-        actual = col.JoinStr(separator)
-        Assert.That(expected, [Is].EqualTo(actual))
+    <TestCase({"a", "b", "c"}, "b", {"a", "c"})>
+    <TestCase({"a", "b", "c"}, "x", {"a", "b", "c"})>
+    <TestCase({"a", Nothing, "c"}, Nothing, {"a", "c"})>
+    <TestCase({"a", "", "c"}, "", {"a", "c"})>
+    <TestCase(New String() {}, "a", New String() {})>
+    <TestCase(New String() {}, Nothing, New String() {})>
+    <TestCase(New String() {}, "", New String() {})>
+    Public Sub ForceRemove_NormalTests(col As IEnumerable(Of String), itemRemoved As String, expected As IEnumerable(Of String))
+        Dim list As New List(Of String)(col)
+        list.ForceRemove(itemRemoved)
+        Assert.That(expected, [Is].EquivalentTo(list))
     End Sub
 
-    <Test(), Category("Icm")>
-    Public Sub ForceRemoveTest()
+    <Test>
+    Public Sub ForceRemove_WithNullArray_ThrowsNullReferenceException()
+        Dim col As ICollection(Of String) = Nothing
 
-        Dim c As ICollection(Of String) = Nothing
-        Dim item As String = "b"
-
-        c = New List(Of String) From {"a", "b", "c"}
-        ICollectionExtensions.ForceRemove(Of String)(c, item)
-        Assert.IsFalse(c.Contains(item))
-
-        'Caso 1
-        c = New List(Of String) From {"a", "b", "c"}
-        item = "x"
-        ICollectionExtensions.ForceRemove(Of String)(c, item)
-        Assert.IsFalse(c.Contains(item))
-
-        'Caso 2
-        c = New List(Of String) From {"a", "b", "c"}
-        item = Nothing
-        ICollectionExtensions.ForceRemove(Of String)(c, item)
-        Assert.IsFalse(c.Contains(item))
-
-        'Caso 3
-        c = New List(Of String) From {"a", "b", "c"}
-        item = ""
-        ICollectionExtensions.ForceRemove(Of String)(c, item)
-        Assert.IsFalse(c.Contains(item))
-
-        'Caso 4
-        c = New List(Of String) From {""}
-        item = "b"
-        ICollectionExtensions.ForceRemove(Of String)(c, item)
-        Assert.IsFalse(c.Contains(item))
-
+        Assert.That(Sub() col.ForceRemove(";"), Throws.TypeOf(Of NullReferenceException))
     End Sub
+
 End Class
