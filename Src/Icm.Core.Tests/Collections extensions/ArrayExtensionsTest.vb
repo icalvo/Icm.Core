@@ -76,14 +76,14 @@ Public Class ArrayExtensionsTest
     <TestCaseSource("MultiGetRow_NormalStringTestCases")>
     Public Sub MultiGetRow_ReturnsExpected(target(,) As String, iteratingDimension As Integer, fixedDimensionValues As Integer(), expected As String())
         Dim actual = target.MultiGetRow(Of String)(iteratingDimension, fixedDimensionValues)
-        Assert.That(expected, [Is].EquivalentTo(actual))
+        Assert.That(actual, [Is].EquivalentTo(expected))
     End Sub
 
     <Test()>
     <TestCaseSource("MultiGetRow_NormalIntegerTestCases")>
     Public Sub MultiGetRow_ReturnsExpected(target As Array, iteratingDimension As Integer, fixedDimensionValues As Integer(), expected As Integer())
         Dim actual = target.MultiGetRow(Of Integer)(iteratingDimension, fixedDimensionValues)
-        Assert.That(expected, [Is].EquivalentTo(actual))
+        Assert.That(actual, [Is].EquivalentTo(expected))
     End Sub
 
     <Test()>

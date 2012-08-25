@@ -18,7 +18,7 @@ Public Class ObjectExtensionsTest
     '''<summary>
     '''A test for IsOneOf
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub IsOneOfTest()
         Dim s As String = String.Empty
 

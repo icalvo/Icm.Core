@@ -39,7 +39,7 @@ Public Class PriorityQueueTest
 #End Region
 
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub GeneralTestQueues()
         Dim miQ As New PriorityQueue(Of Integer)(3)
         'Los encolamos en prioridad 0

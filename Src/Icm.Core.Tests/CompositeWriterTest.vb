@@ -15,7 +15,7 @@ Public Class CompositeWriterTest
     '''<summary>
     '''A test for WriteLine
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub CompositeWriterTest()
         Dim target As CompositeWriter = New CompositeWriter
         Dim s As String = String.Empty
@@ -26,20 +26,20 @@ Public Class CompositeWriterTest
         target.Add(sw1)
         target.Write(s)
 
-        Assert.IsTrue(sw1.ToString = "hola")
+        Assert.That(sw1.ToString = "hola")
 
         Dim sw2 As New StringWriter()
         target.Add(sw2)
         target.WriteLine(Date.Now)
         'Debug.WriteLine(sw1)
         Dim aux2 = "hola" & sw2.ToString
-        Assert.IsTrue(sw1.ToString = aux2)
+        Assert.That(sw1.ToString = aux2)
 
         Dim sw3 As New StringWriter
         target.Add(sw3)
         target.Write("Prueba")
-        Assert.IsTrue(sw1.ToString = "hola" & sw2.ToString)
-        Assert.IsTrue(sw3.ToString = "Prueba")
+        Assert.That(sw1.ToString = "hola" & sw2.ToString)
+        Assert.That(sw3.ToString = "Prueba")
         target.Close()
 
 

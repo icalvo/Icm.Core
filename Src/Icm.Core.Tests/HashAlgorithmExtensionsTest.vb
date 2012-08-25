@@ -46,7 +46,7 @@ Public Class HashAlgorithmExtensionsTest
     '''<summary>
     '''A test for StringHash
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub StringHashTest2()
 
         Dim target As New MD5CryptoServiceProvider
@@ -62,7 +62,7 @@ Public Class HashAlgorithmExtensionsTest
     '''<summary>
     '''A test for StringHash
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub StringHashTest()
 
         'Caso1
@@ -94,7 +94,7 @@ Public Class HashAlgorithmExtensionsTest
     '''<summary>
     '''A test for ByteToString
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub ByteToStringTest()
 
         'Caso 1
@@ -112,7 +112,7 @@ Public Class HashAlgorithmExtensionsTest
     '''<summary>
     '''A test for ByteHash
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub ByteHashTest2()
 
         'Caso1

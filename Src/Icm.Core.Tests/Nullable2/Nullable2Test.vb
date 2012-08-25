@@ -3,7 +3,7 @@
 <TestFixture(), Category("Icm")>
 Public Class Nullable2Test
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub HasValueTest()
         Dim nulInteger As Nullable2(Of Integer)
         Assert.IsFalse(nulInteger.HasValue)
@@ -12,24 +12,24 @@ Public Class Nullable2Test
         Assert.IsFalse(nulInteger.HasValue)
 
         nulInteger = 0
-        Assert.IsTrue(nulInteger.HasValue)
+        Assert.That(nulInteger.HasValue)
 
         nulInteger = Nothing
         Assert.IsFalse(nulInteger.HasValue)
 
         Dim nulString As Nullable2(Of String) = Nothing
 
-        Assert.IsTrue(nulString.HasValue)
+        Assert.That(nulString.HasValue)
         nulString = Nothing
-        Assert.IsTrue(nulString.HasValue)
+        Assert.That(nulString.HasValue)
         nulString = ""
-        Assert.IsTrue(nulString.HasValue)
+        Assert.That(nulString.HasValue)
         nulString = "Abc"
-        Assert.IsTrue(nulString.HasValue)
+        Assert.That(nulString.HasValue)
 
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub ValueTest()
         Dim nulInteger As Nullable2(Of Integer)
 
@@ -64,7 +64,7 @@ Public Class Nullable2Test
 
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub HasSomethingTest()
         Dim nulInteger As Nullable2(Of Integer)
         Assert.IsFalse(nulInteger.HasSomething)
@@ -73,7 +73,7 @@ Public Class Nullable2Test
         Assert.IsFalse(nulInteger.HasSomething)
 
         nulInteger = 0
-        Assert.IsTrue(nulInteger.HasSomething)
+        Assert.That(nulInteger.HasSomething)
 
         nulInteger = Nothing
         Assert.IsFalse(nulInteger.HasSomething)
@@ -84,9 +84,9 @@ Public Class Nullable2Test
         nulString = Nothing
         Assert.IsFalse(nulString.HasSomething)
         nulString = ""
-        Assert.IsTrue(nulString.HasSomething)
+        Assert.That(nulString.HasSomething)
         nulString = "Abc"
-        Assert.IsTrue(nulString.HasSomething)
+        Assert.That(nulString.HasSomething)
 
     End Sub
 

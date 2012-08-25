@@ -44,7 +44,7 @@ Public Class STATTest
     '''<summary>
     '''A test for Uniform01
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub Uniform01Test()
 
         Dim actual As Double
@@ -59,13 +59,13 @@ Public Class STATTest
         media = media / 500
         Debug.WriteLine(media)
 
-        Assert.IsTrue(media > 0.40000000000000002 And media < 0.59999999999999998)
+        Assert.That(media > 0.40000000000000002 And media < 0.59999999999999998)
     End Sub
 
     '''<summary>
     '''A test for Uniform
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub UniformTest()
 
         'Caso 1

@@ -42,7 +42,7 @@ Public Class DateExtensionsTest
     '''<summary>
     '''A test for Season
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub SeasonTest()
         Dim d As Date
         Dim expected As DateExtensions.Seasons = DateExtensions.Seasons.Spring

@@ -44,7 +44,7 @@ Public Class GeneralSectionHandlerTest
     '''<summary>
     '''A test for ManageSection
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub ManageSectionTest()
         Assert.Inconclusive()
         Dim target As GeneralSectionHandler = New GeneralSectionHandler
@@ -60,7 +60,7 @@ Public Class GeneralSectionHandlerTest
     '''<summary>
     '''A test for Create
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub CreateTest()
         Assert.Inconclusive()
         Dim target As IConfigurationSectionHandler = New GeneralSectionHandler ' TODO: Initialize to an appropriate value
@@ -79,7 +79,7 @@ Public Class GeneralSectionHandlerTest
     '''<summary>
     '''A test for BuildHash
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub BuildHashTest()
         Assert.Inconclusive()
         Dim target As GeneralSectionHandler = New GeneralSectionHandler ' TODO: Initialize to an appropriate value
@@ -96,7 +96,7 @@ Public Class GeneralSectionHandlerTest
     '''<summary>
     '''A test for BuildArray
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub BuildArrayTest()
         Assert.Inconclusive()
         Dim target As GeneralSectionHandler = New GeneralSectionHandler ' TODO: Initialize to an appropriate value

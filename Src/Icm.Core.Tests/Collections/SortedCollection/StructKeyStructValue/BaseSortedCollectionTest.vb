@@ -14,7 +14,7 @@ Public Class StructKeyStructValue_BaseSortedCollectionTest
 
         Dim actual = coll.GetFreeKey(13)
 
-        Assert.IsTrue(actual.HasValue)
+        Assert.That(actual.HasValue)
         Assert.AreEqual(expected, actual)
     End Sub
 
@@ -28,7 +28,7 @@ Public Class StructKeyStructValue_BaseSortedCollectionTest
         coll.Add(14, "b"c)
         Dim actual = coll.GetFreeKey(13)
 
-        Assert.IsTrue(actual.HasValue)
+        Assert.That(actual.HasValue)
         Assert.AreEqual(expected, actual)
     End Sub
 
@@ -44,7 +44,7 @@ Public Class StructKeyStructValue_BaseSortedCollectionTest
         Dim actual = coll.GetFreeKey(13)
 
         ' Assert
-        Assert.IsTrue(actual.HasValue)
+        Assert.That(actual.HasValue)
         Assert.AreEqual(expected, actual)
     End Sub
 

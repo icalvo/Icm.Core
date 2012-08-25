@@ -46,7 +46,7 @@ Public Class FileToolsTest
     ' '''<summary>
     ' '''A test for FormatFile
     ' '''</summary>
-    '<Test(), Category("Icm")>
+    '<Test()>
     'Public Sub FormatFileTest()
 
     '    'Caso 1
@@ -62,7 +62,7 @@ Public Class FileToolsTest
     '''<summary>
     '''A test for FormatFile
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub FormatFileTest2()
 
         'Caso 1

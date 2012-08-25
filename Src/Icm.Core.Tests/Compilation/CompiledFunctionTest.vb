@@ -6,7 +6,7 @@ Public Class CompiledFunctionTest
 
     Private ReadOnly Namespaces As New List(Of String)()
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub CompileOkTest()
         Dim Funct As CompiledFunction(Of Integer)
         Funct = New VBCompiledFunction(Of Integer)
@@ -14,10 +14,10 @@ Public Class CompiledFunctionTest
         Funct.AddParameter(Of Integer)("y")
         Funct.Code = "x+y"
         Funct.CompileAsExpression()
-        Assert.IsTrue(Funct.CompilerErrors.Count = 0)
+        Assert.That(Funct.CompilerErrors.Count = 0)
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub EvaluateTest()
         Dim Funct As CompiledFunction(Of Integer)
         Funct = New VBCompiledFunction(Of Integer)
@@ -28,7 +28,7 @@ Public Class CompiledFunctionTest
         Assert.AreEqual(10, Funct.Evaluate(5, 5))
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub CompileSyntaxErrorTest()
 
         Dim Funct As New VBCompiledFunction(Of Integer)
@@ -42,8 +42,8 @@ Public Class CompiledFunctionTest
         Dim list = Funct.CompilerErrors
         Dim errores = list.Where(Function(ce) Not ce.IsWarning)
         Dim warnings = list.Where(Function(ce) ce.IsWarning)
-        Assert.IsTrue(errores.Count = 1)
-        Assert.IsTrue(warnings.Count = 0)
+        Assert.That(errores.Count = 1)
+        Assert.That(warnings.Count = 0)
     End Sub
 
 End Class

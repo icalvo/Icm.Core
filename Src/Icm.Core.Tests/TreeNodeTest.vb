@@ -54,7 +54,7 @@ Public Class TreeNodeTest
 
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub RemoveChildTest()
         RemoveChildTestHelper()
     End Sub
@@ -72,13 +72,13 @@ Public Class TreeNodeTest
 
         actual = target.AddChild(value)
 
-        Assert.IsTrue(CBool(target.Children.Count(Function(child) actual.Value = expected.Value) = 1))
-        Assert.IsTrue(actual.Parent.Value = "a")
-        Assert.IsTrue(CBool(target.Children.Count() = 1))
+        Assert.That(CBool(target.Children.Count(Function(child) actual.Value = expected.Value) = 1))
+        Assert.That(actual.Parent.Value = "a")
+        Assert.That(CBool(target.Children.Count() = 1))
 
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub AddChildTest()
         AddChildTestHelper()
     End Sub
@@ -94,12 +94,12 @@ Public Class TreeNodeTest
         target.AddChild(tn)
 
         Assert.AreEqual(tn.Parent.Value = "a", True)
-        Assert.IsTrue(target.Children.Count() = 1)
-        Assert.IsTrue(target.Children.Count(Function(child) child.Value = "b") = 1)
+        Assert.That(target.Children.Count() = 1)
+        Assert.That(target.Children.Count(Function(child) child.Value = "b") = 1)
 
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub AddChildTest1()
         AddChildTest1Helper()
     End Sub
@@ -107,7 +107,7 @@ Public Class TreeNodeTest
     '''<summary>
     '''A test for TestFinal
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub TestFinal()
         Dim v As String = ("maria")
         Dim target As New TreeNode(Of String)(v)
@@ -126,10 +126,10 @@ Public Class TreeNodeTest
             End If
         Next
 
-        Assert.IsTrue(CBool(target.Children.Count(Function(child) child.Value = "x") = 1))
+        Assert.That(CBool(target.Children.Count(Function(child) child.Value = "x") = 1))
         Assert.IsFalse(CBool(target.Children.Count(Function(child) child.Value = "b") = 1))
         Assert.AreEqual(target.Children.All(Function(child) child.Parent.Value = "maria"), True)
-        Assert.IsTrue(target.Children.Count() = 4)
+        Assert.That(target.Children.Count() = 4)
 
 
     End Sub
@@ -137,7 +137,7 @@ Public Class TreeNodeTest
     '''<summary>
     '''A test for AddChild
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub AddChildrenTest()
         Dim v As String = ("maria")
         Dim target As New TreeNode(Of String)(v)
@@ -148,17 +148,17 @@ Public Class TreeNodeTest
         target.AddChildren(tn)
         ResultadoList = target.Children
         Assert.AreEqual(ResultadoList.All(Function(child) child.Parent.Value = "maria"), True)
-        Assert.IsTrue(target.Children.Count() = 4)
-        Assert.IsTrue(target.Children.Count(Function(child) child.Value = "b") = 1)
-        Assert.IsTrue(target.Children.Count(Function(child) child.Value = "c") = 1)
-        Assert.IsTrue(target.Children.Count(Function(child) child.Value = "m") = 1)
-        Assert.IsTrue(target.Children.Count(Function(child) child.Value = "S") = 1)
+        Assert.That(target.Children.Count() = 4)
+        Assert.That(target.Children.Count(Function(child) child.Value = "b") = 1)
+        Assert.That(target.Children.Count(Function(child) child.Value = "c") = 1)
+        Assert.That(target.Children.Count(Function(child) child.Value = "m") = 1)
+        Assert.That(target.Children.Count(Function(child) child.Value = "S") = 1)
     End Sub
 
     '''<summary>
     '''A test for AddChild
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub AddChildrenTest2()
 
         Dim v As String = ("maria")
@@ -174,11 +174,11 @@ Public Class TreeNodeTest
 
         target.AddChildren(tn)
         Assert.AreEqual(tn.All(Function(child) child.Parent.Value = "maria"), True)
-        Assert.IsTrue(target.Children.Count() = 4)
-        Assert.IsTrue(target.Children.Count(Function(child) child.Value = "b") = 1)
-        Assert.IsTrue(target.Children.Count(Function(child) child.Value = "c") = 1)
-        Assert.IsTrue(target.Children.Count(Function(child) child.Value = "m") = 1)
-        Assert.IsTrue(target.Children.Count(Function(child) child.Value = "S") = 1)
+        Assert.That(target.Children.Count() = 4)
+        Assert.That(target.Children.Count(Function(child) child.Value = "b") = 1)
+        Assert.That(target.Children.Count(Function(child) child.Value = "c") = 1)
+        Assert.That(target.Children.Count(Function(child) child.Value = "m") = 1)
+        Assert.That(target.Children.Count(Function(child) child.Value = "S") = 1)
     End Sub
 
 End Class

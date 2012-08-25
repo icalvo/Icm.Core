@@ -7,35 +7,32 @@
 <TestFixture(), Category("Icm")>
 Public Class WorkingDaysManagerTest
 
-    '''<summary>
-    '''A test for WeeklyHolidays
-    '''</summary>
-    <Test(), Category("Icm")>
+    Dim target As New WorkingDaysManager({#1/1/2011#}, {DayOfWeek.Saturday, DayOfWeek.Sunday})
+
+    <Test()>
     Public Sub WeeklyHolidaysTest()
-        Dim target As New WorkingDaysManager({#1/1/2011#}, {DayOfWeek.Saturday, DayOfWeek.Sunday})
         Dim actual As IEnumerable(Of DayOfWeek)
         actual = target.WeeklyHolidays
-        Assert.IsTrue(actual.Count = 2)
-        Assert.IsTrue(actual.Contains(DayOfWeek.Saturday))
-        Assert.IsTrue(actual.Contains(DayOfWeek.Sunday))
+        Assert.That(actual.Count, [Is].EqualTo(2))
+        Assert.That(actual.Contains(DayOfWeek.Saturday))
+        Assert.That(actual.Contains(DayOfWeek.Sunday))
     End Sub
 
     '''<summary>
     '''A test for DayHolidays
     '''</summary>
-    <Test(), Category("Icm")>
-    <Ignore()>
+    <Test()>
     Public Sub DayHolidaysTest()
-        Dim target As New WorkingDaysManager({#1/1/2011#}, {DayOfWeek.Saturday, DayOfWeek.Sunday})
         Dim actual As IEnumerable(Of Date)
         actual = target.DayHolidays
-        Assert.Inconclusive()
+        Dim expected = New List(Of Date)({#1/1/2011#})
+        Assert.That(actual, [Is].EqualTo(expected))
     End Sub
 
     '''<summary>
     '''A test for PrevWorkingDay
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub PrevWorkingDayTest()
         Dim target As New WorkingDaysManager
         Dim d As Date = New Date
@@ -59,7 +56,7 @@ Public Class WorkingDaysManagerTest
     '''<summary>
     '''A test for NextWorkingDay
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub NextWorkingDayTest()
         Dim target As New WorkingDaysManager
         Dim d As Date
@@ -83,7 +80,7 @@ Public Class WorkingDaysManagerTest
     '''<summary>
     '''A test for IsWorking
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub IsWorkingTest()
         Dim target As New WorkingDaysManager
         Dim d As Date
@@ -107,7 +104,7 @@ Public Class WorkingDaysManagerTest
     '''<summary>
     '''A test for AddDays
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub AddDaysTest()
         Dim target As New WorkingDaysManager
         Dim d As Date = New Date

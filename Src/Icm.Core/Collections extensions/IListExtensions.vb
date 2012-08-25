@@ -29,31 +29,30 @@ Namespace Icm.Collections
         ''' <param name="value"></param>
         ''' <param name="comparer"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        '''   <see cref="List(Of T)"></see> have a BinarySearch method but IList not. This
+        ''' is an implementation for IList.
+        ''' </remarks>
         <Extension()>
         Public Function Search(Of T)(ByVal lst As IList(Of T), ByVal index As Integer, ByVal length As Integer, ByVal value As T, ByVal comparer As IComparer(Of T)) As Integer
-            Try
-                If (comparer Is Nothing) Then
-                    comparer = System.Collections.Generic.Comparer(Of T).Default
+            If (comparer Is Nothing) Then
+                comparer = System.Collections.Generic.Comparer(Of T).Default
+            End If
+            Dim num As Integer = index
+            Dim num2 As Integer = ((index + length) - 1)
+            Do While (num <= num2)
+                Dim num3 As Integer = (num + ((num2 - num) >> 1))
+                Dim cmp As Integer = comparer.Compare(lst(num3), value)
+                If (cmp = 0) Then
+                    Return num3
                 End If
-                Dim num As Integer = index
-                Dim num2 As Integer = ((index + length) - 1)
-                Do While (num <= num2)
-                    Dim num3 As Integer = (num + ((num2 - num) >> 1))
-                    Dim cmp As Integer = comparer.Compare(lst(num3), value)
-                    If (cmp = 0) Then
-                        Return num3
-                    End If
-                    If (cmp < 0) Then
-                        num = (num3 + 1)
-                    Else
-                        num2 = (num3 - 1)
-                    End If
-                Loop
-                Return Not num
-            Catch ex As Exception
-                Throw New InvalidOperationException("Fallo en el comparador", ex)
-            End Try
+                If (cmp < 0) Then
+                    num = (num3 + 1)
+                Else
+                    num2 = (num3 - 1)
+                End If
+            Loop
+            Return Not num
         End Function
 
         ''' <summary>
@@ -65,7 +64,10 @@ Namespace Icm.Collections
         ''' <param name="length"></param>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        '''   <see cref="List(Of T)"></see> have a BinarySearch method but IList not. This
+        ''' is an implementation for IList.
+        ''' </remarks>
         <Extension()>
         Public Function Search(Of T)(ByVal lst As IList(Of T), ByVal index As Integer, ByVal length As Integer, ByVal value As T) As Integer
             Return lst.Search(index, length, value, Nothing)
@@ -78,7 +80,10 @@ Namespace Icm.Collections
         ''' <param name="lst"></param>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        '''   <see cref="List(Of T)"></see> have a BinarySearch method but IList not. This
+        ''' is an implementation for IList.
+        ''' </remarks>
         <Extension()>
         Public Function Search(Of T)(ByVal lst As IList(Of T), ByVal value As T) As Integer
             Return lst.Search(0, lst.Count, value, Nothing)
@@ -92,18 +97,21 @@ Namespace Icm.Collections
         ''' <param name="value"></param>
         ''' <param name="comparer"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        '''   <see cref="List(Of T)"></see> have a BinarySearch method but IList not. This
+        ''' is an implementation for IList.
+        ''' </remarks>
         <Extension()>
         Public Function Search(Of T)(ByVal lst As IList(Of T), ByVal value As T, ByVal comparer As IComparer(Of T)) As Integer
             Return lst.Search(0, lst.Count, value, comparer)
         End Function
 
         ''' <summary>
-        '''   <see cref="List(Of T)"></see> have an AddRange method but IList not. This
-        ''' is an implementation for IList.
         ''' </summary>
         ''' <param name="sc"></param>
         ''' <remarks>
+        '''   <see cref="List(Of T)"></see> have an AddRange method but IList not. This
+        ''' is an implementation for IList.
         ''' </remarks>
         ''' <history>
         ''' 	[icalvo]	23/06/2005	Created

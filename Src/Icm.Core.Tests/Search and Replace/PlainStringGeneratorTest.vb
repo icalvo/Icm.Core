@@ -42,7 +42,7 @@ Public Class PlainStringGeneratorTest
     '''<summary>
     '''A test for Generate
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub GenerateTest()
 
         Dim s As String = "HOLA"

@@ -1,135 +1,46 @@
 ﻿Imports Icm
 
 '''<summary>
-'''This is a test class for StringExtensionsTest and is intended
-'''to contain all StringExtensionsTest Unit Tests
+'''This is a test class for StringExtensions and is intended
+'''to contain all StringExtensions Unit Tests
 '''</summary>
 <TestFixture(), Category("Icm")>
 Public Class StringExtensionsTest
 
-#Region "Additional test attributes"
-    '
-    'You can use the following additional attributes as you write your tests:
-    '
-    'Use ClassInitialize to run code before running the first test in the class
-    '<ClassInitialize()>  _
-    'Public Shared Sub MyClassInitialize(ByVal testContext As TestContext)
-    'End Sub
-    '
-    'Use ClassCleanup to run code after all tests in a class have run
-    '<ClassCleanup()>  _
-    'Public Shared Sub MyClassCleanup()
-    'End Sub
-    '
-    'Use TestInitialize to run code before running each test
-    '<TestInitialize()>  _
-    'Public Sub MyTestInitialize()
-    'End Sub
-    '
-    'Use TestCleanup to run code after each test has run
-    '<TestCleanup()>  _
-    'Public Sub MyTestCleanup()
-    'End Sub
-    '
-#End Region
-
-
-    '''<summary>
-    '''A test for ToUpperFirst
-    '''</summary>
-    <Test(), Category("Icm")>
-    Public Sub ToUpperFirstTest_BasicCase()
-
-        'Case 1
-        Dim s As String = "bLioNNpPA"
-        Dim expected As String = "BLioNNpPA"
+    <TestCase("bLioNNpPA", "BLioNNpPA")>
+    <TestCase("BaMBu", "BaMBu")>
+    <TestCase("áNGeL", "ÁNGeL")>
+    <TestCase("78a", "78a")>
+    <TestCase("a1", "A1")>
+    <TestCase("", "")>
+    <TestCase(Nothing, "")>
+    Public Sub ToUpperFirstTest_BasicCase(s As String, expected As String)
         Dim actual As String
-        actual = s.ToUpperFirst()
-        Assert.AreEqual(expected, actual)
-
-        'Case 2
-        s = "BaMBu"
-        expected = "BaMBu"
         actual = s.ToUpperFirst()
         Assert.AreEqual(expected, actual)
     End Sub
 
-    <Test(), Category("Icm")>
-    Public Sub ToUpperFirstTest_ExtremeCases()
-
-        'Case 1
-        Dim s As String = "áNGeL"
-        Dim expected As String = "ÁNGeL"
-        Dim actual As String
-        actual = s.ToUpperFirst()
-        Assert.AreEqual(expected, actual)
-
-        'Case 2
-        s = "78a"
-        expected = "78a"
-        actual = s.ToUpperFirst()
-        Assert.AreEqual(expected, actual)
-
-        'Case 3
-        s = "a1"
-        expected = "A1"
-        actual = s.ToUpperFirst()
-        Assert.AreEqual(expected, actual)
-
-    End Sub
-
-    '''<summary>
-    '''A test for Repeat
-    '''</summary>
-    <Test(), Category("Icm")>
-    Public Sub RepeatTest()
-        Dim s As String = String.Empty
-        Dim count As Integer = 0
-        Dim expected As String = String.Empty
+    <TestCase("aa", 3, "aaaaaa", Nothing)>
+    <TestCase("", 3, "", Nothing)>
+    <TestCase("aa", 0, "", Nothing)>
+    <TestCase("aa", -5, Nothing, GetType(ArgumentOutOfRangeException))>
+    <TestCase(Nothing, 3, Nothing, GetType(NullReferenceException))>
+    Public Sub RepeatTest(s As String, count As Integer, expected As String, expectedException As Type)
         Dim actual As String
 
-        'Case 1
-        s = "aa"
-        count = 3
-        expected = "aaaaaa"
-        actual = StringExtensions.Repeat(s, count)
-        Assert.AreEqual(expected, actual)
-
-
-        'Case 2
-        s = ""
-        count = 3
-        expected = ""
-        actual = StringExtensions.Repeat(s, count)
-        Assert.AreEqual(expected, actual)
-
-        ''Case 3
-        s = "aaa"
-        count = -3
-        expected = ""
-        Try
-            actual = StringExtensions.Repeat(s, count)
-            Assert.Fail("Should throw ArgumentOutOfRangeException")
-        Catch ex As ArgumentOutOfRangeException
-
-        Catch ex As Exception
-            Assert.Fail("Should throw ArgumentOutOfRangeException")
-        End Try
-
-        'Case 4
-        s = "aaaa"
-        count = 0
-        expected = ""
-        actual = StringExtensions.Repeat(s, count)
-        Assert.AreEqual(expected, actual)
-
+        If expectedException Is Nothing Then
+            actual = s.Repeat(count)
+            Assert.AreEqual(expected, actual)
+        Else
+            Assert.That(Sub() s.Repeat(count), Throws.TypeOf(expectedException))
+        End If
     End Sub
 
 
     '''<summary>
     '''A test for Left
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub LeftTest()
         Dim s As String = String.Empty
         Dim length As Integer = 0
@@ -181,7 +92,7 @@ Public Class StringExtensionsTest
     '''<summary>
     '''A test for Med
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub MedTest()
         Dim s As String = String.Empty
         Dim startIdx As Integer = 0
@@ -226,7 +137,7 @@ Public Class StringExtensionsTest
     '''<summary>
     '''A test for SkipBoth
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub SkipBothTest()
         Dim s As String = String.Empty '
         Dim startLength As Integer = 0 ' 
@@ -270,7 +181,7 @@ Public Class StringExtensionsTest
     '''<summary>
     '''A test for Right
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub RightTest()
         Dim s As String = String.Empty
         Dim length As Integer = 0
@@ -321,7 +232,7 @@ Public Class StringExtensionsTest
     '''<summary>
     '''A test for SurroundedBy
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub SurroundedByTest()
         Dim s As String = String.Empty '
         Dim startS As String = String.Empty

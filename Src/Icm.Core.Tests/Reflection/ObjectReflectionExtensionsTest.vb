@@ -102,7 +102,7 @@ Public Class ObjectReflectionExtensionsTest
     Public Sub HasFieldTest()
         Dim obj As New MyExample
 
-        Assert.IsTrue(obj.HasField("myfield"))
+        Assert.That(obj.HasField("myfield"))
         Assert.IsFalse(obj.HasField("myother"))
     End Sub
 
@@ -199,7 +199,7 @@ Public Class ObjectReflectionExtensionsTest
     Public Sub HasPropTest()
         Dim obj As New MyExample
 
-        Assert.IsTrue(obj.HasProp("MyProp"))
+        Assert.That(obj.HasProp("MyProp"))
         Assert.IsFalse(obj.HasProp("myother"))
     End Sub
 
@@ -207,7 +207,7 @@ Public Class ObjectReflectionExtensionsTest
     Public Sub TypeHasPropTest()
         Dim obj As New MyExample
 
-        Assert.IsTrue(TypeHasProp(Of MyExample)("MyProp"))
+        Assert.That(TypeHasProp(Of MyExample)("MyProp"))
         Assert.IsFalse(TypeHasProp(Of MyExample)("myother"))
     End Sub
 End Class

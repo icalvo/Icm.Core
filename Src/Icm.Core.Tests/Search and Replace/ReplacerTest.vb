@@ -15,7 +15,7 @@ Public Class ReplacerTest
     '''<summary>
     '''A test for TagStart
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub EmptyTagStartTest()
 
         Dim s1 As String = ""
@@ -33,7 +33,7 @@ Public Class ReplacerTest
     End Sub
 
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub TagEndTest()
         Dim s1 As String = ""
         Dim tgstart As String = "asdf"
@@ -53,7 +53,7 @@ Public Class ReplacerTest
     '''<summary>
     '''A test for Replace
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub ReplaceTest()
 
         Dim s1 As String = "HOLA SOY -NOMBRE- HOY ES -FECHA-"
@@ -78,7 +78,7 @@ Public Class ReplacerTest
     '''<summary>
     '''A test for ModifyReplacement
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub ModifyReplacementTest1()
 
         Dim s1 As String = "HOLA SOY -NOMBRE- HOY ES -FECHA-"
@@ -103,7 +103,7 @@ Public Class ReplacerTest
     '''<summary>
     '''A test for AddReplacement
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub AddReplacementTest()
 
         Dim s1 As String = "HOLA SOY -NOMBRE- HOY ES -NOMBRE-"

@@ -42,7 +42,7 @@ Public Class SettingsTest
     '''<summary>
     '''A test for GetCfg
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub GetCfgTest()
         Dim key As String = "system.data"
         Dim actual As Object

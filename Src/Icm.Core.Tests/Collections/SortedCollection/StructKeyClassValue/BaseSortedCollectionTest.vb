@@ -14,7 +14,7 @@ Public Class BaseSortedCollectionTest
 
         Dim actual = coll.GetFreeKey(13)
 
-        Assert.IsTrue(actual.HasValue)
+        Assert.That(actual.HasValue)
         Assert.AreEqual(expected, actual)
     End Sub
 
@@ -28,7 +28,7 @@ Public Class BaseSortedCollectionTest
         coll.Add(14, "value2")
         Dim actual = coll.GetFreeKey(13)
 
-        Assert.IsTrue(actual.HasValue)
+        Assert.That(actual.HasValue)
         Assert.AreEqual(expected, actual)
     End Sub
 
@@ -44,7 +44,7 @@ Public Class BaseSortedCollectionTest
         Dim actual = coll.GetFreeKey(13)
 
         ' Assert
-        Assert.IsTrue(actual.HasValue)
+        Assert.That(actual.HasValue)
         Assert.AreEqual(expected, actual)
     End Sub
 

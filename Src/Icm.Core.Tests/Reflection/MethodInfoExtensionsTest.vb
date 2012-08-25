@@ -9,17 +9,17 @@ Public Class MethodInfoExtensionsTest
 
         Dim attrs() As ExampleAttribute
         attrs = mi.GetAttributes(Of Example1Attribute)(False)
-        Assert.IsTrue(attrs.Count = 1)
+        Assert.That(attrs.Count = 1)
         Assert.AreEqual("classB", attrs(0).Message)
 
         attrs = mi.GetAttributes(Of Example1Attribute)(True)
-        Assert.IsTrue(attrs.Count = 3)
-        Assert.IsTrue(attrs.Any(Function(attr) attr.Message = "classAfirst"))
-        Assert.IsTrue(attrs.Any(Function(attr) attr.Message = "classAsecond"))
-        Assert.IsTrue(attrs.Any(Function(attr) attr.Message = "classB"))
+        Assert.That(attrs.Count = 3)
+        Assert.That(attrs.Any(Function(attr) attr.Message = "classAfirst"))
+        Assert.That(attrs.Any(Function(attr) attr.Message = "classAsecond"))
+        Assert.That(attrs.Any(Function(attr) attr.Message = "classB"))
 
         attrs = mi.GetAttributes(Of Example3Attribute)(True)
-        Assert.IsTrue(attrs.Count = 0)
+        Assert.That(attrs.Count = 0)
     End Sub
 
     <Test()>
@@ -27,7 +27,7 @@ Public Class MethodInfoExtensionsTest
         Dim mi = GetType(ClassB).GetMethod("Routine")
 
         Assert.IsFalse(mi.HasAttribute(Of Example2Attribute)(False))
-        Assert.IsTrue(mi.HasAttribute(Of Example2Attribute)(True))
+        Assert.That(mi.HasAttribute(Of Example2Attribute)(True))
     End Sub
 
     <Test()>

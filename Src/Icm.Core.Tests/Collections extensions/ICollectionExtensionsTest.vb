@@ -14,7 +14,7 @@ Public Class ICollectionExtensionsTest
     Public Sub ForceRemove_NormalTests(col As IEnumerable(Of String), itemRemoved As String, expected As IEnumerable(Of String))
         Dim list As New List(Of String)(col)
         list.ForceRemove(itemRemoved)
-        Assert.That(expected, [Is].EquivalentTo(list))
+        Assert.That(list, [Is].EquivalentTo(expected))
     End Sub
 
     <Test>

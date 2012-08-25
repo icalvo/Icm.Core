@@ -18,7 +18,7 @@ Public Class TimespanExtensionsTest
     '''<summary>
     '''A test for DividedBy
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub DividedByTest()
         Dim t As TimeSpan = New TimeSpan(3, 0, 0)
         Dim divisor As Single = 3
@@ -45,7 +45,7 @@ Public Class TimespanExtensionsTest
     '''<summary>
     '''A test for IsZero
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub IsZeroTest()
 
         Dim t As TimeSpan = New TimeSpan(3, 0, 0)
@@ -64,7 +64,7 @@ Public Class TimespanExtensionsTest
     '''<summary>
     '''A test for IsZero
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub IsNotZerotest()
 
         Dim t As TimeSpan = New TimeSpan(3, 0, 0)
@@ -79,7 +79,7 @@ Public Class TimespanExtensionsTest
     '''<summary>
     '''A test for ToAbrev
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub ToAbrevTest()
         Dim ts As TimeSpan = New TimeSpan()
         Dim expected As String = String.Empty
@@ -108,7 +108,7 @@ Public Class TimespanExtensionsTest
     '''<summary>
     '''A test for ToHHmm
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub ToHHmmTest()
         Dim ts As TimeSpan = New TimeSpan()
         Dim expected As String = String.Empty
@@ -131,7 +131,7 @@ Public Class TimespanExtensionsTest
     '''<summary>
     '''A test for ToHHmmss
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub ToHHmmssTest()
         Dim ts As TimeSpan
         Dim expected As String = String.Empty
@@ -160,7 +160,7 @@ Public Class TimespanExtensionsTest
     '''<summary>
     '''A test for ToMicroseconds
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub ToMicrosecondsTest()
         Dim ts As TimeSpan = New TimeSpan()
         Dim expected As Long = 0
@@ -189,7 +189,7 @@ Public Class TimespanExtensionsTest
     '''<summary>
     '''A test for ToMillisecondsAndOne
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub ToMillisecondsAndOneTest()
         Dim ts As TimeSpan = New TimeSpan()
         Dim expected As String = String.Empty
@@ -217,7 +217,7 @@ Public Class TimespanExtensionsTest
     '''<summary>
     '''A test for Tommssttt
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub TommsstttTest()
         Dim ts As TimeSpan = New TimeSpan()
         Dim expected As String = String.Empty

@@ -43,7 +43,7 @@ Public Class LongExtensionsTest
     '''<summary>
     '''A test for HumanFileSize
     '''</summary>
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub HumanFileSizeTest_BasicCases()
         Dim expected As String
         Dim actual As String
@@ -65,7 +65,7 @@ Public Class LongExtensionsTest
 
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub HumanFileSizeTest_ExtremeCases()
         Dim expected As String
         Dim actual As String

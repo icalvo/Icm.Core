@@ -142,6 +142,9 @@ Namespace Icm.Collections.Generic.StructKeyStructValue
             Dim fFinal As TKey?
             fFinal = desiredKey
             Do While fFinal.HasValue AndAlso ContainsKey(fFinal.Value)
+                If TotalOrder.Compare(fFinal.Value, TotalOrder.Greatest) = 0 Then
+                    Return Nothing
+                End If
                 fFinal = TotalOrder.Next(fFinal.Value)
             Loop
             Return fFinal

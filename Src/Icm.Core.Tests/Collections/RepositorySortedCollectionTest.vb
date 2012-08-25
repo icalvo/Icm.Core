@@ -25,7 +25,7 @@ Public Class RepositorySortedCollectionTest
 
     End Class
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub Constructor()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
@@ -35,10 +35,10 @@ Public Class RepositorySortedCollectionTest
 
         ' ASSERT
         Assert.AreEqual("/", sc.BucketQueue)
-        Assert.IsTrue(repo.List.SequenceEqual(InitialList))
+        Assert.That(repo.List.SequenceEqual(InitialList))
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub DoesNotGetBucketIfTheresNotDatesInBucket()
 
         ' ARRANGE
@@ -51,10 +51,10 @@ Public Class RepositorySortedCollectionTest
         ' ASSERT
         Assert.AreEqual("/", sc.BucketQueue)
         Assert.IsFalse(result)
-        Assert.IsTrue(repo.List.SequenceEqual(InitialList))
+        Assert.That(repo.List.SequenceEqual(InitialList))
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub DoesGetBucketIfThereAreDatesInBucket()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
@@ -65,11 +65,11 @@ Public Class RepositorySortedCollectionTest
         result = sc.ContainsKey(#1/1/2007#)
         ' ASSERT
         Assert.AreEqual("/2007/", sc.BucketQueue)
-        Assert.IsTrue(result)
+        Assert.That(result)
 
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub LastBucketAccessedGetsFirst()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
@@ -88,7 +88,7 @@ Public Class RepositorySortedCollectionTest
 
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub OldestBucketIsThrownAway()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
@@ -105,7 +105,7 @@ Public Class RepositorySortedCollectionTest
         Assert.AreEqual("/2008/2007/", sc.BucketQueue)
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub NextInSameBucket()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
@@ -119,7 +119,7 @@ Public Class RepositorySortedCollectionTest
     End Sub
 
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub NextInOtherNotLoadedBucket()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
@@ -135,7 +135,7 @@ Public Class RepositorySortedCollectionTest
     End Sub
 
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub NextInOtherLoadedBucket()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
@@ -152,7 +152,7 @@ Public Class RepositorySortedCollectionTest
         Assert.AreEqual("/2008/", sc.BucketQueue)
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub NextInOtherNotConsecutiveBucket()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
@@ -166,7 +166,7 @@ Public Class RepositorySortedCollectionTest
         Assert.AreEqual("/2012/", sc.BucketQueue)
     End Sub
 
-    <Test(), Category("Icm")>
+    <Test()>
     Public Sub NextDoesNotExist()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
