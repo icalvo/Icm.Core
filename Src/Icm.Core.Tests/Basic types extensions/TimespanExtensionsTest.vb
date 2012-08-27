@@ -1,245 +1,113 @@
 ﻿Imports System
 
-
-<TestFixture(), Category("Icm")>
-Public Class UndefinedValueExtensionsTest
-
-
-End Class
-
-
-'''<summary>
-'''This is a test class for TimespanExtensionsTest and is intended
-'''to contain all TimespanExtensionsTest Unit Tests
-'''</summary>
 <TestFixture(), Category("Icm")>
 Public Class TimespanExtensionsTest
 
-    '''<summary>
-    '''A test for DividedBy
-    '''</summary>
-    <Test()>
-    Public Sub DividedByTest()
-        Dim t As TimeSpan = New TimeSpan(3, 0, 0)
-        Dim divisor As Single = 3
-        Dim expected As TimeSpan = New TimeSpan(CLng(t.Ticks / 3))
-        Dim actual As TimeSpan
+    Shared ReadOnly DividedByTestCases As Object() = {
+        New TestCaseData(TimeSpan.FromHours(3), 3).Returns(TimeSpan.FromHours(1)),
+        New TestCaseData(TimeSpan.FromHours(-3), 3).Returns(TimeSpan.FromHours(-1)),
+        New TestCaseData(TimeSpan.FromHours(3), -3).Returns(TimeSpan.FromHours(-1)),
+        New TestCaseData(TimeSpan.Zero, 3).Returns(TimeSpan.Zero),
+        New TestCaseData(TimeSpan.FromHours(3), 0).Throws(GetType(OverflowException))
+    }
 
-        'bassic case
-        actual = TimespanExtensions.DividedBy(t, divisor)
-        Assert.AreEqual(expected, actual)
+    <TestCaseSource("DividedByTestCases")>
+    Public Function DividedBy_Test(span As TimeSpan, divisor As Single) As TimeSpan
+        Return span.DividedBy(divisor)
+    End Function
 
-        'Divisor = 0
-        divisor = 0
-        Try
-            actual = TimespanExtensions.DividedBy(t, divisor)
-            Assert.Fail("Should throw OverFlowException")
-        Catch ex As OverflowException
+    Shared ReadOnly IsZeroTestCases As Object() = {
+        New TestCaseData(TimeSpan.FromHours(3)).Returns(False),
+        New TestCaseData(TimeSpan.FromHours(-3)).Returns(False),
+        New TestCaseData(TimeSpan.Zero).Returns(True)
+    }
 
-        Catch ex As Exception
-            Assert.Fail("Should throw OverFlowException")
-        End Try
+    <TestCaseSource("IsZeroTestCases")>
+    Public Function IsZero_Test(target As TimeSpan) As Boolean
+        Return target.IsZero()
+    End Function
+    
+    Shared ReadOnly IsNotZeroTestCases As Object() = {
+        New TestCaseData(TimeSpan.FromHours(3)).Returns(True),
+        New TestCaseData(TimeSpan.FromHours(-3)).Returns(True),
+        New TestCaseData(TimeSpan.Zero).Returns(False)
+    }
 
-    End Sub
+    <TestCaseSource("IsNotZeroTestCases")>
+    Public Function IsNotZero_Test(target As TimeSpan) As Boolean
+        Return target.IsNotZero()
+    End Function
 
-    '''<summary>
-    '''A test for IsZero
-    '''</summary>
-    <Test()>
-    Public Sub IsZeroTest()
+    Shared ReadOnly ToAbbrevTestCases As Object() = {
+        New TestCaseData(New TimeSpan(2, 14, 2)).Returns("2h14'2''"),
+        New TestCaseData(New TimeSpan(0, 0, 2)).Returns("2''"),
+        New TestCaseData(TimeSpan.Zero).Returns("0"),
+        New TestCaseData(New TimeSpan(-5, 14, 18)).Returns("-4h45'42''")
+    }
 
-        Dim t As TimeSpan = New TimeSpan(3, 0, 0)
-        Dim expected As Boolean = False
-        Dim actual As Boolean
-        actual = TimespanExtensions.IsZero(t)
-        Assert.AreEqual(expected, actual)
+    <TestCaseSource("ToAbbrevTestCases")>
+    Public Function ToAbbrev_Test(target As TimeSpan) As String
+        Return target.ToAbbrev
+    End Function
 
-        'Caso 2 (la fecha es igual a 0)
-        Dim d As TimeSpan = New TimeSpan(0, 0, 0)
-        expected = True
-        actual = TimespanExtensions.IsZero(d)
-        Assert.AreEqual(expected, actual)
-    End Sub
+    Shared ReadOnly ToHHmmTestCases As Object() = {
+        New TestCaseData(New TimeSpan(2, 14, 18)).Returns("02:14"),
+        New TestCaseData(New TimeSpan(0, 0, 2)).Returns("00:00"),
+        New TestCaseData(TimeSpan.Zero).Returns("00:00"),
+        New TestCaseData(New TimeSpan(-5, 14, 18)).Returns("-04:45")
+    }
 
-    '''<summary>
-    '''A test for IsZero
-    '''</summary>
-    <Test()>
-    Public Sub IsNotZerotest()
+    <TestCaseSource("ToHHmmTestCases")>
+    Public Function ToHHmm_Test(target As TimeSpan) As String
+        Return target.ToHHmm
+    End Function
 
-        Dim t As TimeSpan = New TimeSpan(3, 0, 0)
-        Dim expected As Boolean = False
-        Dim actual As Boolean
-        actual = TimespanExtensions.IsZero(t)
-        Assert.AreEqual(expected, actual)
+    Shared ReadOnly ToHHmmssTestCases As Object() = {
+        New TestCaseData(New TimeSpan(2, 14, 18)).Returns("02:14:18"),
+        New TestCaseData(New TimeSpan(0, 0, 2)).Returns("00:00:02"),
+        New TestCaseData(TimeSpan.Zero).Returns("00:00:00"),
+        New TestCaseData(New TimeSpan(-5, 14, 18)).Returns("-04:45:42")
+    }
 
-    End Sub
+    <TestCaseSource("ToHHmmssTestCases")>
+    Public Function ToHHmmss_Test(target As TimeSpan) As String
+        Return target.ToHHmmss
+    End Function
 
+    Shared ReadOnly TommsstttTestCases As Object() = {
+        New TestCaseData(New TimeSpan(2, 14, 18, 25)).Returns("3738:25.000"),
+        New TestCaseData(New TimeSpan(0, 0, 2)).Returns("00:02.000"),
+        New TestCaseData(TimeSpan.Zero).Returns("00:00.000"),
+        New TestCaseData(New TimeSpan(-5, 14, 18)).Returns("-285:42.000")
+    }
 
-    '''<summary>
-    '''A test for ToAbrev
-    '''</summary>
-    <Test()>
-    Public Sub ToAbrevTest()
-        Dim ts As TimeSpan = New TimeSpan()
-        Dim expected As String = String.Empty
-        Dim actual As String
+    <TestCaseSource("TommsstttTestCases")>
+    Public Function Tommssttt_Test(target As TimeSpan) As String
+        Return target.Tommssttt
+    End Function
 
-        'Caso 1
-        ts = New TimeSpan(2, 14, 2)
-        expected = "2h14'2''"
-        actual = TimespanExtensions.ToAbbrev(ts)
-        Assert.AreEqual(expected, actual)
+    Shared ReadOnly ToHHmmsstttTestCases As Object() = {
+        New TestCaseData(New TimeSpan(2, 14, 18, 25)).Returns("62:18:25.000"),
+        New TestCaseData(New TimeSpan(0, 0, 2)).Returns("00:00:02.000"),
+        New TestCaseData(TimeSpan.Zero).Returns("00:00:00.000"),
+        New TestCaseData(New TimeSpan(-5, 14, 18)).Returns("-04:45:42.000")
+    }
 
-        'Caso 1
-        ts = New TimeSpan(0, 0, 2)
-        expected = "2''"
-        actual = TimespanExtensions.ToAbbrev(ts)
-        Assert.AreEqual(expected, actual)
+    <TestCaseSource("ToHHmmsstttTestCases")>
+    Public Function ToHHmmssttt_Test(target As TimeSpan) As String
+        Return target.ToHHmmssttt
+    End Function
 
-        'Caso 3
-        ts = New TimeSpan(-5, 14, 18)
-        expected = "-4h-45'-42''"
-        actual = TimespanExtensions.ToAbbrev(ts)
-        Assert.AreEqual(expected, actual)
+    Shared ReadOnly TotalMicrosecondsTestCases As Object() = {
+        New TestCaseData(New TimeSpan(2, 14, 18, 25)).Returns(224305000000),
+        New TestCaseData(New TimeSpan(0, 0, 0, 2)).Returns(2000000),
+        New TestCaseData(TimeSpan.Zero).Returns(0),
+        New TestCaseData(New TimeSpan(-5, 14, 18)).Returns(-17142000000)
+    }
 
-    End Sub
+    <TestCaseSource("TotalMicrosecondsTestCases")>
+    Public Function TotalMicroseconds_Test(target As TimeSpan) As Long
+        Return target.TotalMicroseconds
+    End Function
 
-    '''<summary>
-    '''A test for ToHHmm
-    '''</summary>
-    <Test()>
-    Public Sub ToHHmmTest()
-        Dim ts As TimeSpan = New TimeSpan()
-        Dim expected As String = String.Empty
-        Dim actual As String
-
-        'Caso 1
-        ts = New TimeSpan(2, 14, 2)
-        expected = "02:14"
-        actual = TimespanExtensions.ToHHmm(ts)
-        Assert.AreEqual(expected, actual)
-
-        'Caso 2
-        ts = New TimeSpan(-5, 14, 18)
-        expected = "-04:45"
-        actual = TimespanExtensions.ToHHmm(ts)
-        Assert.AreEqual(expected, actual)
-
-    End Sub
-
-    '''<summary>
-    '''A test for ToHHmmss
-    '''</summary>
-    <Test()>
-    Public Sub ToHHmmssTest()
-        Dim ts As TimeSpan
-        Dim expected As String = String.Empty
-        Dim actual As String
-
-        'Caso 1
-        ts = New TimeSpan(2, 14, 18)
-        expected = "02:14:18"
-        actual = TimespanExtensions.ToHHmmss(ts)
-        Assert.AreEqual(expected, actual)
-
-        'Caso 2
-        ts = New TimeSpan(-5, 14, 18)
-        expected = "-04:45:42"
-        actual = TimespanExtensions.ToHHmmss(ts)
-        Assert.AreEqual(expected, actual)
-
-        'Caso 3
-        ts = New TimeSpan(0, 0, 0)
-        expected = "00:00:00"
-        actual = TimespanExtensions.ToHHmmss(ts)
-        Assert.AreEqual(expected, actual)
-
-    End Sub
-
-    '''<summary>
-    '''A test for ToMicroseconds
-    '''</summary>
-    <Test()>
-    Public Sub ToMicrosecondsTest()
-        Dim ts As TimeSpan = New TimeSpan()
-        Dim expected As Long = 0
-        Dim actual As Long
-
-        'Caso 1
-        ts = New TimeSpan(2, 14, 18, 25)
-        expected = 224305000000
-        actual = ts.TotalMicroseconds()
-        Assert.AreEqual(expected, actual)
-
-        'Caso 2
-        ts = New TimeSpan(0, 0, 0, 2)
-        expected = 2000000
-        actual = ts.TotalMicroseconds()
-        Assert.AreEqual(expected, actual)
-
-        'Caso 2
-        ts = New TimeSpan(-5, 14, 18)
-        expected = -17142000000
-        actual = ts.TotalMicroseconds()
-        Assert.AreEqual(expected, actual)
-
-    End Sub
-
-    '''<summary>
-    '''A test for ToMillisecondsAndOne
-    '''</summary>
-    <Test()>
-    Public Sub ToMillisecondsAndOneTest()
-        Dim ts As TimeSpan = New TimeSpan()
-        Dim expected As String = String.Empty
-        Dim actual As String
-
-        'Caso 1
-        ts = New TimeSpan(2, 14, 18, 25)
-        expected = "224305000,0"
-        actual = TimespanExtensions.ToMillisecondsAndOne(ts)
-        Assert.AreEqual(expected, actual)
-
-        'Caso 2
-        ts = New TimeSpan(0, 0, 0, 2)
-        expected = "2000,0"
-        actual = TimespanExtensions.ToMillisecondsAndOne(ts)
-        Assert.AreEqual(expected, actual)
-
-        'Caso 3
-        ts = New TimeSpan(-5, 14, 18)
-        expected = "-17142000,0"
-        actual = TimespanExtensions.ToMillisecondsAndOne(ts)
-        Assert.AreEqual(expected, actual)
-    End Sub
-
-    '''<summary>
-    '''A test for Tommssttt
-    '''</summary>
-    <Test()>
-    Public Sub TommsstttTest()
-        Dim ts As TimeSpan = New TimeSpan()
-        Dim expected As String = String.Empty
-        Dim actual As String
-
-
-        'Caso 1
-        ts = New TimeSpan(2, 14, 18, 25)
-        expected = "3738:25.000"
-        actual = TimespanExtensions.Tommssttt(ts)
-        Assert.AreEqual(expected, actual)
-
-        'Caso 2
-        ts = New TimeSpan(0, 0, 0, 2)
-        expected = "00:02.000"
-        actual = TimespanExtensions.Tommssttt(ts)
-        Assert.AreEqual(expected, actual)
-
-        'Caso 3
-        ts = New TimeSpan(-5, 14, 18)
-        expected = "-285:42.000"
-        actual = TimespanExtensions.Tommssttt(ts)
-        Assert.AreEqual(expected, actual)
-    End Sub
 End Class

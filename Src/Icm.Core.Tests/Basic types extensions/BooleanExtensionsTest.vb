@@ -1,21 +1,17 @@
 ﻿<TestFixture()>
 Public Class BooleanExtensionsTest
 
-    <Test()>
-    Public Sub ToIntegerTest()
-        Assert.AreEqual(1, True.ToInteger)
-        Assert.AreEqual(0, False.ToInteger)
-    End Sub
+    <TestCase(True, Result:=1)>
+    <TestCase(False, Result:=0)>
+    Public Function ToInteger_Test(bool As Boolean) As Integer
+        Return bool.ToInteger
+    End Function
 
-    <Test()>
-    Public Sub IfNTest()
-        Dim bool As Boolean?
-        bool = True
-        Assert.AreEqual("cadena verdad", bool.IfN("cadena verdad", "cadena falso", "cadena nulo"))
-        bool = False
-        Assert.AreEqual("cadena falso", bool.IfN("cadena verdad", "cadena falso", "cadena nulo"))
-        bool = Nothing
-        Assert.AreEqual("cadena nulo", bool.IfN("cadena verdad", "cadena falso", "cadena nulo"))
-    End Sub
+    <TestCase(True, "cadena verdad", "cadena falso", "cadena nulo", Result:="cadena verdad")>
+    <TestCase(False, "cadena verdad", "cadena falso", "cadena nulo", Result:="cadena falso")>
+    <TestCase(Nothing, "cadena verdad", "cadena falso", "cadena nulo", Result:="cadena nulo")>
+    Public Function IfN_Test(bool As Boolean?, trueString As String, falseString As String, nullString As String) As String
+        Return bool.IfN(trueString, falseString, nullString)
+    End Function
 
 End Class

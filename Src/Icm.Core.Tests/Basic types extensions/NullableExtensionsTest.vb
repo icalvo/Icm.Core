@@ -1,30 +1,16 @@
 ﻿<TestFixture()>
 Public Class NullableExtensionsTest
 
-    <Test()>
-    Public Sub VTest()
-        Dim obj As Integer?
-
-        obj = 3
-        Assert.AreEqual(obj.V, obj.Value)
-
-        obj = Nothing
-        Assert.Throws(Of InvalidOperationException)(
-            Sub()
-                Dim a = obj.V
-            End Sub)
+    <TestCase(3)>
+    <TestCase(Nothing, ExpectedException:=GetType(InvalidOperationException))>
+    Public Sub V_Test(obj As Nullable(Of Integer))
+        Assert.That(obj.V, [Is].EqualTo(obj.Value))
     End Sub
 
-
-    <Test()>
-    Public Sub HasNotValueTest()
-        Dim obj As Integer?
-
-        obj = 3
-        Assert.AreEqual(obj.HasNotValue, Not obj.HasValue)
-
-        obj = Nothing
-        Assert.AreEqual(obj.HasNotValue, Not obj.HasValue)
+    <TestCase(3)>
+    <TestCase(Nothing)>
+    Public Sub HasNotValue_Test(obj As Nullable(Of Integer))
+        Assert.That(obj.HasNotValue, [Is].EqualTo(Not obj.HasValue))
     End Sub
 
 End Class

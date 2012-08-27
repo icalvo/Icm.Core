@@ -50,18 +50,25 @@ Namespace Icm
             If ts = TimeSpan.Zero Then
                 Return "0"
             End If
+            Dim absoluteTs As TimeSpan
+            If ts < TimeSpan.Zero Then
+                absoluteTs = ts.Negate
+                sb.Append("-")
+            Else
+                absoluteTs = ts
+            End If
 
-            If ts.Days <> 0 Then
-                sb.Append(ts.Days & "d")
+            If absoluteTs.Days <> 0 Then
+                sb.Append(absoluteTs.Days & "d")
             End If
-            If ts.Hours <> 0 Then
-                sb.Append(ts.Hours & "h")
+            If absoluteTs.Hours <> 0 Then
+                sb.Append(absoluteTs.Hours & "h")
             End If
-            If ts.Minutes <> 0 Then
-                sb.Append(ts.Minutes & "'")
+            If absoluteTs.Minutes <> 0 Then
+                sb.Append(absoluteTs.Minutes & "'")
             End If
-            If ts.Seconds <> 0 Then
-                sb.Append(ts.Seconds & "''")
+            If absoluteTs.Seconds <> 0 Then
+                sb.Append(absoluteTs.Seconds & "''")
             End If
 
             Return sb.ToString
@@ -120,17 +127,6 @@ Namespace Icm
         <Extension()>
         Public Function TotalMicroseconds(ByVal ts As TimeSpan) As Long
             Return 1000 * ts.Ticks \ TimeSpan.TicksPerMillisecond
-        End Function
-
-        ''' <summary>
-        ''' Milliseconds format with one decimal
-        ''' </summary>
-        ''' <param name="ts"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        <Extension()>
-        Public Function ToMillisecondsAndOne(ByVal ts As TimeSpan) As String
-            Return ts.TotalMilliseconds.ToString("#0.0")
         End Function
 
     End Module

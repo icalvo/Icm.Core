@@ -1,52 +1,27 @@
 ﻿<TestFixture()>
 Public Class ObjectExtensionsTest
 
-    <Test()> _
-    Public Sub IfNothingTest()
-        Dim str As String
+    Shared ReadOnly IfNothingTestCases As Object() = {
+        New TestCaseData("value", "subst").Returns("value"),
+        New TestCaseData(Nothing, "subst").Returns("subst"),
+        New TestCaseData("value", Nothing).Returns("value"),
+        New TestCaseData(Nothing, Nothing).Returns(Nothing),
+        New TestCaseData(DBNull.Value, "subst").Returns("subst")
+    }
 
-        str = "value"
-        Assert.AreEqual("value", str.IfNothing("subst"))
+    <TestCaseSource("IfNothingTestCases")>
+    Public Function IfNothing_Test(target As Object, subst As String) As String
+        Return ObjectExtensions.IfNothing(target, subst)
+    End Function
 
-        str = Nothing
-        Assert.AreEqual("subst", str.IfNothing("subst"))
+    <TestCase({"hola", "maria", "pato", "perro"}, "hola", Result:=True)>
+    <TestCase({"hola", "maria", "pato", "perro"}, "adios", Result:=False)>
+    <TestCase({"hola", "maria", "pato", "perro"}, Nothing, Result:=False)>
+    <TestCase(New String() {}, "hola", Result:=False)>
+    <TestCase(Nothing, "hola", Result:=False)>
+    <TestCase(Nothing, Nothing, Result:=False)>
+    Public Function IsOneOf_Test(sa As String(), s As String) As Boolean
+        Return s.IsOneOf(sa)
+    End Function
 
-        Assert.AreEqual("subst", DBNull.Value.IfNothing("subst"))
-
-    End Sub
-
-    '''<summary>
-    '''A test for IsOneOf
-    '''</summary>
-    <Test()>
-    Public Sub IsOneOfTest()
-        Dim s As String = String.Empty
-
-        Dim expected As Boolean = False
-        Dim actual As Boolean
-
-        'Caso 1
-        Dim sa As String() = {"hola", "maria", "pato", "perro"}
-        s = "hola"
-        expected = True
-        actual = s.IsOneOf(sa)
-        Assert.AreEqual(expected, actual)
-        sa = Nothing
-
-        'Caso 2
-        s = "adios"
-        sa = {"hola", "maria", "pato", "perro"}
-        expected = False
-        actual = s.IsOneOf(sa)
-        Assert.AreEqual(expected, actual)
-        sa = Nothing
-
-        'Caso3
-        s = Nothing
-        sa = {"hola", "maria", "pato", "perro"}
-        expected = False
-        actual = s.IsOneOf(sa)
-        Assert.AreEqual(expected, actual)
-
-    End Sub
 End Class

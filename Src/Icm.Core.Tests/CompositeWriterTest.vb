@@ -3,12 +3,6 @@ Imports System.IO
 Imports System.IO.StringWriter
 Imports Icm.IO
 
-
-
-'''<summary>
-'''This is a test class for CompositeWriterTest and is intended
-'''to contain all CompositeWriterTest Unit Tests
-'''</summary>
 <TestFixture(), Category("Icm")>
 Public Class CompositeWriterTest
 
@@ -16,33 +10,32 @@ Public Class CompositeWriterTest
     '''A test for WriteLine
     '''</summary>
     <Test()>
-    Public Sub CompositeWriterTest()
-        Dim target As CompositeWriter = New CompositeWriter
-        Dim s As String = String.Empty
-
-        s = "hola"
-        Dim sw1 As New StringWriter()
+    Public Sub Write_Test()
+        Dim target As New CompositeWriter
+        Dim s1 = "hola"
+        Dim s2 = "quetal"
+        Dim s3 = "adios"
+        Dim sw1 As New StringWriter
+        Dim sw2 As New StringWriter
+        Dim sw3 As New StringWriter
 
         target.Add(sw1)
-        target.Write(s)
+        target.Write(s1)
 
         Assert.That(sw1.ToString = "hola")
 
-        Dim sw2 As New StringWriter()
         target.Add(sw2)
-        target.WriteLine(Date.Now)
-        'Debug.WriteLine(sw1)
-        Dim aux2 = "hola" & sw2.ToString
-        Assert.That(sw1.ToString = aux2)
+        target.Write(s2)
 
-        Dim sw3 As New StringWriter
+        Assert.That(sw1.ToString = "holaquetal")
+        Assert.That(sw2.ToString = "quetal")
+
         target.Add(sw3)
-        target.Write("Prueba")
-        Assert.That(sw1.ToString = "hola" & sw2.ToString)
-        Assert.That(sw3.ToString = "Prueba")
+        target.Write(s3)
+        Assert.That(sw1.ToString = "holaquetaladios")
+        Assert.That(sw2.ToString = "quetaladios")
+        Assert.That(sw3.ToString = "adios")
         target.Close()
-
-
     End Sub
 
 End Class

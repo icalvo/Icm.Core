@@ -42,10 +42,18 @@ Namespace Icm
         ''' <remarks></remarks>
         <Extension()>
         Public Function AddS(ByVal d As Date, ByVal dur As TimeSpan) As Date
+            If dur < TimeSpan.Zero Then
+                Throw New ArgumentException("Cannot accept negative durations", "dur")
+            End If
             If dur = TimeSpan.MaxValue Then
                 Return Date.MaxValue
             Else
-                Return d.Add(dur)
+                Dim maxDate = Date.MaxValue.Subtract(dur)
+                If d > maxDate Then
+                    Return Date.MaxValue
+                Else
+                    Return d.Add(dur)
+                End If
             End If
         End Function
 

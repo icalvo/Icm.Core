@@ -29,9 +29,9 @@ Public Class RepositorySortedCollectionTest
     Public Sub Constructor()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
-        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, 2, New DateTotalOrder)
 
         ' ACT
+        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, maxBuckets:=2, totalOrder:=New DateTotalOrder)
 
         ' ASSERT
         Assert.AreEqual("/", sc.BucketQueue)
@@ -39,11 +39,11 @@ Public Class RepositorySortedCollectionTest
     End Sub
 
     <Test()>
-    Public Sub DoesNotGetBucketIfTheresNotDatesInBucket()
+    Public Sub ContainsKey_IfThereAreNoDatesInBucket_DoesNotGetBucket()
 
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
-        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, 2, New DateTotalOrder)
+        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, maxBuckets:=2, totalOrder:=New DateTotalOrder)
         Dim result As Boolean
 
         ' ACT
@@ -55,10 +55,10 @@ Public Class RepositorySortedCollectionTest
     End Sub
 
     <Test()>
-    Public Sub DoesGetBucketIfThereAreDatesInBucket()
+    Public Sub ContainsKey_IfThereAreDatesInBucket_GetsBucket()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
-        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, 2, New DateTotalOrder)
+        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, maxBuckets:=2, totalOrder:=New DateTotalOrder)
         Dim result As Boolean
 
         ' ACT
@@ -70,10 +70,10 @@ Public Class RepositorySortedCollectionTest
     End Sub
 
     <Test()>
-    Public Sub LastBucketAccessedGetsFirst()
+    Public Sub ContainsKey_LastBucketAccessedGetsFirst()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
-        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, 3, New DateTotalOrder)
+        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, maxBuckets:=3, totalOrder:=New DateTotalOrder)
         Dim result As Boolean
 
         ' ACT
@@ -89,10 +89,10 @@ Public Class RepositorySortedCollectionTest
     End Sub
 
     <Test()>
-    Public Sub OldestBucketIsThrownAway()
+    Public Sub ContainsKey_OldestBucketIsThrownAway()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
-        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, 2, New DateTotalOrder)
+        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, maxBuckets:=2, totalOrder:=New DateTotalOrder)
         Dim result As Boolean
 
         ' ACT
@@ -106,10 +106,10 @@ Public Class RepositorySortedCollectionTest
     End Sub
 
     <Test()>
-    Public Sub NextInSameBucket()
+    Public Sub Next_WhenInSameBucket()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
-        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, 2, New DateTotalOrder)
+        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, maxBuckets:=2, totalOrder:=New DateTotalOrder)
         Dim result As Date?
         ' ACT
         result = sc.Next(#1/1/2007#)
@@ -120,10 +120,10 @@ Public Class RepositorySortedCollectionTest
 
 
     <Test()>
-    Public Sub NextInOtherNotLoadedBucket()
+    Public Sub Next_WhenInOtherNotLoadedBucket()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
-        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, 2, New DateTotalOrder)
+        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, maxBuckets:=2, totalOrder:=New DateTotalOrder)
         Dim result As Date?
         ' ACT
         Assert.AreEqual("/", sc.BucketQueue)
@@ -136,10 +136,10 @@ Public Class RepositorySortedCollectionTest
 
 
     <Test()>
-    Public Sub NextInOtherLoadedBucket()
+    Public Sub Next_WhenInOtherLoadedBucket()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
-        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, 2, New DateTotalOrder)
+        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, maxBuckets:=2, totalOrder:=New DateTotalOrder)
         Dim result As Date?
         ' ACT
         sc.ContainsKey(#1/1/2008#)
@@ -153,10 +153,10 @@ Public Class RepositorySortedCollectionTest
     End Sub
 
     <Test()>
-    Public Sub NextInOtherNotConsecutiveBucket()
+    Public Sub Next_WhenInOtherNotConsecutiveBucket()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
-        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, 2, New DateTotalOrder)
+        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, maxBuckets:=2, totalOrder:=New DateTotalOrder)
         Dim result As Date?
         ' ACT
         result = sc.Next(#1/1/2010#)
@@ -167,16 +167,16 @@ Public Class RepositorySortedCollectionTest
     End Sub
 
     <Test()>
-    Public Sub NextDoesNotExist()
+    Public Sub Next_WhenDoesNotExist()
         ' ARRANGE
         Dim repo = New FakeRepo(InitialList)
-        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, 2, New DateTotalOrder)
+        Dim sc As New RepositorySortedCollection(Of Date, String)(repo, New YearManager, maxBuckets:=2, totalOrder:=New DateTotalOrder)
         Dim result As Date?
         ' ACT
         result = sc.Next(#1/1/2013#)
 
         ' ASSERT
-        Assert.IsNull(result)
+        Assert.That(result, [Is].Null)
 
     End Sub
 End Class

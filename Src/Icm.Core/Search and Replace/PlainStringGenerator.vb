@@ -7,6 +7,7 @@ Namespace Icm.Text
     ''' <remarks></remarks>
     Public Class PlainStringGenerator
         Implements IEnumerator(Of String)
+        Implements IEnumerable(Of String)
 
         Private ReadOnly s_ As String
 
@@ -33,11 +34,18 @@ Namespace Icm.Text
         End Function
 
         Public Sub Reset() Implements IEnumerator.Reset
-            Throw New NotImplementedException
         End Sub
 
 
         Public Sub Dispose() Implements IDisposable.Dispose
         End Sub
+
+        Public Function GetEnumerator() As IEnumerator(Of String) Implements IEnumerable(Of String).GetEnumerator
+            Return Me
+        End Function
+
+        Public Function GetEnumerator1() As IEnumerator Implements IEnumerable.GetEnumerator
+            Return Me
+        End Function
     End Class
 End Namespace

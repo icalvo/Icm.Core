@@ -17,7 +17,7 @@ Namespace Icm.Collections.Generic.StructKeyClassValue
     Public Class RepositorySortedCollection(Of TKey As {Structure, IComparable(Of TKey)}, TValue As Class)
         Inherits BaseSortedCollection(Of TKey, TValue)
 
-#Region " Atributos "
+#Region " Attributes "
         Private ReadOnly bucketQueue_ As New LinkedList(Of Integer)()
         Private ReadOnly buckets_ As New Dictionary(Of Integer, SortedList(Of TKey?, TValue))()
 
@@ -36,7 +36,7 @@ Namespace Icm.Collections.Generic.StructKeyClassValue
                       ByVal maxBuckets As Integer,
                       ByVal totalOrder As ITotalOrder(Of TKey)
                       )
-            MyBase.new(totalOrder)
+            MyBase.New(totalOrder)
             repository_ = repo
             periodManager_ = periodManager
             maximumBuckets_ = maxBuckets

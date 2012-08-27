@@ -161,11 +161,7 @@ Namespace Icm
         ''' <remarks></remarks>
         <Extension()>
         Public Function IfEmpty(ByVal s As String, ByVal emptyString As String) As String
-            If s = "" Then
-                Return emptyString
-            Else
-                Return s
-            End If
+            Return If(s IsNot Nothing AndAlso s = String.Empty, emptyString, s)
         End Function
 
         ''' <summary>
@@ -176,11 +172,7 @@ Namespace Icm
         ''' <remarks></remarks>
         <Extension()>
         Public Function IsEmpty(ByVal s As String) As Boolean
-            If s = "" Then
-                Return True
-            Else
-                Return False
-            End If
+            Return s IsNot Nothing AndAlso s = String.Empty
         End Function
     End Module
 

@@ -36,6 +36,8 @@ Namespace Icm.Text
 #End Region
 
         Public Sub New(ByVal tr As TextReader, ByVal tw As TextWriter, Optional ByVal tgstart As String = "__", Optional ByVal tgend As String = "__")
+            If tr Is Nothing Then Throw New ArgumentNullException("tr")
+            If tw Is Nothing Then Throw New ArgumentNullException("tw")
             Input = tr
             Output = tw
             TagStart = tgstart
@@ -198,6 +200,20 @@ Namespace Icm.Text
                         End If
                 End Select
             Loop
+            If st = State.TagContent Then
+                If replacements_.ContainsKey(bufferTag.ToString) Then
+                    replacements_(bufferTag.ToString).MoveNext()
+                    Output.Write(replacements_(bufferTag.ToString).Current)
+                Else
+                    Output.Write(tagStart_)
+                    Output.Write(bufferTag.ToString)
+                    ' Don't output tag end because it is not present in the input
+                End If
+                st = State.BeforeTag
+            End If
+            If st <> State.BeforeTag Then
+                Throw New InvalidOperationException("Unclosed tag")
+            End If
         End Sub
 
         ''' <summary>

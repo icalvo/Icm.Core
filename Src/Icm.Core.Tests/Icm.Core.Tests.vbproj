@@ -100,7 +100,6 @@
     <Compile Include="Collections extensions\TextWriterExtensionsTest.vb" />
     <Compile Include="Collections\PriorityQueueTest.vb" />
     <Compile Include="Collections\RepositorySortedCollectionTest.vb" />
-    <Compile Include="Collections\RepositoryTest.vb" />
     <Compile Include="Collections\SortedCollection\StructKeyClassValue\BaseSortedCollectionTest.vb" />
     <Compile Include="Collections\SortedCollection\StructKeyStructValue\BaseSortedCollectionTest.vb" />
     <Compile Include="Compilation\CompiledFunctionTest.vb" />

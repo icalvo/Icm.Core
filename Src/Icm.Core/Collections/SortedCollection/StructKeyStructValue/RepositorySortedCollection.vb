@@ -17,7 +17,7 @@ Namespace Icm.Collections.Generic.StructKeyStructValue
     Public Class RepositorySortedCollection(Of TKey As {Structure, IComparable(Of TKey)}, TValue As Structure)
         Inherits BaseSortedCollection(Of TKey, TValue)
 
-#Region " Atributos "
+#Region " Attributes "
         Private bucketQueue_ As New LinkedList(Of Integer)
         Private buckets_ As New Dictionary(Of Integer, SortedList(Of TKey?, TValue))
 

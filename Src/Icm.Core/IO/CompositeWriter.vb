@@ -14,11 +14,11 @@ Namespace Icm.IO
     Public Class CompositeWriter
         Inherits TextWriter
 
-        Private ReadOnly _textWriters As New List(Of TextWriter)()
+        Private ReadOnly textWriters_ As New List(Of TextWriter)()
 
-        Protected ReadOnly Property textWriters() As IList(Of TextWriter)
+        Protected ReadOnly Property TextWriters() As IList(Of TextWriter)
             Get
-                Return _textWriters
+                Return textWriters_
             End Get
         End Property
 
@@ -27,48 +27,48 @@ Namespace Icm.IO
             Add(tws)
         End Sub
 
-        Public Shadows Sub Add(ByVal ParamArray tws() As TextWriter)
+        Public Sub Add(ByVal ParamArray tws() As TextWriter)
             For Each tw In tws
                 If tw Is Nothing Then
                     Throw New ArgumentNullException("tws")
                 End If
-                textWriters.Add(tw)
+                TextWriters.Add(tw)
             Next
         End Sub
 
         Public Overloads Overrides Sub Write(ByVal value As Char)
-            For Each tw As TextWriter In textWriters
+            For Each tw As TextWriter In TextWriters
                 tw.Write(value)
             Next
         End Sub
 
         Public Overloads Overrides Sub Write(ByVal value As String)
-            For Each tw As TextWriter In textWriters
+            For Each tw As TextWriter In TextWriters
                 tw.Write(value)
             Next
         End Sub
 
         Public Overrides Sub Flush()
-            For Each tw As TextWriter In textWriters
+            For Each tw As TextWriter In TextWriters
                 tw.Flush()
             Next
         End Sub
 
         Public Overrides Sub Close()
-            For Each tw As TextWriter In textWriters
+            For Each tw As TextWriter In TextWriters
                 tw.Close()
             Next
         End Sub
 
         Public Overloads Overrides Sub WriteLine(ByVal value As String)
-            For Each tw As TextWriter In textWriters
+            For Each tw As TextWriter In TextWriters
                 tw.WriteLine(value)
             Next
         End Sub
 
         Public Overrides ReadOnly Property Encoding() As System.Text.Encoding
             Get
-                Return System.Text.Encoding.Default
+                Throw New InvalidOperationException("CompositeWriter does not have a single encoding because it is composed of several child TextWriters.")
             End Get
         End Property
     End Class

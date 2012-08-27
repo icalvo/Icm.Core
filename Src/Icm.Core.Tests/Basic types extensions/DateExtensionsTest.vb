@@ -1,76 +1,32 @@
 ﻿Imports System
 
-
-
-
-
-'''<summary>
-'''This is a test class for DateExtensionsTest and is intended
-'''to contain all DateExtensionsTest Unit Tests
-'''</summary>
 <TestFixture(), Category("Icm")>
 Public Class DateExtensionsTest
 
+    Shared ReadOnly SeasonTestCases() As Object = {
+        New TestCaseData(New Date(2010, 4, 2)).Returns(Seasons.Spring),
+        New TestCaseData(New Date(2010, 12, 25)).Returns(Seasons.Winter),
+        New TestCaseData(New Date(2010, 10, 27)).Returns(Seasons.Fall),
+        New TestCaseData(New Date(2010, 7, 23)).Returns(Seasons.Summer)
+    }
 
-#Region "Additional test attributes"
-    '
-    'You can use the following additional attributes as you write your tests:
-    '
-    'Use ClassInitialize to run code before running the first test in the class
-    '<ClassInitialize()>  _
-    'Public Shared Sub MyClassInitialize(ByVal testContext As TestContext)
-    'End Sub
-    '
-    'Use ClassCleanup to run code after all tests in a class have run
-    '<ClassCleanup()>  _
-    'Public Shared Sub MyClassCleanup()
-    'End Sub
-    '
-    'Use TestInitialize to run code before running each test
-    '<TestInitialize()>  _
-    'Public Sub MyTestInitialize()
-    'End Sub
-    '
-    'Use TestCleanup to run code after each test has run
-    '<TestCleanup()>  _
-    'Public Sub MyTestCleanup()
-    'End Sub
-    '
-#End Region
+    <TestCaseSource("SeasonTestCases")>
+    Public Function Season_Test(d As Date) As Seasons
+        Return d.Season
+    End Function
 
+    Shared ReadOnly AddSTestCases() As Object = {
+        New TestCaseData(New Date(2010, 4, 2), TimeSpan.FromDays(3)).Returns(New Date(2010, 4, 5)),
+        New TestCaseData(Date.MaxValue, TimeSpan.FromDays(3)).Returns(Date.MaxValue),
+        New TestCaseData(New Date(2010, 4, 2), TimeSpan.MaxValue).Returns(Date.MaxValue),
+        New TestCaseData(New Date(2010, 4, 2), TimeSpan.FromDays(-3)).Throws(GetType(ArgumentException)),
+        New TestCaseData(New Date(2010, 4, 2), TimeSpan.Zero).Returns(New Date(2010, 4, 2))
+    }
 
-    '''<summary>
-    '''A test for Season
-    '''</summary>
-    <Test()>
-    Public Sub SeasonTest()
-        Dim d As Date
-        Dim expected As DateExtensions.Seasons = DateExtensions.Seasons.Spring
-        Dim actual As DateExtensions.Seasons
+    <TestCaseSource("AddSTestCases")>
+    Public Function AddS_Test(d As Date, dur As TimeSpan) As Date
+        Return d.AddS(dur)
+    End Function
 
-        'When date is spring
-        d = New Date(2010, 4, 2)
-        actual = DateExtensions.Season(d)
-        Assert.AreEqual(expected, actual)
-
-        'When date is winter
-        d = CDate("2010-12-28")
-        expected = DateExtensions.Seasons.Winter
-        actual = DateExtensions.Season(d)
-        Assert.AreEqual(expected, actual)
-
-        'when date is fall
-        d = New Date(2010, 10, 27)
-        expected = DateExtensions.Seasons.Fall
-        actual = DateExtensions.Season(d)
-        Assert.AreEqual(expected, actual)
-
-        'when date is summer
-        d = New Date(2010, 7, 27)
-        expected = DateExtensions.Seasons.Summer
-        actual = DateExtensions.Season(d)
-        Assert.AreEqual(expected, actual)
-
-    End Sub
 End Class
 
