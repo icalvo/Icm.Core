@@ -9,27 +9,25 @@ Namespace Icm.Compilation
     ''' </summary>
     ''' <typeparam name="T">Function return type</typeparam>
     ''' <remarks>
-    ''' Use property <see cref="CompiledFunction.Code" /> to establish the code of
+    ''' Use property <see cref="CompiledFunction(Of T).Code" /> to establish the code of
     ''' the function.
-    ''' Use the method <see cref="CompiledFunction.AddParameter" />  to establish the
+    ''' Use the method <see cref="CompiledFunction(Of T).AddParameter" />  to establish the
     ''' parameters of the function.
-    ''' Use <see cref="CompiledFunction.CompileAsExpression" /> to compile 
+    ''' Use <see cref="CompiledFunction(Of T).CompileAsExpression" /> to compile 
     ''' a function that returns the given code. This method returns False if
     ''' the compilation fails. Use property <see cref="CompiledFunction.CompilerErrors" />
     ''' to obtain the compilation errors.
-    ''' La función  <see cref="CompiledFunction{T}.CompileAsExpression">CompileAsExpression</see> se utiliza para 
-    ''' tomar la decisión, y se le deben pasar como argumentos los parámetros
-    ''' previamente configurados.
+    ''' Use <see cref=" CompiledFunction(Of T).Evaluate">Evaluate</see> to execute the function
+    ''' with some given arguments which must be type compatible with the previously configured
+    ''' parameters.
     ''' </remarks>
     Public MustInherit Class CompiledFunction(Of T)
         Implements IDisposable
 
-        Private _namespaces As IList(Of String) = New List(Of String)()
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <remarks></remarks>
         Private Shared ReadOnly _instances As New Dictionary(Of String, Object)()
+        Private _namespaces As IList(Of String) = New List(Of String)()
+        Private ReadOnly _parameters As New List(Of CompiledParameterInfo)
+        Private ReadOnly _compilerErrors As New List(Of CompilerError)
 
         Protected Property CompilerParameters As New CompilerParameters
         Protected Property CodeProvider As CodeDomProvider
@@ -43,8 +41,6 @@ Namespace Icm.Compilation
         Private _execInstance As Object
         Private _MethodInfo As MethodInfo
 
-        Private ReadOnly _parameters As New List(Of CompiledParameterInfo)
-        Private ReadOnly _compilerErrors As New List(Of CompilerError)
 
         ReadOnly Property Parameters As IList(Of CompiledParameterInfo)
             Get

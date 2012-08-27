@@ -121,7 +121,7 @@ Namespace Icm.Collections.Generic.StructKeyClassValue
             Set(ByVal value As TValue)
                 GetBucket(key)(key) = value
 
-                ' Estrategia de copia directa en DB
+                ' Copy-on-write strategy
                 repository_.Update(key, value)
             End Set
         End Property
