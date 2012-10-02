@@ -49,7 +49,7 @@ Namespace Icm.Collections
         ''' </history>
         <Extension()>
         Public Function JoinStr(ByVal list As IEnumerable(Of String), ByVal separator As String) As String
-            Return String.Join(separator, list.ToArray)
+            Return String.Join(separator, list.Where(Function(s) Not String.IsNullOrEmpty(s)).ToArray)
         End Function
 
         ''' <summary>
