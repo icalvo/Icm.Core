@@ -159,6 +159,13 @@
     <Compile Include="Collections\SortedCollection\General\MemorySortedCollectionRepository.vb" />
     <Compile Include="Collections\SortedCollection\General\RepositorySortedCollection.vb" />
     <Compile Include="Compilation\CSharpCompiledFunction.vb" />
+    <Compile Include="IO\TextReaderExtensions.vb" />
+    <Compile Include="Localization\Translation.vb" />
+    <Compile Include="Localization\FakeLocalizationRepository.vb" />
+    <Compile Include="Localization\ITranslation.vb" />
+    <Compile Include="Localization\TranslationFormat.vb" />
+    <Compile Include="Localization\TranslationFactory.vb" />
+    <Compile Include="Localization\TranslationList.vb" />
     <Compile Include="Nullable2\Nullable2.vb" />
     <Compile Include="Nullable2\Nullable2Conversion.vb" />
     <Compile Include="Reflection\Reflection.es.Designer.vb">
@@ -253,7 +260,7 @@
     <Compile Include="Collections extensions\IListExtensions.vb" />
     <Compile Include="INamed.vb" />
     <Compile Include="DateTimeInterval.vb" />
-    <Compile Include="ILocalizationRepository.vb" />
+    <Compile Include="Localization\ILocalizationRepository.vb" />
     <Compile Include="Basic types extensions\LongExtensions.vb" />
     <Compile Include="IO\MailTextWriter.vb" />
     <Compile Include="Math\LimitedQueue.vb" />
@@ -279,6 +286,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reflection.resx</DependentUpon>
     </Compile>
+    <Compile Include="TimerExtensions.vb" />
     <Compile Include="Tuples\ModifiableTuplesFactory.vb" />
     <Compile Include="Tuples\Pair.vb" />
     <Compile Include="IO\PathManager.vb" />
@@ -308,9 +316,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Text\UsualRegularExpressions.vb" />
-    <Compile Include="Timers.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Tools.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -364,9 +369,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.XML" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

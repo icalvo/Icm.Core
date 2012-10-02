@@ -108,9 +108,12 @@
     <Compile Include="Configuration\GeneralSectionHandlerTest.vb" />
     <Compile Include="Configuration\SettingsTest.vb" />
     <Compile Include="Configuration\TypedDictionarySectionHandlerTest.vb" />
+    <Compile Include="DateTimeIntervalTest.vb" />
     <Compile Include="Functions\TotalOrder\BaseTotalOrderTest.vb" />
     <Compile Include="HashAlgorithmExtensionsTest.vb" />
     <Compile Include="IO\FileToolsTest.vb" />
+    <Compile Include="IO\TextReaderExtensionsTest.vb" />
+    <Compile Include="Localization\TranslationTest.vb" />
     <Compile Include="Math\STATTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
