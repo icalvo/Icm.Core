@@ -27,27 +27,17 @@
                 SetInterval(start_, value)
             End Set
         End Property
-        ReadOnly Property Inicio() As Date
-            Get
-                Return start_
-            End Get
-        End Property
 
-
-        Property Fin() As Date
-            Get
-                Return end_
-            End Get
-            Set(ByVal value As Date)
-                SetInterval(start_, value)
-            End Set
-        End Property
         Public Sub New(ByVal i As Date, ByVal f As Date)
             SetInterval(i, f)
         End Sub
 
         Public Sub New(ByVal i As Date, ByVal dur As TimeSpan)
             SetInterval(i, dur)
+        End Sub
+
+        Public Sub New(ByVal point As Date)
+            SetInterval(point, point)
         End Sub
 
         ReadOnly Property Duration() As TimeSpan
