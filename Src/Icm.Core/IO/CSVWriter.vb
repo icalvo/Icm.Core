@@ -12,8 +12,8 @@ Namespace Icm.IO
 
         Private ReadOnly _tw As TextWriter
 
-        Public Sub New(ByVal fn As String)
-            _tw = New StreamWriter(fn, False, Encoding.GetEncoding("iso-8859-1"))
+        Public Sub New(ByVal tw As TextWriter)
+            _tw = tw
         End Sub
 
         Public Sub AddHeader(ByVal ParamArray fields() As String)
