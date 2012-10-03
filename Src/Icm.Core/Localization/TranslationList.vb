@@ -20,7 +20,19 @@ Namespace Icm.Localization
             Dim primaryLang = lcid And &H3FF
 
             If primaryLang = 3082 Then
-
+                Dim last = args.LastOrDefault
+                If last IsNot Nothing Then
+                    If last.ToString.ToLower.StartsWith("i") Then
+                        Return args.JoinStr(", ", " y ")
+                    ElseIf last.ToString.ToLower.StartsWith("hi") Then
+                        Return args.JoinStr(", ", " y ")
+                    End If
+                End If
+                Return args.JoinStr(", ", " y ")
+            ElseIf primaryLang = 1033 Then
+                Return args.JoinStr(", ", ", and ")
+            ElseIf primaryLang = 2057 Then
+                Return args.JoinStr(", ", ", and ")
             Else
                 Return args.JoinStr(", ")
             End If
