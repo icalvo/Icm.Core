@@ -158,6 +158,9 @@
     <Compile Include="Collections\SortedCollection\General\MemorySortedCollection.vb" />
     <Compile Include="Collections\SortedCollection\General\MemorySortedCollectionRepository.vb" />
     <Compile Include="Collections\SortedCollection\General\RepositorySortedCollection.vb" />
+    <Compile Include="Color console\ColorConsole.vb" />
+    <Compile Include="Color console\ColorSetting.vb" />
+    <Compile Include="Color console\ColorString.vb" />
     <Compile Include="Compilation\CSharpCompiledFunction.vb" />
     <Compile Include="IO\TextReaderExtensions.vb" />
     <Compile Include="Localization\Translation.vb" />
