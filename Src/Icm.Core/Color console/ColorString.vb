@@ -1,4 +1,4 @@
-Namespace Icm
+Namespace Icm.ColorConsole
 
     ''' <summary>
     ''' String with foreground and background colors.

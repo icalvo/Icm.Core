@@ -1,4 +1,4 @@
-Namespace Icm
+Namespace Icm.ColorConsole
 
     ''' <summary>
     ''' Console color setting.
