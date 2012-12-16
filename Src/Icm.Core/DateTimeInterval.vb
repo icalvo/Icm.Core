@@ -92,13 +92,13 @@ Namespace Icm
             SetInterval(pointDate, pointDate)
         End Sub
 
-        Public Overridable Function Description() As Translation
+        Public Overridable Function Description() As Phrase
             If [End] = Date.MaxValue Then
-                Return TransF("from {0:dd/MM/yyyy HH:mm:ss}, indefinitely", Start)
+                Return PhrF("from {0:dd/MM/yyyy HH:mm:ss}, indefinitely", Start)
             ElseIf [End] = Date.MinValue Then
-                Return TransF("{0:dd/MM/yyyy HH:mm:ss}", Start)
+                Return PhrF("{0:dd/MM/yyyy HH:mm:ss}", Start)
             Else
-                Return TransF("between {0:dd/MM/yyyy HH:mm:ss} and {1:dd/MM/yyyy HH:mm:ss} ({2})", Start, [End], Duration.ToAbbrev)
+                Return PhrF("between {0:dd/MM/yyyy HH:mm:ss} and {1:dd/MM/yyyy HH:mm:ss} ({2})", Start, [End], Duration.ToAbbrev)
             End If
         End Function
 
