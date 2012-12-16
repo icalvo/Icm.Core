@@ -2,9 +2,9 @@
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
-<Assembly: AssemblyCompany("Ignacio Calvo")> 
-<Assembly: AssemblyProduct("ICM Classes")> 
-<Assembly: AssemblyCopyright("Copyright (c) Ignacio Calvo")> 
+<Assembly: AssemblyCompany("Ignacio Calvo Martínez")> 
+<Assembly: AssemblyProduct("ICM Libraries")> 
+<Assembly: AssemblyCopyright("Copyright © Ignacio Calvo Martínez")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)> 
