@@ -1,6 +1,59 @@
 ﻿Namespace Icm
 
+    Public Interface ITreeNode(Of T)
+        Property Value() As T
+        Function GetParent() As ITreeNode(Of T)
+        Function GetChildren() As IEnumerable(Of ITreeNode(Of T))
+    End Interface
+
+    Public Module ITreeNodeExtensions
+
+        Public Iterator Function DepthPreorderTraverse(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of T)
+            Yield tn.Value
+            For Each child In tn.GetChildren
+                For Each result In DepthPreorderTraverse(child)
+                    Yield result
+                Next
+            Next
+        End Function
+
+        Public Iterator Function DepthPostorderTraverse(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of T)
+            For Each child In tn.GetChildren
+                For Each result In DepthPreorderTraverse(child)
+                    Yield result
+                Next
+            Next
+            Yield tn.Value
+        End Function
+
+        Public Iterator Function BreadthTraverse(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of T)
+            Dim queue As New Queue(Of ITreeNode(Of T))
+            queue.Enqueue(tn)
+            For Each result In BreadthTraverse(queue)
+                Yield result
+            Next
+        End Function
+
+        Public Iterator Function BreadthTraverse(Of T)(queue As Queue(Of ITreeNode(Of T))) As IEnumerable(Of T)
+            If queue.Count = 0 Then
+                Exit Function
+            End If
+            Dim tn = queue.Dequeue
+            Yield tn.Value
+
+            For Each child In tn.GetChildren
+                queue.Enqueue(child)
+            Next
+            For Each result In BreadthTraverse(queue)
+                Yield result
+            Next
+        End Function
+
+    End Module
+
     Public Class TreeNode(Of T)
+        Implements ITreeNode(Of T)
+
         Private parent_ As TreeNode(Of T)
         Private ReadOnly children_ As New List(Of TreeNode(Of T))()
         Private level_ As Integer
@@ -9,7 +62,7 @@
             Value = v
         End Sub
 
-        Property Value() As T
+        Property Value() As T Implements ITreeNode(Of T).Value
 
         ReadOnly Property Children() As IEnumerable(Of TreeNode(Of T))
             Get
@@ -75,6 +128,13 @@
             children_.Remove(tn)
         End Sub
 
+        Public Function GetChildren() As IEnumerable(Of ITreeNode(Of T)) Implements ITreeNode(Of T).GetChildren
+            Return Children
+        End Function
+
+        Public Function GetParent() As ITreeNode(Of T) Implements ITreeNode(Of T).GetParent
+            Return Parent
+        End Function
     End Class
 
 End Namespace
