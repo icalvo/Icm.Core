@@ -5,5 +5,5 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Tests for Icm.Core library")> 
 <Assembly: Guid("52fdc3ed-a01f-49e0-931b-f71906f5c75b")> 
 <Assembly: CLSCompliant(True)> 
-<Assembly: AssemblyVersion("0.0.0.0")>   ' To be filled by CI server
-<Assembly: AssemblyFileVersion("0.0.0.0")>    ' To be filled by CI server
+<Assembly: AssemblyVersion("1.1.2")>   ' To be filled by CI server
+<Assembly: AssemblyFileVersion("1.1.2")>    ' To be filled by CI server
