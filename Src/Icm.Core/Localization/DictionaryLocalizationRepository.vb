@@ -3,14 +3,14 @@ Imports System.Globalization
 Namespace Icm.Localization
 
     Public Class DictionaryLocalizationRepository
-        Inherits Dictionary(Of Tuple(Of String, Integer), String)
+        Inherits Dictionary(Of LocalizationKey, String)
         Implements ILocalizationRepository
 
         Public Sub New()
             MyBase.New()
         End Sub
 
-        Public Sub New(dict As Dictionary(Of Tuple(Of String, Integer), String))
+        Public Sub New(dict As Dictionary(Of LocalizationKey, String))
             MyBase.New()
 
             For Each element In dict
@@ -26,7 +26,7 @@ Namespace Icm.Localization
 
         ReadOnly Property ItemForCulture(ByVal lcid As Integer, ByVal key As String) As String Implements ILocalizationRepository.ItemForCulture
             Get
-                Dim multkey = Tuple.Create(key, lcid)
+                Dim multkey = New LocalizationKey(key, lcid)
 
                 If ContainsKey(multkey) Then
                     Return Item(multkey)

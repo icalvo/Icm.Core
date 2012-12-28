@@ -25,7 +25,7 @@ Namespace Icm.IO
 
         Private Sub base_Changed(ByVal sender As Object, ByVal e As FileSystemEventArgs) Handles MyBase.Changed, MyBase.Created, MyBase.Deleted
             Ahora = Now
-            Debug.WriteLine("Changed {0} {1}", e.ChangeType, e.FullPath)
+            Debug.WriteLine(String.Format("Changed {0} {1}", e.ChangeType, e.FullPath))
             Select Case e.ChangeType
                 Case WatcherChangeTypes.Deleted, WatcherChangeTypes.Created
                     ChequearMovimiento(e)

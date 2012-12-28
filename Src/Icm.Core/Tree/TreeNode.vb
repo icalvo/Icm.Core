@@ -129,7 +129,7 @@
         End Sub
 
         Public Function GetChildren() As IEnumerable(Of ITreeNode(Of T)) Implements ITreeNode(Of T).GetChildren
-            Return Children
+            Return Children.Cast(Of ITreeNode(Of T))()
         End Function
 
         Public Function GetParent() As ITreeNode(Of T) Implements ITreeNode(Of T).GetParent

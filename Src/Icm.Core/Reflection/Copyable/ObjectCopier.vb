@@ -105,7 +105,7 @@ Namespace Icm.Reflection
             End If
 
             For Each provider As IInstanceProvider In Providers
-                If provider.Provided = instanceType Then
+                If provider.Provided Is instanceType Then
                     Return provider.CreateCopy(instance)
                 End If
             Next
