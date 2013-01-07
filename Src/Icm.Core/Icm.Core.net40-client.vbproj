@@ -165,6 +165,7 @@
     <Compile Include="IO\TextReaderExtensions.vb" />
     <Compile Include="Localization\DictionaryFixedCultureLocalizationRepository.vb" />
     <Compile Include="Localization\DictionaryLocalizationRepository.vb" />
+    <Compile Include="Localization\LocalizationKey.vb" />
     <Compile Include="Localization\PhraseBase.vb" />
     <Compile Include="Localization\ResourceLocalizationRepository.vb" />
     <Compile Include="Localization\Phrase.vb" />
@@ -293,6 +294,9 @@
       <DependentUpon>Reflection.resx</DependentUpon>
     </Compile>
     <Compile Include="TimerExtensions.vb" />
+    <Compile Include="Tree\ITreeNode.vb" />
+    <Compile Include="Tree\ITreeNodeExtensions.vb" />
+    <Compile Include="Tree\TransformTreeNode.vb" />
     <Compile Include="Tuples\ModifiableTuplesFactory.vb" />
     <Compile Include="Tuples\Pair.vb" />
     <Compile Include="IO\PathManager.vb" />
@@ -355,7 +359,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Icm.Core.nuspec" />
     <None Include="Icm.pfx" />
     <None Include="packages.config" />
   </ItemGroup>

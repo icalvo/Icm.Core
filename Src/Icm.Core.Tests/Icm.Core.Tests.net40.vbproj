@@ -132,7 +132,7 @@
     <Compile Include="Reflection\ObjectReflectionExtensionsTest.vb" />
     <Compile Include="Search and Replace\PlainStringGeneratorTest.vb" />
     <Compile Include="Search and Replace\ReplacerTest.vb" />
-    <Compile Include="TreeNodeTest.vb" />
+    <Compile Include="Tree\TreeNodeTest.vb" />
     <Compile Include="WorkingDaysManagerTest.vb" />
   </ItemGroup>
   <ItemGroup>

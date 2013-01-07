@@ -1,56 +1,5 @@
 ﻿Namespace Icm
 
-    Public Interface ITreeNode(Of T)
-        Property Value() As T
-        Function GetParent() As ITreeNode(Of T)
-        Function GetChildren() As IEnumerable(Of ITreeNode(Of T))
-    End Interface
-
-    Public Module ITreeNodeExtensions
-
-        Public Iterator Function DepthPreorderTraverse(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of T)
-            Yield tn.Value
-            For Each child In tn.GetChildren
-                For Each result In DepthPreorderTraverse(child)
-                    Yield result
-                Next
-            Next
-        End Function
-
-        Public Iterator Function DepthPostorderTraverse(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of T)
-            For Each child In tn.GetChildren
-                For Each result In DepthPreorderTraverse(child)
-                    Yield result
-                Next
-            Next
-            Yield tn.Value
-        End Function
-
-        Public Iterator Function BreadthTraverse(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of T)
-            Dim queue As New Queue(Of ITreeNode(Of T))
-            queue.Enqueue(tn)
-            For Each result In BreadthTraverse(queue)
-                Yield result
-            Next
-        End Function
-
-        Public Iterator Function BreadthTraverse(Of T)(queue As Queue(Of ITreeNode(Of T))) As IEnumerable(Of T)
-            If queue.Count = 0 Then
-                Exit Function
-            End If
-            Dim tn = queue.Dequeue
-            Yield tn.Value
-
-            For Each child In tn.GetChildren
-                queue.Enqueue(child)
-            Next
-            For Each result In BreadthTraverse(queue)
-                Yield result
-            Next
-        End Function
-
-    End Module
-
     Public Class TreeNode(Of T)
         Implements ITreeNode(Of T)
 
@@ -100,11 +49,13 @@
             Return tn
         End Function
 
-        Public Sub AddChild(ByVal tn As TreeNode(Of T))
+        Public Function AddChild(ByVal tn As TreeNode(Of T)) As TreeNode(Of T)
             tn.parent_ = Me
             tn.level_ = level_ + 1
             children_.Add(tn)
-        End Sub
+
+            Return tn
+        End Function
 
         Public Sub AddChildren(ByVal l As IEnumerable(Of T))
             Dim result As New List(Of TreeNode(Of T))
