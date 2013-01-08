@@ -11,12 +11,53 @@ Namespace Icm
 
         <Extension>
         Public Iterator Function DepthPreorderTraverse(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of T)
+            Dim childStack As New Stack(Of IEnumerator(Of ITreeNode(Of T)))
+
+            childStack.Push(tn.GetChildren.GetEnumerator)
             Yield tn.Value
-            For Each child In tn.GetChildren
-                For Each result In DepthPreorderTraverse(child)
-                    Yield result
+            Do Until childStack.Count = 0
+                Dim childEnum = childStack.Peek
+
+                If childEnum.MoveNext() Then
+                    Dim child = childEnum.Current
+                    childStack.Push(child.GetChildren.GetEnumerator)
+                    Yield child.Value
+                Else
+                    childStack.Pop()
+                End If
+            Loop
+        End Function
+
+        <Extension>
+        Public Iterator Function DepthPostorderTraverse(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of T)
+            Dim childStack As New Stack(Of IEnumerator(Of ITreeNode(Of T)))
+            Dim rootEnum = {tn}.ToList.GetEnumerator
+            childStack.Push(rootEnum)
+            Do
+                Dim childEnum = childStack.Peek
+
+                If childEnum.MoveNext() Then
+                    Dim child = childEnum.Current
+                    childStack.Push(child.GetChildren.GetEnumerator)
+                Else
+                    childStack.Pop()
+                    Yield childStack.Peek.Current.Value
+                End If
+            Loop Until childStack.Count = 1
+        End Function
+
+        <Extension>
+        Public Iterator Function BreadthTraverse(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of T)
+            Dim queue As New Queue(Of ITreeNode(Of T))
+
+            queue.Enqueue(tn)
+            While Not queue.Count = 0
+                tn = queue.Dequeue()
+                Yield tn.Value
+                For Each child In tn.GetChildren
+                    queue.Enqueue(child)
                 Next
-            Next
+            End While
         End Function
 
         ''' <summary>
@@ -53,61 +94,41 @@ Namespace Icm
 
 
         <Extension>
-        Public Iterator Function DepthPostorderTraverse(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of T)
-            For Each child In tn.GetChildren
-                For Each result In DepthPostorderTraverse(child)
-                    Yield result
-                Next
-            Next
-            Yield tn.Value
-        End Function
-
-        <Extension>
-        Public Iterator Function BreadthTraverse(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of T)
-            Dim queue As New Queue(Of ITreeNode(Of T))
-            queue.Enqueue(tn)
-            For Each result In BreadthTraverse(queue)
-                Yield result
-            Next
-        End Function
-
-        Private Iterator Function BreadthTraverse(Of T)(queue As Queue(Of ITreeNode(Of T))) As IEnumerable(Of T)
-            If queue.Count = 0 Then
-                Exit Function
-            End If
-            Dim tn = queue.Dequeue
-            Yield tn.Value
-
-            For Each child In tn.GetChildren
-                queue.Enqueue(child)
-            Next
-            For Each result In BreadthTraverse(queue)
-                Yield result
-            Next
-        End Function
-
-        <Extension>
         Public Iterator Function DepthPreorderTraverseWithLevel(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of Tuple(Of T, Integer))
-            For Each element In tn.DepthPreorderTraverseWithLevel(0)
-                Yield element
-            Next
-        End Function
+            Dim childStack As New Stack(Of IEnumerator(Of ITreeNode(Of T)))
 
-        <Extension>
-        Private Iterator Function DepthPreorderTraverseWithLevel(Of T)(tn As ITreeNode(Of T), level As Integer) As IEnumerable(Of Tuple(Of T, Integer))
-            Yield Tuple.Create(tn.Value, level)
-            For Each child In tn.GetChildren
-                For Each result In child.DepthPreorderTraverseWithLevel(level + 1)
-                    Yield result
-                Next
-            Next
+            childStack.Push(tn.GetChildren.GetEnumerator)
+            Yield Tuple.Create(tn.Value, childStack.Count - 1)
+            Do Until childStack.Count = 0
+                Dim childEnum = childStack.Peek
+
+                If childEnum.MoveNext() Then
+                    Dim child = childEnum.Current
+                    childStack.Push(child.GetChildren.GetEnumerator)
+                    Yield Tuple.Create(child.Value, childStack.Count - 1)
+                Else
+                    childStack.Pop()
+                End If
+            Loop
+
         End Function
 
         <Extension>
         Public Iterator Function DepthPostorderTraverseWithLevel(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of Tuple(Of T, Integer))
-            For Each element In tn.DepthPostorderTraverseWithLevel(0)
-                Yield element
-            Next
+            Dim childStack As New Stack(Of IEnumerator(Of ITreeNode(Of T)))
+            Dim rootEnum = {tn}.ToList.GetEnumerator
+            childStack.Push(rootEnum)
+            Do
+                Dim childEnum = childStack.Peek
+
+                If childEnum.MoveNext() Then
+                    Dim child = childEnum.Current
+                    childStack.Push(child.GetChildren.GetEnumerator)
+                Else
+                    childStack.Pop()
+                    Yield Tuple.Create(childStack.Peek.Current.Value, childStack.Count - 1)
+                End If
+            Loop Until childStack.Count = 1
         End Function
 
         <Extension>
@@ -123,28 +144,21 @@ Namespace Icm
 
         <Extension>
         Public Iterator Function BreadthTraverseWithLevel(Of T)(tn As ITreeNode(Of T)) As IEnumerable(Of Tuple(Of T, Integer))
-            Dim queue As New Queue(Of Tuple(Of ITreeNode(Of T), Integer))
-            queue.Enqueue(Tuple.Create(tn, 0))
-            For Each result In BreadthTraverseWithLevel(queue)
-                Yield result
-            Next
+            Dim queue As New Queue(Of ITreeNode(Of T))
+            Dim levelQueue As New Queue(Of Integer)
+
+            queue.Enqueue(tn)
+            levelQueue.Enqueue(0)
+            While Not queue.Count = 0
+                tn = queue.Dequeue()
+                Dim level = levelQueue.Dequeue
+                Yield Tuple.Create(tn.Value, level)
+                For Each child In tn.GetChildren
+                    queue.Enqueue(child)
+                    levelQueue.Enqueue(level + 1)
+                Next
+            End While
         End Function
-
-        Private Iterator Function BreadthTraverseWithLevel(Of T)(queue As Queue(Of Tuple(Of ITreeNode(Of T), Integer))) As IEnumerable(Of Tuple(Of T, Integer))
-            If queue.Count = 0 Then
-                Exit Function
-            End If
-            Dim tn = queue.Dequeue
-            Yield Tuple.Create(tn.Item1.Value, tn.Item2)
-
-            For Each child In tn.Item1.GetChildren
-                queue.Enqueue(tuple.Create(child, tn.Item2 + 1))
-            Next
-            For Each result In BreadthTraverseWithLevel(queue)
-                Yield result
-            Next
-        End Function
-
 
         Public Function Node(Of T)(v As T, ParamArray children() As TreeNode(Of T)) As TreeNode(Of T)
             Dim result As New TreeNode(Of T)(v)
