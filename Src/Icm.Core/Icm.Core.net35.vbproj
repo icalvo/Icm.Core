@@ -18,7 +18,7 @@
     <ProjectType>Local</ProjectType>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{347421A5-E5A1-4239-B6C9-5FCB7D524086}</ProjectGuid>
+    <ProjectGuid>{884CD959-7100-4081-AF2D-57EE3E76926E}</ProjectGuid>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -251,9 +251,14 @@
       <DependentUpon>Reflection.resx</DependentUpon>
     </Compile>
     <Compile Include="TimerExtensions.vb" />
+    <Compile Include="Tree\ITreeElement.vb" />
+    <Compile Include="Tree\ITreeElementExtensions.vb" />
     <Compile Include="Tree\ITreeNode.vb" />
     <Compile Include="Tree\ITreeNodeExtensions.vb" />
+    <Compile Include="Tree\TransformTreeElement.vb" />
     <Compile Include="Tree\TransformTreeNode.vb" />
+    <Compile Include="Tree\TreeElement.vb" />
+    <Compile Include="Tree\TreeFactory.vb" />
     <Compile Include="Tuples\Tuple.vb" />
     <Compile Include="Tuples\ModifiableTuplesFactory.vb" />
     <Compile Include="Tuples\Pair.vb" />

@@ -1,4 +1,5 @@
-Namespace Icm
+Namespace Icm.Tree
+
 
     ''' <summary>
     ''' A TransformTreeNode(Of T1,T2) acts as a proxy for a ITreeNode(Of T1), giving the full funcionality of
@@ -8,24 +9,16 @@ Namespace Icm
     ''' <typeparam name="T2"></typeparam>
     ''' <remarks></remarks>
     Public Class TransformTreeNode(Of T1, T2)
+        Inherits TransformTreeElement(Of T1, T2)
         Implements ITreeNode(Of T2)
 
-        Private _basenode As ITreeNode(Of T1)
-        Private _transform As Func(Of T1, T2)
-        Private _node As ITreeNode(Of T2)
+        Private ReadOnly _basenode As ITreeNode(Of T1)
+        Private ReadOnly _transform As Func(Of T1, T2)
         Private _value As T2
 
         Public Sub New(node As ITreeNode(Of T1), transform As Func(Of T1, T2))
-            _basenode = node
-            _transform = transform
+            MyBase.New(node, transform)
         End Sub
-        Public Function GetChildren() As IEnumerable(Of ITreeNode(Of T2)) Implements ITreeNode(Of T2).GetChildren
-#If Framework = "Net35" Then
-            Return _basenode.GetChildren().Select(Function(child) New TransformTreeNode(Of T1, T2)(child, _transform)))
-#Else
-            Return _basenode.GetChildren().Select(Function(child) DirectCast(New TransformTreeNode(Of T1, T2)(child, _transform), ITreeNode(Of T2)))
-#End If
-        End Function
 
         Public Function GetParent() As ITreeNode(Of T2) Implements ITreeNode(Of T2).GetParent
             Dim sourceParent = _basenode.GetParent
@@ -36,16 +29,5 @@ Namespace Icm
             End If
         End Function
 
-        Property Value As T2 Implements ITreeNode(Of T2).Value
-            Get
-                If _value Is Nothing Then
-                    _value = _transform(_basenode.Value)
-                End If
-                Return _value
-            End Get
-            Set(value As T2)
-                Throw New InvalidOperationException("Cannot modify value of a TransformTreeNode")
-            End Set
-        End Property
     End Class
 End Namespace

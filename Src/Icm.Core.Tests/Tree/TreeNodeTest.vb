@@ -1,4 +1,5 @@
 ﻿Imports Icm.Collections
+Imports Icm.Tree
 
 '''<summary>
 '''This is a test class for TreeNodeTest and is intended
