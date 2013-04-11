@@ -180,12 +180,12 @@
     <Compile Include="Localization\PhraseAnd.vb" />
     <Compile Include="Nullable2\Nullable2.vb" />
     <Compile Include="Nullable2\Nullable2Conversion.vb" />
+    <Compile Include="Reflection\ObjectCopyExtensions.vb" />
     <Compile Include="Reflection\Reflection.es.Designer.vb">
       <DependentUpon>Reflection.es.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Reflection\Copyable\ICopyable.vb" />
     <Compile Include="Functions\TotalOrder\LongTotalOrder.vb" />
     <Compile Include="Reflection\ActivatorTools.vb" />
     <Compile Include="Reflection\ExpressionExtensions.vb" />
@@ -196,7 +196,6 @@
     <Compile Include="Compilation\CompiledParameterInfo.vb" />
     <Compile Include="Compilation\CompileException.vb" />
     <Compile Include="Compilation\VBCompiledFunction.vb" />
-    <Compile Include="Reflection\Copyable\ObjectCopier.vb" />
     <Compile Include="IO\CompositeWriter.vb" />
     <Compile Include="Configuration\TypedValue.vb" />
     <Compile Include="Configuration\GeneralSectionHandler.vb" />
@@ -206,11 +205,6 @@
     <Compile Include="IO\MovementEventArgs.vb" />
     <Compile Include="IO\TextWriterExtensions.vb" />
     <Compile Include="Constants.vb" />
-    <Compile Include="Reflection\Copyable\BaseCopyable.vb" />
-    <Compile Include="Reflection\Copyable\IInstanceProvider.vb" />
-    <Compile Include="Reflection\Copyable\InstanceProvider.vb" />
-    <Compile Include="Reflection\Copyable\ObjectExtensions.vb" />
-    <Compile Include="Reflection\Copyable\VisitedGraph.vb" />
     <Compile Include="IO\CSVWriter.vb" />
     <Compile Include="Basic types extensions\DateExtensions.vb" />
     <Compile Include="Collections\SortedCollection\RangeIntervalEnumerator.vb" />

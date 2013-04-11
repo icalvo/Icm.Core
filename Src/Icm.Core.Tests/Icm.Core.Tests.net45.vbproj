@@ -131,7 +131,10 @@
     <Compile Include="Ninject\KernelContainerTest.vb" />
     <Compile Include="Nullable2\Nullable2Test.vb" />
     <Compile Include="Reflection\MethodInfoExtensionsTest.vb" />
+    <Compile Include="Reflection\MyExample.vb" />
+    <Compile Include="Reflection\ObjectCopyExtensionsTest.vb" />
     <Compile Include="Reflection\ObjectReflectionExtensionsTest.vb" />
+    <Compile Include="Repository\MemoryRepositoryTest.vb" />
     <Compile Include="Search and Replace\PlainStringGeneratorTest.vb" />
     <Compile Include="Search and Replace\ReplacerTest.vb" />
     <Compile Include="Tree\ITreeNodeExtensionsTest.vb" />

@@ -15,6 +15,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Icm.Core.net40", "Icm.Core\
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Icm.Core.net40-client", "Icm.Core\Icm.Core.net40-client.vbproj", "{8586553D-55A5-4E57-B3ED-45CA65ABA0AA}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Icm.Core.Tests.net45", "Icm.Core.Tests\Icm.Core.Tests.net45.vbproj", "{F6EDABF4-E1D7-4D91-B187-EBF057DDFB5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,12 @@ Global
 		{8586553D-55A5-4E57-B3ED-45CA65ABA0AA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8586553D-55A5-4E57-B3ED-45CA65ABA0AA}.Release|x86.ActiveCfg = Release|x86
 		{8586553D-55A5-4E57-B3ED-45CA65ABA0AA}.Release|x86.Build.0 = Release|x86
+		{F6EDABF4-E1D7-4D91-B187-EBF057DDFB5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6EDABF4-E1D7-4D91-B187-EBF057DDFB5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6EDABF4-E1D7-4D91-B187-EBF057DDFB5C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F6EDABF4-E1D7-4D91-B187-EBF057DDFB5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6EDABF4-E1D7-4D91-B187-EBF057DDFB5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6EDABF4-E1D7-4D91-B187-EBF057DDFB5C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
