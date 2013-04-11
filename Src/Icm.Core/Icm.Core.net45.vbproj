@@ -166,6 +166,20 @@
     <Compile Include="Color console\ColorConsole.vb" />
     <Compile Include="Color console\ColorSetting.vb" />
     <Compile Include="Color console\ColorString.vb" />
+    <Compile Include="CommandLine\CommandLine.vb" />
+    <Compile Include="CommandLine\CommandLineExtensions.vb" />
+    <Compile Include="CommandLine\CommandLineTools.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommandLineTools.resx</DependentUpon>
+    </Compile>
+    <Compile Include="CommandLine\NamedParameter.vb" />
+    <Compile Include="CommandLine\SubArgument.vb" />
+    <Compile Include="CommandLine\SubArgumentType.vb" />
+    <Compile Include="CommandLine\UndefinedOptionException.vb" />
+    <Compile Include="CommandLine\UnnamedParameter.vb" />
+    <Compile Include="CommandLine\UnnamedParametersConfig.vb" />
+    <Compile Include="CommandLine\ValuesStore.vb" />
     <Compile Include="Compilation\CSharpCompiledFunction.vb" />
     <Compile Include="IO\TextReaderExtensions.vb" />
     <Compile Include="Localization\DictionaryFixedCultureLocalizationRepository.vb" />
@@ -340,6 +354,11 @@
     <Compile Include="Tuples\Tuple4.vb" />
     <Compile Include="Compilation\CompiledFunction.vb" />
     <Compile Include="WorkingDaysManager.vb" />
+    <EmbeddedResource Include="CommandLine\CommandLineTools.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommandLineTools.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="IO\EnhancedFileSystemWatcher.resx">
       <DependentUpon>EnhancedFileSystemWatcher.vb</DependentUpon>
       <SubType>Designer</SubType>

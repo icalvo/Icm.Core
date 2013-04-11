@@ -105,6 +105,8 @@
     <Compile Include="Collections\RepositorySortedCollectionTest.vb" />
     <Compile Include="Collections\SortedCollection\StructKeyClassValue\BaseSortedCollectionTest.vb" />
     <Compile Include="Collections\SortedCollection\StructKeyStructValue\BaseSortedCollectionTest.vb" />
+    <Compile Include="CommandLineTools\CommandLineTest.vb" />
+    <Compile Include="CommandLineTools\ValuesStoreTest.vb" />
     <Compile Include="Compilation\CompiledFunctionTest.vb" />
     <Compile Include="Compilation\CompileError.vb" />
     <Compile Include="CompositeWriterTest.vb" />
@@ -160,7 +162,6 @@
       <Name>Icm.Core.net45</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
