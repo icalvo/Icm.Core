@@ -298,6 +298,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reflection.resx</DependentUpon>
     </Compile>
+    <Compile Include="Repository\IEntityRepository.vb" />
+    <Compile Include="Repository\MemoryRepository.vb" />
     <Compile Include="TimerExtensions.vb" />
     <Compile Include="Tree\ITreeElement.vb" />
     <Compile Include="Tree\ITreeElementExtensions.vb" />
