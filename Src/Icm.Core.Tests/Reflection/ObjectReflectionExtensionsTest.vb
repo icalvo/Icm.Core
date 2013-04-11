@@ -96,19 +96,19 @@ Public Class ObjectReflectionExtensionsTest
         New TestCaseData(New MyExample, "myfield.Substring", New Object() {1, 3}).Returns("yte"),
         New TestCaseData(New MyExample, "myfield.Length.ToString", Nothing).Returns("6"),
         New TestCaseData(New MyExample, "myfield.Length.ToString", {"00"}).Returns("06"),
-        New TestCaseData(New MyExample, "DictPropStr[key1]").Returns("value1"),
-        New TestCaseData(New MyExample, "DictPropStr[key2]").Returns("value2"),
-        New TestCaseData(New MyExample, "DictPropStr[key3]").Throws(GetType(KeyNotFoundException)),
-        New TestCaseData(New MyExample, "DictPropInt[1234]").Returns("value1i"),
-        New TestCaseData(New MyExample, "DictPropInt[4567]").Returns("value2i"),
-        New TestCaseData(New MyExample, "DictPropInt[4568]").Throws(GetType(KeyNotFoundException)),
-        New TestCaseData(New MyExample, "DictPropInt[qwer]").Throws(GetType(FormatException)),
-        New TestCaseData(New MyExample, "DictPropDate[2013-04-07]").Returns("value2d"),
-        New TestCaseData(New MyExample, "IndexedProp[7]").Returns("<<7>>"),
-        New TestCaseData(New MyExample, "IndexedProp2[19, asdf]").Returns("<<19;asdf>>"),
-        New TestCaseData(New MyExample, "ArrayProp[0]").Returns("a"),
-        New TestCaseData(New MyExample, "ArrayProp[1]").Returns("b"),
-        New TestCaseData(New MyExample, "ArrayProp[2]").Throws(GetType(IndexOutOfRangeException))
+        New TestCaseData(New MyExample, "DictPropStr[key1]", Nothing).Returns("value1"),
+        New TestCaseData(New MyExample, "DictPropStr[key2]", Nothing).Returns("value2"),
+        New TestCaseData(New MyExample, "DictPropStr[key3]", Nothing).Throws(GetType(KeyNotFoundException)),
+        New TestCaseData(New MyExample, "DictPropInt[1234]", Nothing).Returns("value1i"),
+        New TestCaseData(New MyExample, "DictPropInt[4567]", Nothing).Returns("value2i"),
+        New TestCaseData(New MyExample, "DictPropInt[4568]", Nothing).Throws(GetType(KeyNotFoundException)),
+        New TestCaseData(New MyExample, "DictPropInt[qwer]", Nothing).Throws(GetType(FormatException)),
+        New TestCaseData(New MyExample, "DictPropDate[2013-04-07]", Nothing).Returns("value2d"),
+        New TestCaseData(New MyExample, "IndexedProp[7]", Nothing).Returns("<<7>>"),
+        New TestCaseData(New MyExample, "IndexedProp2[19, asdf]", Nothing).Returns("<<19;asdf>>"),
+        New TestCaseData(New MyExample, "ArrayProp[0]", Nothing).Returns("a"),
+        New TestCaseData(New MyExample, "ArrayProp[1]", Nothing).Returns("b"),
+        New TestCaseData(New MyExample, "ArrayProp[2]", Nothing).Throws(GetType(IndexOutOfRangeException))
     }
 
     <TestCaseSource("GetMemberTestCases")>

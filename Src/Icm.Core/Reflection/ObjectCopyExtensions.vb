@@ -98,11 +98,15 @@ Namespace Icm.Reflection
             ElseIf excludedTypes.Any(Function(exclType) prop.PropertyType.Name.StartsWith(exclType)) Then
                 Debug.Print("---- Property {0} excluded for being of type {1}", propName, prop.PropertyType.Name)
             ElseIf HasProp(objSource, propName) Then
-                Debug.Print("-- Copying property {0} with value [{1}] (old: [{2}])",
-                            propName,
-                           GetProp(objSource, propName),
-                           GetProp(objDest, propName))
-                SetProp(objDest, propName, GetProp(objSource, propName))
+                If prop.GetIndexParameters.Count = 0 Then
+                    Debug.Print("-- Copying property {0} with value [{1}] (old: [{2}])",
+                                propName,
+                               GetProp(objSource, propName),
+                               GetProp(objDest, propName))
+                    SetProp(objDest, propName, GetProp(objSource, propName))
+                Else
+                    Debug.Print("---- Property {0} is indexed", propName)
+                End If
             Else
                 Debug.Print("---- Property {0} does not exist at source", propName)
             End If
