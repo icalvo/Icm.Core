@@ -391,21 +391,33 @@ Namespace Icm.Reflection
                 Dim index As String
                 Dim idxOpen = callItem.IndexOf("[")
                 callItemClean = callItem.Substring(0, idxOpen)
-
+                index = callItem.Substring(idxOpen + 1, callItem.Length - idxOpen - 2)
+#If FrameworkNet35 Then
+                If (reqMemberType And MemberTypes.Property) = MemberTypes.Property Then
+#Else
                 If reqMemberType.HasFlag(MemberTypes.Property) Then
+#End If
                     Dim piCallItem = obj.GetType.GetProperty(callItemClean)
-
-                    index = callItem.Substring(idxOpen + 1, callItem.Length - idxOpen - 2)
 
                     If piCallItem IsNot Nothing Then
                         Dim indices = index.Split(","c)
                         Dim propParams = piCallItem.GetIndexParameters
                         If propParams.Count = indices.Count Then
+                            Dim zip As IEnumerable(Of Object)
+#If FrameworkNet35 Then
+                            Dim zipList As New List(Of Object)
+                            zip = zipList
+                            For i = 0 To propParams.Count - 1
+                                zipList.Add(Convert.ChangeType(indices(i).Trim, propParams(i).ParameterType))
+                            Next
+#Else
+                            zip = propParams.Zip(indices, Function(parinfo, idx) Convert.ChangeType(idx.Trim, parinfo.ParameterType))
+#End If
                             Return GetSingleMember(
                                 obj,
                                 callItemClean,
                                 MemberTypes.Property,
-                                propParams.Zip(indices, Function(parinfo, idx) Convert.ChangeType(idx.Trim, parinfo.ParameterType)).ToArray
+                                zip.ToArray
                             )
                         End If
                     End If
@@ -424,17 +436,29 @@ Namespace Icm.Reflection
                     Return GetSingleMember(result, "GetValue", MemberTypes.Method, CInt(index))
                 End If
                 ' Case 2: Default property
-                Dim defPropAttr = DirectCast(type.GetCustomAttribute(GetType(DefaultMemberAttribute)), DefaultMemberAttribute)
+                Dim defPropAttr = type.GetAttribute(Of DefaultMemberAttribute)(inherit:=True)
                 If defPropAttr IsNot Nothing Then
                     Dim propName = defPropAttr.MemberName
                     Dim defProp = type.GetProperty(propName)
                     Dim propParams = defProp.GetIndexParameters()
                     Dim indices = index.Split(","c)
+
+                    Dim zip As IEnumerable(Of Object)
+#If FrameworkNet35 Then
+                    Dim zipList As New List(Of Object)
+                    zip = zipList
+                    For i = 0 To propParams.Count - 1
+                        zipList.Add(Convert.ChangeType(indices(i).Trim, propParams(i).ParameterType))
+                    Next
+#Else
+                    zip = propParams.Zip(indices, Function(parinfo, idx) Convert.ChangeType(idx.Trim, parinfo.ParameterType))
+#End If
+
                     Return GetSingleMember(
                         result,
                         propName,
                         MemberTypes.Property,
-                        propParams.Zip(indices, Function(parinfo, idx) Convert.ChangeType(idx.Trim, parinfo.ParameterType)).ToArray
+                        zip.ToArray
                     )
                 End If
                 ' Case 3: IEnumerable
@@ -450,19 +474,31 @@ Namespace Icm.Reflection
 
         Private Function GetSingleMember(obj As Object, callItem As String, reqMemberType As MemberTypes, ParamArray args() As Object) As Object
             Try
+#If FrameworkNet35 Then
+                If (reqMemberType And MemberTypes.Property) = MemberTypes.Property Then
+#Else
                 If reqMemberType.HasFlag(MemberTypes.Property) Then
+#End If
                     Dim pi = obj.GetType.GetProperty(callItem)
                     If pi IsNot Nothing Then
                         Return pi.GetValue(obj, args)
                     End If
                 End If
+#If FrameworkNet35 Then
+                If (reqMemberType And MemberTypes.Field) = MemberTypes.Field Then
+#Else
                 If reqMemberType.HasFlag(MemberTypes.Field) Then
+#End If
                     Dim fi = obj.GetType.GetField(callItem)
                     If fi IsNot Nothing Then
                         Return fi.GetValue(obj)
                     End If
                 End If
+#If FrameworkNet35 Then
+                If (reqMemberType And MemberTypes.Method) = MemberTypes.Method Then
+#Else
                 If reqMemberType.HasFlag(MemberTypes.Method) Then
+#End If
                     Dim fni As MethodInfo
                     If args Is Nothing OrElse args.Count = 0 Then
                         fni = obj.GetType.GetMethod(callItem, {})

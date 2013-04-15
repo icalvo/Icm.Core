@@ -7,15 +7,14 @@
     </ProductVersion>
     <SchemaVersion>
     </SchemaVersion>
-    <ProjectGuid>{F6EDABF4-E1D7-4D91-B187-EBF057DDFB5C}</ProjectGuid>
+    <ProjectGuid>{F9997B15-EF62-4410-A59C-A2B80572A748}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Icm.Test</RootNamespace>
     <AssemblyName>Icm.Core.Tests</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -24,11 +23,12 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\net35\</OutputPath>
     <DocumentationFile>Icm.Core.Tests.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -54,8 +54,8 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net35\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -100,6 +100,8 @@
     <Compile Include="Collections extensions\JoinStrExtensionsTest.vb" />
     <Compile Include="Collections extensions\TextWriterExtensionsTest.vb" />
     <Compile Include="Collections\PriorityQueueTest.vb" />
+    <Compile Include="CommandLineTools\CommandLineTest.vb" />
+    <Compile Include="CommandLineTools\ValuesStoreTest.vb" />
     <Compile Include="Compilation\CompiledFunctionTest.vb" />
     <Compile Include="Compilation\CompileError.vb" />
     <Compile Include="CompositeWriterTest.vb" />
@@ -125,7 +127,10 @@
     <Compile Include="Ninject\KernelContainerTest.vb" />
     <Compile Include="Nullable2\Nullable2Test.vb" />
     <Compile Include="Reflection\MethodInfoExtensionsTest.vb" />
+    <Compile Include="Reflection\MyExample.vb" />
+    <Compile Include="Reflection\ObjectCopyExtensionsTest.vb" />
     <Compile Include="Reflection\ObjectReflectionExtensionsTest.vb" />
+    <Compile Include="Repository\MemoryRepositoryTest.vb" />
     <Compile Include="Search and Replace\PlainStringGeneratorTest.vb" />
     <Compile Include="Search and Replace\ReplacerTest.vb" />
     <Compile Include="Tree\ITreeNodeExtensionsTest.vb" />
@@ -146,9 +151,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Icm.Core\Icm.Core.net40-client.vbproj">
-      <Project>{347421A5-E5A1-4239-B6C9-5FCB7D524086}</Project>
-      <Name>Icm.Core.net40-client</Name>
+    <ProjectReference Include="..\Icm.Core\Icm.Core.net35.vbproj">
+      <Project>{884CD959-7100-4081-AF2D-57EE3E76926E}</Project>
+      <Name>Icm.Core.net35</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -7,7 +7,7 @@
     </ProductVersion>
     <SchemaVersion>
     </SchemaVersion>
-    <ProjectGuid>{F6EDABF4-E1D7-4D91-B187-EBF057DDFB5C}</ProjectGuid>
+    <ProjectGuid>{8F86FBC1-0E12-44F8-9427-6FCBC82C5DBD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Icm.Test</RootNamespace>
     <AssemblyName>Icm.Core.Tests</AssemblyName>
@@ -102,6 +102,8 @@
     <Compile Include="Collections\RepositorySortedCollectionTest.vb" />
     <Compile Include="Collections\SortedCollection\StructKeyClassValue\BaseSortedCollectionTest.vb" />
     <Compile Include="Collections\SortedCollection\StructKeyStructValue\BaseSortedCollectionTest.vb" />
+    <Compile Include="CommandLineTools\CommandLineTest.vb" />
+    <Compile Include="CommandLineTools\ValuesStoreTest.vb" />
     <Compile Include="Compilation\CompiledFunctionTest.vb" />
     <Compile Include="Compilation\CompileError.vb" />
     <Compile Include="CompositeWriterTest.vb" />
@@ -128,7 +130,10 @@
     <Compile Include="Ninject\KernelContainerTest.vb" />
     <Compile Include="Nullable2\Nullable2Test.vb" />
     <Compile Include="Reflection\MethodInfoExtensionsTest.vb" />
+    <Compile Include="Reflection\MyExample.vb" />
+    <Compile Include="Reflection\ObjectCopyExtensionsTest.vb" />
     <Compile Include="Reflection\ObjectReflectionExtensionsTest.vb" />
+    <Compile Include="Repository\MemoryRepositoryTest.vb" />
     <Compile Include="Search and Replace\PlainStringGeneratorTest.vb" />
     <Compile Include="Search and Replace\ReplacerTest.vb" />
     <Compile Include="Tree\TreeNodeTest.vb" />
@@ -149,11 +154,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Icm.Core\Icm.Core.net40-client.vbproj">
-      <Project>{347421A5-E5A1-4239-B6C9-5FCB7D524086}</Project>
+      <Project>{8586553D-55A5-4E57-B3ED-45CA65ABA0AA}</Project>
       <Name>Icm.Core.net40-client</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

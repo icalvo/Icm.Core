@@ -5,7 +5,7 @@ Namespace Proes.Data
     Public Class MemoryRepository(Of TType As New, TKey As Structure)
         Implements IEntityRepository(Of TType, TKey)
 
-        Private _store As ISet(Of TType)
+        Private _store As ICollection(Of TType)
         Private ReadOnly _idFunction As Func(Of TType, TKey)
 
         ''' <summary>
@@ -22,7 +22,7 @@ Namespace Proes.Data
         ''' </summary>
         ''' <param name="store"></param>
         ''' <param name="idFunction"></param>
-        Public Sub New(ByVal store As ISet(Of TType), ByVal idFunction As Func(Of TType, TKey))
+        Public Sub New(ByVal store As ICollection(Of TType), ByVal idFunction As Func(Of TType, TKey))
             _store = store
             _idFunction = idFunction
         End Sub

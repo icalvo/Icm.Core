@@ -36,7 +36,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\net-4.5\</OutputPath>
+    <OutputPath>bin\Release\net45\</OutputPath>
     <DocumentationFile>Icm.Core.Tests.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>

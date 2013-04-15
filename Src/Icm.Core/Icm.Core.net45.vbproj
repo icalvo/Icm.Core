@@ -84,8 +84,7 @@
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants>FrameworkNet45</DefineConstants>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DebugSymbols>true</DebugSymbols>
@@ -104,7 +103,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin\Release\net-4.5\</OutputPath>
+    <OutputPath>bin\Release\net45\</OutputPath>
     <DocumentationFile>Icm.Core.xml</DocumentationFile>
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
@@ -195,6 +194,7 @@
     <Compile Include="Nullable2\Nullable2.vb" />
     <Compile Include="Nullable2\Nullable2Conversion.vb" />
     <Compile Include="Reflection\ObjectCopyExtensions.vb" />
+    <Compile Include="Reflection\ObjectReflectionExtensions.vb" />
     <Compile Include="Reflection\Reflection.es.Designer.vb">
       <DependentUpon>Reflection.es.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -205,7 +205,6 @@
     <Compile Include="Reflection\ExpressionExtensions.vb" />
     <Compile Include="Reflection\ImplementorInstanceProvider.vb" />
     <Compile Include="Reflection\MethodInfoExtensions.vb" />
-    <Compile Include="Reflection\ObjectReflectionExtensions.vb" />
     <Compile Include="Reflection\TypeExtensions.vb" />
     <Compile Include="Compilation\CompiledParameterInfo.vb" />
     <Compile Include="Compilation\CompileException.vb" />
