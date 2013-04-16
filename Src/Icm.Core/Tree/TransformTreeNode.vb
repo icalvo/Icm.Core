@@ -2,12 +2,13 @@ Namespace Icm.Tree
 
 
     ''' <summary>
-    ''' A TransformTreeNode(Of T1,T2) acts as a proxy for a ITreeNode(Of T1), giving the full funcionality of
-    ''' an ITreeNode(Of T2) by using a transformation function from T1 to T2. It builds its members
+    ''' Proxy for a ITreeNode(Of T1) that implements an ITreeNode(Of T2).
     ''' </summary>
     ''' <typeparam name="T1"></typeparam>
     ''' <typeparam name="T2"></typeparam>
-    ''' <remarks></remarks>
+    ''' <remarks>A TransformTreeNode(Of T1,T2) gives the full funcionality of
+    ''' an ITreeNode(Of T2) by using a transformation function from T1 to T2. It builds its members on the fly,
+    ''' whenever GetChildren is called, by building new TransformTreeNodes wrapping the original children.</remarks>
     Public Class TransformTreeNode(Of T1, T2)
         Inherits TransformTreeElement(Of T1, T2)
         Implements ITreeNode(Of T2)

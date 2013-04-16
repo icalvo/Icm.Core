@@ -4,6 +4,16 @@ Namespace Icm.Tree
 
     Public Module ITreeNodeExtensions
 
+        ''' <summary>
+        ''' Transforms a tree of T1 into a tree of T2 by means of a TransformTreeNode and a transform function that
+        ''' converts T1 into T2.
+        ''' </summary>
+        ''' <typeparam name="T1"></typeparam>
+        ''' <typeparam name="T2"></typeparam>
+        ''' <param name="tn"></param>
+        ''' <param name="transform"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         <Extension>
         Public Function [Select](Of T1, T2)(tn As ITreeNode(Of T1), transform As Func(Of T1, T2)) As ITreeNode(Of T2)
             Return New TransformTreeNode(Of T1, T2)(tn, transform)
