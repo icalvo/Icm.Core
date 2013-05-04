@@ -1,11 +1,24 @@
-﻿Namespace Icm
+﻿Namespace Icm.Tree
 
+    ''' <summary>
+    ''' A TreeNode is a physical, in-memory implementation of ITreeNode.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <remarks>
+    ''' <para>A TreeNode only relates with other TreeNodes: its parent can only be a TreeNode and
+    ''' its children are also bound to be TreeNodes. This allows to implement automatic Parent-Children
+    ''' relationship management, so that if you add a child to a TreeNode, this child will automatically have
+    ''' the current node as its parent; and if you set a TreeNode to be the parent of another TreeNode, that
+    ''' one will be automatically added to the children collection of the current one.</para>
+    ''' <para>In addition, a TreeNode maintains its level, which is zero for a parentless node and
+    ''' equal to the parent's level plus one if the node has a parent.</para>
+    ''' </remarks>
     Public Class TreeNode(Of T)
         Implements ITreeNode(Of T)
 
-        Private parent_ As TreeNode(Of T)
-        Private ReadOnly children_ As New List(Of TreeNode(Of T))()
-        Private level_ As Integer
+        Private _parent As TreeNode(Of T)
+        Private ReadOnly _children As New List(Of TreeNode(Of T))()
+        Private _level As Integer
 
         Public Sub New(ByVal v As T)
             Value = v
@@ -15,31 +28,31 @@
 
         ReadOnly Property Children() As IEnumerable(Of TreeNode(Of T))
             Get
-                Return children_
+                Return _children
             End Get
         End Property
 
         Property Parent() As TreeNode(Of T)
             Get
-                Return parent_
+                Return _parent
             End Get
             Set(ByVal value As TreeNode(Of T))
-                If parent_ IsNot Nothing Then
-                    parent_.children_.Remove(Me)
+                If _parent IsNot Nothing Then
+                    _parent._children.Remove(Me)
                 End If
-                parent_ = value
-                If parent_ IsNot Nothing Then
-                    parent_.children_.Add(Me)
-                    level_ = parent_.level_
+                _parent = value
+                If _parent IsNot Nothing Then
+                    _parent._children.Add(Me)
+                    _level = _parent._level
                 Else
-                    level_ = 0
+                    _level = 0
                 End If
             End Set
         End Property
 
         ReadOnly Property Level() As Integer
             Get
-                Return level_
+                Return _level
             End Get
         End Property
 
@@ -50,9 +63,9 @@
         End Function
 
         Public Function AddChild(ByVal tn As TreeNode(Of T)) As TreeNode(Of T)
-            tn.parent_ = Me
-            tn.level_ = level_ + 1
-            children_.Add(tn)
+            tn._parent = Me
+            tn._level = _level + 1
+            _children.Add(tn)
 
             Return tn
         End Function
@@ -71,21 +84,30 @@
         End Sub
 
         Public Sub RemoveChild(ByVal tn As TreeNode(Of T))
-            If parent_ IsNot Nothing Then
-                parent_.RemoveChild(Me)
+            If _parent IsNot Nothing Then
+                _parent.RemoveChild(Me)
             End If
-            tn.parent_ = Nothing
-            tn.level_ = 0
-            children_.Remove(tn)
+            tn._parent = Nothing
+            tn._level = 0
+            _children.Remove(tn)
         End Sub
-
-        Public Function GetChildren() As IEnumerable(Of ITreeNode(Of T)) Implements ITreeNode(Of T).GetChildren
-            Return Children.Cast(Of ITreeNode(Of T))()
-        End Function
 
         Public Function GetParent() As ITreeNode(Of T) Implements ITreeNode(Of T).GetParent
             Return Parent
         End Function
+
+        Public Function GetEnumerator() As IEnumerator(Of ITreeElement(Of T)) Implements IEnumerable(Of ITreeElement(Of T)).GetEnumerator
+#If Framework = "net35" Then
+            Return _children.Cast(Of ITreeElement(Of T)).GetEnumerator
+#Else
+            Return _children.Cast(Of ITreeElement(Of T)).GetEnumerator
+#End If
+        End Function
+
+        Public Function GetEnumerator1() As IEnumerator Implements IEnumerable.GetEnumerator
+            Return _children.GetEnumerator
+        End Function
+
     End Class
 
 End Namespace

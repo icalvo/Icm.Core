@@ -14,8 +14,15 @@ Namespace Icm.Compilation
 
         Public Sub New()
             Dim providerOptions As New Dictionary(Of String, String)
-
+#If FrameworkNet35 Then
+            providerOptions.Add("CompilerVersion", "v3.5")
+#End If
+#If FrameworkNet40 Then
             providerOptions.Add("CompilerVersion", "v4.0")
+#End If
+#If FrameworkNet45 Then
+            providerOptions.Add("CompilerVersion", "v4.0")
+#End If
             CodeProvider = New CSharpCodeProvider(providerOptions)
 
             AddNamespace("System", "system.dll")

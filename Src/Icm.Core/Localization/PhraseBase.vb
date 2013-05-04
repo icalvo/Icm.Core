@@ -1,5 +1,7 @@
+Imports System.Globalization
+
 Namespace Icm.Localization
-    Public MustInherit Class Phrase
+    Public MustInherit Class PhraseBase
         Implements IPhrase
 
         Public MustOverride Function Translate(lcid As Integer, locRepo As ILocalizationRepository) As String Implements IPhrase.Translate

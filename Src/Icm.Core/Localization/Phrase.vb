@@ -3,7 +3,7 @@ Imports Icm.Collections
 
 Namespace Icm.Localization
 
-    Public MustInherit Class Phrase2
+    Public MustInherit Class Phrase
         Implements IPhrase
 
         Public MustOverride Function Translate(lcid As Integer, locRepo As ILocalizationRepository) As String Implements IPhrase.Translate

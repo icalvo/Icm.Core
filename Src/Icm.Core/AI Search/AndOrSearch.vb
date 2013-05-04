@@ -17,7 +17,7 @@
                         SetS.AddRange(s.Predecessors)
                     End If
                     s.MarkedLink = amin
-                    s.H = amin.Cost
+                    's.H = amin.Cost
                 Else
                 End If
             Loop

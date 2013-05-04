@@ -8,39 +8,39 @@ Namespace Icm.Collections.Generic
             Return n.g + n.h
         End Function
 
-        Public Function AaSearch(ByVal raíz As INode) As INode
-            Dim ABIERTA As New Dictionary(Of String, INode) From {{raíz.Clave, raíz}}
-            Dim CERRADA As New Dictionary(Of String, INode)
+        Public Function AaSearch(ByVal root As INode) As INode
+            Dim visited As New HashSet(Of INode) From {root}
+            Dim evaluated As New HashSet(Of INode)
 
-            raíz.g = 0
+            root.g = 0
 
-            Do Until ABIERTA.Count = 0
-                Dim m = ABIERTA.MinEntity(Function(n) n.Value.f).Value
-                If m.EsMeta Then Return m
-                Dim sucesores = m.ObtenerSucesores
-                For Each np In sucesores
-                    np.Padre = m
-                    np.g = m.g + m.Coste(np)
-                    If ABIERTA.ContainsKey(np.Clave) Then
-                        Dim n = ABIERTA(np.Clave)
-                        If np.g < n.g Then
-                            n.Padre = m
-                            n.g = np.g
+            Do Until visited.Count = 0
+                Dim current = visited.MinEntity(Function(n) n.f)
+
+                If current.IsGoal Then
+                    Return current
+                End If
+                visited.Remove(current)
+                evaluated.Add(current)
+                For Each neighbor In current.Neighbors
+                    If evaluated.Contains(neighbor) Then
+                        Continue For
+                    End If
+                    Dim tentative_g = current.g + current.Distance(neighbor)
+
+                    If visited.Contains(neighbor) OrElse tentative_g <= neighbor.g Then
+                        neighbor.CameFrom = current
+                        neighbor.g = tentative_g
+                        If Not visited.Contains(neighbor) Then
+                            visited.Add(neighbor)
                         End If
-                    ElseIf CERRADA.ContainsKey(np.Clave) Then
-                        Dim n = CERRADA(np.Clave)
-                        If np.g < n.g Then
-                            ' Recorrer en profundidad los descendientes de n
 
-                        End If
-                    Else
-                        ABIERTA.Add(np.Clave, np)
-                        m.Sucesores.Add(np)
                     End If
 
                 Next
             Loop
-            Throw New NotImplementedException ' UNDONE: Implementar
+            Return Nothing
         End Function
+
     End Module
 End Namespace

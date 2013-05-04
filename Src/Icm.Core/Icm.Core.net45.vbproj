@@ -84,8 +84,7 @@
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants>FrameworkNet45</DefineConstants>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DebugSymbols>true</DebugSymbols>
@@ -104,7 +103,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin\Release\net-4.5\</OutputPath>
+    <OutputPath>bin\Release\net45\</OutputPath>
     <DocumentationFile>Icm.Core.xml</DocumentationFile>
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
@@ -169,6 +168,20 @@
     <Compile Include="Color console\ColorConsole.vb" />
     <Compile Include="Color console\ColorSetting.vb" />
     <Compile Include="Color console\ColorString.vb" />
+    <Compile Include="CommandLine\CommandLine.vb" />
+    <Compile Include="CommandLine\CommandLineExtensions.vb" />
+    <Compile Include="CommandLine\CommandLineTools.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommandLineTools.resx</DependentUpon>
+    </Compile>
+    <Compile Include="CommandLine\NamedParameter.vb" />
+    <Compile Include="CommandLine\SubArgument.vb" />
+    <Compile Include="CommandLine\SubArgumentType.vb" />
+    <Compile Include="CommandLine\UndefinedOptionException.vb" />
+    <Compile Include="CommandLine\UnnamedParameter.vb" />
+    <Compile Include="CommandLine\UnnamedParametersConfig.vb" />
+    <Compile Include="CommandLine\ValuesStore.vb" />
     <Compile Include="Compilation\CSharpCompiledFunction.vb" />
     <Compile Include="IO\TextReaderExtensions.vb" />
     <Compile Include="Localization\DictionaryFixedCultureLocalizationRepository.vb" />
@@ -183,23 +196,22 @@
     <Compile Include="Localization\PhraseAnd.vb" />
     <Compile Include="Nullable2\Nullable2.vb" />
     <Compile Include="Nullable2\Nullable2Conversion.vb" />
+    <Compile Include="Reflection\ObjectCopyExtensions.vb" />
+    <Compile Include="Reflection\ObjectReflectionExtensions.vb" />
     <Compile Include="Reflection\Reflection.es.Designer.vb">
       <DependentUpon>Reflection.es.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Reflection\Copyable\ICopyable.vb" />
     <Compile Include="Functions\TotalOrder\LongTotalOrder.vb" />
     <Compile Include="Reflection\ActivatorTools.vb" />
     <Compile Include="Reflection\ExpressionExtensions.vb" />
     <Compile Include="Reflection\ImplementorInstanceProvider.vb" />
     <Compile Include="Reflection\MethodInfoExtensions.vb" />
-    <Compile Include="Reflection\ObjectReflectionExtensions.vb" />
     <Compile Include="Reflection\TypeExtensions.vb" />
     <Compile Include="Compilation\CompiledParameterInfo.vb" />
     <Compile Include="Compilation\CompileException.vb" />
     <Compile Include="Compilation\VBCompiledFunction.vb" />
-    <Compile Include="Reflection\Copyable\ObjectCopier.vb" />
     <Compile Include="IO\CompositeWriter.vb" />
     <Compile Include="Configuration\TypedValue.vb" />
     <Compile Include="Configuration\GeneralSectionHandler.vb" />
@@ -209,11 +221,6 @@
     <Compile Include="IO\MovementEventArgs.vb" />
     <Compile Include="IO\TextWriterExtensions.vb" />
     <Compile Include="Constants.vb" />
-    <Compile Include="Reflection\Copyable\BaseCopyable.vb" />
-    <Compile Include="Reflection\Copyable\IInstanceProvider.vb" />
-    <Compile Include="Reflection\Copyable\InstanceProvider.vb" />
-    <Compile Include="Reflection\Copyable\ObjectExtensions.vb" />
-    <Compile Include="Reflection\Copyable\VisitedGraph.vb" />
     <Compile Include="IO\CSVWriter.vb" />
     <Compile Include="Basic types extensions\DateExtensions.vb" />
     <Compile Include="Collections\SortedCollection\RangeIntervalEnumerator.vb" />
@@ -301,10 +308,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reflection.resx</DependentUpon>
     </Compile>
+    <Compile Include="Repository\IEntityRepository.vb" />
+    <Compile Include="Repository\MemoryRepository.vb" />
     <Compile Include="TimerExtensions.vb" />
+    <Compile Include="Tree\ITreeElement.vb" />
+    <Compile Include="Tree\ITreeElementExtensions.vb" />
     <Compile Include="Tree\ITreeNode.vb" />
     <Compile Include="Tree\ITreeNodeExtensions.vb" />
+    <Compile Include="Tree\TransformTreeElement.vb" />
     <Compile Include="Tree\TransformTreeNode.vb" />
+    <Compile Include="Tree\TreeElement.vb" />
+    <Compile Include="Tree\TreeFactory.vb" />
     <Compile Include="Tuples\ModifiableTuplesFactory.vb" />
     <Compile Include="Tuples\Pair.vb" />
     <Compile Include="IO\PathManager.vb" />
@@ -342,6 +356,11 @@
     <Compile Include="Tuples\Tuple4.vb" />
     <Compile Include="Compilation\CompiledFunction.vb" />
     <Compile Include="WorkingDaysManager.vb" />
+    <EmbeddedResource Include="CommandLine\CommandLineTools.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommandLineTools.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="IO\EnhancedFileSystemWatcher.resx">
       <DependentUpon>EnhancedFileSystemWatcher.vb</DependentUpon>
       <SubType>Designer</SubType>

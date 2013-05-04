@@ -1,5 +1,6 @@
 Imports Icm.Collections
-
+Imports Icm.Tree
+Imports Icm.Tree.TreeFactory
 
 <TestFixture>
 Public Class ITreeNodeExtensionsTest
