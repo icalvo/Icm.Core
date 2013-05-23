@@ -155,6 +155,7 @@
     <Compile Include="AI Search\AndOrNode.vb" />
     <Compile Include="AI Search\AndOrSearch.vb" />
     <Compile Include="AI Search\ILink.vb" />
+    <Compile Include="AI Search\MiniMaxSearch.vb" />
     <Compile Include="Basic types extensions\CurryExtensions.vb" />
     <Compile Include="Basic types extensions\TimespanExtensions.vb" />
     <Compile Include="Collections extensions\JoinStrExtensions.vb" />
