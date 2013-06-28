@@ -3,7 +3,7 @@ Imports System.Security.Cryptography
 Imports System.Text
 Imports System.Runtime.CompilerServices
 
-Namespace Icm.Security.Criptography
+Namespace Icm.Security.Cryptography
 
     '''<summary>
     ''' Extensions for HashAlgorithm. StringHash returns a string

@@ -31,6 +31,7 @@ Namespace Icm.Text
         End Property
 
         Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
+            Return False
         End Function
 
         Public Sub Reset() Implements IEnumerator.Reset

@@ -9,6 +9,7 @@ Namespace Icm.Text
 
 
         Private counter_ As Integer
+
         Public Sub New()
             counter_ = 0
         End Sub
@@ -28,6 +29,7 @@ Namespace Icm.Text
 
         Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
             counter_ = counter_ + 1
+            Return False
         End Function
 
         Public Sub Reset() Implements IEnumerator.Reset

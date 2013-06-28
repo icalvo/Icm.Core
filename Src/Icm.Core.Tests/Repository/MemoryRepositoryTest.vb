@@ -32,14 +32,14 @@ Public Class MemoryRepositoryTest
 
     <Test>
     Public Sub ConstructorTest()
-        Dim repo As New Proes.Data.MemoryRepository(Of MyRegister)(Function(reg) reg.Id)
+        Dim repo As New Icm.Data.MemoryRepository(Of MyRegister)(Function(reg) reg.Id)
 
         Assert.That(repo.Count, [Is].EqualTo(0))
     End Sub
 
     <Test>
     Public Sub Constructor2Test()
-        Dim repo As New Proes.Data.MemoryRepository(Of MyRegister)(
+        Dim repo As New Icm.Data.MemoryRepository(Of MyRegister)(
             New HashSet(Of MyRegister) From {
                 MyRegister.Create(1, "asdf"),
                 MyRegister.Create(2, "qwer"),
@@ -56,7 +56,7 @@ Public Class MemoryRepositoryTest
 
     <Test>
     Public Sub LoadTest()
-        Dim repo As New Proes.Data.MemoryRepository(Of MyRegister)(
+        Dim repo As New Icm.Data.MemoryRepository(Of MyRegister)(
             New HashSet(Of MyRegister) From {
                 MyRegister.Create(1, "rtyu"),
                 MyRegister.Create(2, "fghj"),

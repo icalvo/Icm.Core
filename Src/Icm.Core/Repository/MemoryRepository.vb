@@ -1,6 +1,6 @@
 ﻿Imports Icm.Reflection
 
-Namespace Proes.Data
+Namespace Icm.Data
 
     Public Class MemoryRepository(Of TType As New, TKey As Structure)
         Implements IEntityRepository(Of TType, TKey)
@@ -51,11 +51,7 @@ Namespace Proes.Data
             _store.Remove(entity)
         End Sub
 
-        Public Function DeleteById(id As TKey) As TType Implements IEntityRepository(Of TType, TKey).DeleteById
-            Delete(GetById(id))
-        End Function
-
-        Public Function GetById(id As TKey?, Optional bypassCache As Boolean = False, Optional includePath As String = Nothing) As TType Implements IEntityRepository(Of TType, TKey).GetById
+        Public Function GetById(id As TKey?) As TType Implements IEntityRepository(Of TType, TKey).GetById
             If id.HasValue Then
                 Return _store.SingleOrDefault(Function(obj) _idFunction(obj).Equals(id.Value))
             Else

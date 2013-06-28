@@ -133,7 +133,6 @@
     <Compile Include="Reflection\MyExample.vb" />
     <Compile Include="Reflection\ObjectCopyExtensionsTest.vb" />
     <Compile Include="Reflection\ObjectReflectionExtensionsTest.vb" />
-    <Compile Include="Repository\MemoryRepositoryTest.vb" />
     <Compile Include="Search and Replace\PlainStringGeneratorTest.vb" />
     <Compile Include="Search and Replace\ReplacerTest.vb" />
     <Compile Include="Tree\TreeNodeTest.vb" />

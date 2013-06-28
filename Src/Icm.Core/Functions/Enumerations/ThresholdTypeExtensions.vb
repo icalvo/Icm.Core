@@ -21,6 +21,8 @@ Namespace Icm.Functions
                     Return ThresholdType.LeftOpen
                 Case ThresholdType.RightOpen
                     Return ThresholdType.LeftClosed
+                Case Else
+                    Throw New ArgumentException
             End Select
         End Function
 
@@ -44,7 +46,7 @@ Namespace Icm.Functions
                 Case ">="
                     Return ThresholdType.RightOpen
                 Case Else
-                    Throw New InvalidOperationException(String.Format("Unknown operator: {0}", op))
+                    Throw New ArgumentException(String.Format("Unknown operator: {0}", op), "op")
             End Select
         End Function
 

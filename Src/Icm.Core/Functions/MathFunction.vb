@@ -270,9 +270,9 @@
         End Function
 
 
-        Protected Function Compare(ByVal y As TY?, ByVal tumbral As ThresholdType, ByVal umbral As TY) As Boolean
+        Protected Function Compare(ByVal y As TY?, ByVal threshold As ThresholdType, ByVal umbral As TY) As Boolean
             If y.HasValue Then
-                Select Case tumbral
+                Select Case threshold
                     Case ThresholdType.LeftOpen
                         Return y.Value.CompareTo(umbral) > 0
                     Case ThresholdType.LeftClosed
@@ -281,6 +281,8 @@
                         Return y.Value.CompareTo(umbral) < 0
                     Case ThresholdType.RightClosed
                         Return y.Value.CompareTo(umbral) <= 0
+                    Case Else
+                        Throw New ArgumentException("threshold", "threshold")
                 End Select
             Else
                 Return False
