@@ -13,6 +13,7 @@ Namespace Icm.Tree
         Inherits TransformTreeElement(Of T1, T2)
         Implements ITreeNode(Of T2)
 
+
         Private ReadOnly _basenode As ITreeNode(Of T1)
         Private ReadOnly _transform As Func(Of T1, T2)
         Private _value As T2
@@ -30,5 +31,12 @@ Namespace Icm.Tree
             End If
         End Function
 
+        Public Function GetChildNodes() As IEnumerable(Of ITreeNode(Of T2)) Implements ITreeNode(Of T2).GetChildNodes
+#If FrameworkNet35 Then
+            Return _basenode.GetChildNodes.Select(Function(child) DirectCast(New TransformTreeNode(Of T1, T2)(child, _transform), ITreeNode(Of T2)))
+#Else
+            Return _basenode.GetChildNodes.Select(Function(child) New TransformTreeNode(Of T1, T2)(child, _transform))
+#End If
+        End Function
     End Class
 End Namespace

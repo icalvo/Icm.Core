@@ -10,6 +10,6 @@ Namespace Icm.Tree
         Inherits ITreeElement(Of T)
 
         Function GetParent() As ITreeNode(Of T)
-
+        Function GetChildNodes() As IEnumerable(Of ITreeNode(Of T))
     End Interface
 End Namespace

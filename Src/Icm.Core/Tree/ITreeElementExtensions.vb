@@ -15,14 +15,14 @@ Namespace Icm.Tree
         Public Iterator Function DepthPreorderTraverse(Of T)(tn As ITreeElement(Of T)) As IEnumerable(Of T)
             Dim childStack As New Stack(Of IEnumerator(Of ITreeElement(Of T)))
 
-            childStack.Push(tn.GetEnumerator)
+            childStack.Push(tn.GetChildElements.GetEnumerator)
             Yield tn.Value
             Do Until childStack.Count = 0
                 Dim childEnum = childStack.Peek
 
                 If childEnum.MoveNext() Then
                     Dim child = childEnum.Current
-                    childStack.Push(child.GetEnumerator)
+                    childStack.Push(child.GetChildElements.GetEnumerator)
                     Yield child.Value
                 Else
                     childStack.Pop()
@@ -40,7 +40,7 @@ Namespace Icm.Tree
 
                 If childEnum.MoveNext() Then
                     Dim child = childEnum.Current
-                    childStack.Push(child.GetEnumerator)
+                    childStack.Push(child.GetChildElements.GetEnumerator)
                 Else
                     childStack.Pop()
                     Yield childStack.Peek.Current.Value
@@ -56,7 +56,7 @@ Namespace Icm.Tree
             While Not queue.Count = 0
                 tn = queue.Dequeue()
                 Yield tn.Value
-                For Each child In tn
+                For Each child In tn.GetChildElements
                     queue.Enqueue(child)
                 Next
             End While
@@ -67,14 +67,14 @@ Namespace Icm.Tree
         Public Iterator Function DepthPreorderTraverseWithLevel(Of T)(tn As ITreeElement(Of T)) As IEnumerable(Of Tuple(Of T, Integer))
             Dim childStack As New Stack(Of IEnumerator(Of ITreeElement(Of T)))
 
-            childStack.Push(tn.GetEnumerator)
+            childStack.Push(tn.GetChildElements.GetEnumerator)
             Yield Tuple.Create(tn.Value, childStack.Count - 1)
             Do Until childStack.Count = 0
                 Dim childEnum = childStack.Peek
 
                 If childEnum.MoveNext() Then
                     Dim child = childEnum.Current
-                    childStack.Push(child.GetEnumerator)
+                    childStack.Push(child.GetChildElements.GetEnumerator)
                     Yield Tuple.Create(child.Value, childStack.Count - 1)
                 Else
                     childStack.Pop()
@@ -93,7 +93,7 @@ Namespace Icm.Tree
 
                 If childEnum.MoveNext() Then
                     Dim child = childEnum.Current
-                    childStack.Push(child.GetEnumerator)
+                    childStack.Push(child.GetChildElements.GetEnumerator)
                 Else
                     childStack.Pop()
                     Yield Tuple.Create(childStack.Peek.Current.Value, childStack.Count - 1)
@@ -103,7 +103,7 @@ Namespace Icm.Tree
 
         <Extension>
         Private Iterator Function DepthPostorderTraverseWithLevel(Of T)(tn As ITreeElement(Of T), level As Integer) As IEnumerable(Of Tuple(Of T, Integer))
-            For Each child In tn
+            For Each child In tn.GetChildElements
                 For Each result In child.DepthPostorderTraverseWithLevel(level + 1)
                     Yield result
                 Next
@@ -123,7 +123,7 @@ Namespace Icm.Tree
                 tn = queue.Dequeue()
                 Dim level = levelQueue.Dequeue
                 Yield Tuple.Create(tn.Value, level)
-                For Each child In tn
+                For Each child In tn.GetChildElements
                     queue.Enqueue(child)
                     levelQueue.Enqueue(level + 1)
                 Next

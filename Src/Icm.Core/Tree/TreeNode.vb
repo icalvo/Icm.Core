@@ -96,18 +96,21 @@
             Return Parent
         End Function
 
-        Public Function GetEnumerator() As IEnumerator(Of ITreeElement(Of T)) Implements IEnumerable(Of ITreeElement(Of T)).GetEnumerator
-#If Framework = "net35" Then
-            Return _children.Cast(Of ITreeElement(Of T)).GetEnumerator
+        Private Function GetChildElements() As IEnumerable(Of ITreeElement(Of T)) Implements ITreeElement(Of T).GetChildElements
+#If FrameworkNet35 Then
+            Return _children.ConvertAll(Of ITreeElement(Of T))(Function(elem) elem)
 #Else
-            Return _children.Cast(Of ITreeElement(Of T)).GetEnumerator
+            Return _children
 #End If
         End Function
 
-        Public Function GetEnumerator1() As IEnumerator Implements IEnumerable.GetEnumerator
-            Return _children.GetEnumerator
+        Private Function GetChildNodes() As IEnumerable(Of ITreeNode(Of T)) Implements ITreeNode(Of T).GetChildNodes
+#If FrameworkNet35 Then
+            Return _children.ConvertAll(Of ITreeNode(Of T))(Function(elem) elem)
+#Else
+            Return _children
+#End If
         End Function
-
     End Class
 
 End Namespace

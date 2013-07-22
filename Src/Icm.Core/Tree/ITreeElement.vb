@@ -6,9 +6,9 @@ Namespace Icm.Tree
     ''' <typeparam name="T"></typeparam>
     ''' <remarks>Note that ITreeElement does not have a reference to its parent.</remarks>
     Public Interface ITreeElement(Of T)
-        Inherits IEnumerable(Of ITreeElement(Of T))
 
         Property Value() As T
+        Function GetChildElements() As IEnumerable(Of ITreeElement(Of T))
     End Interface
 
 End Namespace
