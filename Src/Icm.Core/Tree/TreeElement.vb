@@ -14,6 +14,7 @@ Namespace Icm.Tree
         Inherits List(Of ITreeElement(Of T))
         Implements ITreeElement(Of T)
 
+
         Public Sub New(ByVal v As T)
             Value = v
         End Sub
@@ -32,5 +33,8 @@ Namespace Icm.Tree
             Next
         End Sub
 
+        Public Function GetChildElements() As IEnumerable(Of ITreeElement(Of T)) Implements ITreeElement(Of T).GetChildElements
+            Return Me
+        End Function
     End Class
 End Namespace
