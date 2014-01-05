@@ -12,8 +12,5 @@
     <description>Basic class library</description>
     <releaseNotes />
     <tags>Icm Core Class Library</tags>
-    <dependencies>
-      <dependency id="Ninject" version="[3.0, 4.0)" />
-    </dependencies>
   </metadata>
 </package>
