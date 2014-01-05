@@ -288,7 +288,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Basic types extensions\NullableExtensions.vb" />
-    <Compile Include="Ninject\KernelContainer.vb" />
     <Compile Include="IO\NullWriter.vb" />
     <Compile Include="Basic types extensions\ObjectExtensions.vb" />
     <Compile Include="Collections\OrderedDictionary.vb" />
@@ -370,7 +369,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Icm.pfx" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">

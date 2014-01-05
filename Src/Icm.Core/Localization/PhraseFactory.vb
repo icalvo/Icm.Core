@@ -22,14 +22,6 @@ Namespace Icm.Localization
             Return PhrAnd(args).Translate(repo)
         End Function
 
-        Public Function TransF(key As String, ParamArray args() As Object) As String
-            Return Icm.Ninject.Instance(Of ILocalizationRepository).TransF(key, args)
-        End Function
-
-        Public Function TransAnd(ParamArray args() As Object) As String
-            Return Icm.Ninject.Instance(Of ILocalizationRepository).TransAnd(args)
-        End Function
-
 
     End Module
 

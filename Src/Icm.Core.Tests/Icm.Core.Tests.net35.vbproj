@@ -124,7 +124,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Ninject\KernelContainerTest.vb" />
     <Compile Include="Nullable2\Nullable2Test.vb" />
     <Compile Include="Reflection\MethodInfoExtensionsTest.vb" />
     <Compile Include="Reflection\MyExample.vb" />
