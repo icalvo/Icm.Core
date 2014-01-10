@@ -16,14 +16,30 @@ Namespace Icm.Localization
         Inherits Phrase
 
         Property Key As String
-        Property Arguments As New List(Of Object)
+
+        Private _arguments As List(Of Object)
+
+        ReadOnly Property Arguments As ICollection(Of Object)
+            Get
+                Return _arguments
+            End Get
+        End Property
 
         Public Sub New(key As String, ParamArray args() As Object)
             Me.Key = key
-            If args IsNot Nothing Then
-                For Each o In args
-                    Arguments.Add(o)
-                Next
+            If args Is Nothing Then
+                _arguments = New List(Of Object)()
+            Else
+                _arguments = New List(Of Object)(args)
+            End If
+        End Sub
+
+        Public Sub New(key As String, args As IEnumerable(Of Object))
+            Me.Key = key
+            If args Is Nothing Then
+                _arguments = New List(Of Object)()
+            Else
+                _arguments = New List(Of Object)(args)
             End If
         End Sub
 

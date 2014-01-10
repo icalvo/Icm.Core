@@ -175,6 +175,8 @@
     <Compile Include="IO\TextReaderExtensions.vb" />
     <Compile Include="Localization\DictionaryFixedCultureLocalizationRepository.vb" />
     <Compile Include="Localization\DictionaryLocalizationRepository.vb" />
+    <Compile Include="Localization\ILocalizationService.vb" />
+    <Compile Include="Localization\ILocalizationServiceExtensions.vb" />
     <Compile Include="Localization\LocalizationKey.vb" />
     <Compile Include="Localization\PhraseBase.vb" />
     <Compile Include="Localization\ResourceLocalizationRepository.vb" />
