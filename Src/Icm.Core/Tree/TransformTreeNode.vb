@@ -13,13 +13,11 @@ Namespace Icm.Tree
         Inherits TransformTreeElement(Of T1, T2)
         Implements ITreeNode(Of T2)
 
-
-        Private ReadOnly _basenode As ITreeNode(Of T1)
-        Private ReadOnly _transform As Func(Of T1, T2)
-        Private _value As T2
+        Private ReadOnly _baseNode As ITreeNode(Of T1)
 
         Public Sub New(node As ITreeNode(Of T1), transform As Func(Of T1, T2))
             MyBase.New(node, transform)
+            _baseNode = node
         End Sub
 
         Public Function GetParent() As ITreeNode(Of T2) Implements ITreeNode(Of T2).GetParent
@@ -27,15 +25,15 @@ Namespace Icm.Tree
             If sourceParent Is Nothing Then
                 Return Nothing
             Else
-                Return New TransformTreeNode(Of T1, T2)(sourceParent, _transform)
+                Return New TransformTreeNode(Of T1, T2)(sourceParent, Transform)
             End If
         End Function
 
         Public Function GetChildNodes() As IEnumerable(Of ITreeNode(Of T2)) Implements ITreeNode(Of T2).GetChildNodes
 #If FrameworkNet35 Then
-            Return _basenode.GetChildNodes.Select(Function(child) DirectCast(New TransformTreeNode(Of T1, T2)(child, _transform), ITreeNode(Of T2)))
+            Return _basenode.GetChildNodes.Select(Function(child) DirectCast(New TransformTreeNode(Of T1, T2)(child, Transform), ITreeNode(Of T2)))
 #Else
-            Return _basenode.GetChildNodes.Select(Function(child) New TransformTreeNode(Of T1, T2)(child, _transform))
+            Return _baseNode.GetChildNodes.Select(Function(child) New TransformTreeNode(Of T1, T2)(child, Transform))
 #End If
         End Function
     End Class
