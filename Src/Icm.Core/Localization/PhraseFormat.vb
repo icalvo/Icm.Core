@@ -15,7 +15,7 @@ Namespace Icm.Localization
     Public Class PhraseFormat
         Inherits Phrase
 
-        Property Key As String
+        Property PhraseKey As String
 
         Private _arguments As List(Of Object)
 
@@ -26,7 +26,7 @@ Namespace Icm.Localization
         End Property
 
         Public Sub New(key As String, ParamArray args() As Object)
-            Me.Key = key
+            Me.PhraseKey = key
             If args Is Nothing Then
                 _arguments = New List(Of Object)()
             Else
@@ -35,7 +35,7 @@ Namespace Icm.Localization
         End Sub
 
         Public Sub New(key As String, args As IEnumerable(Of Object))
-            Me.Key = key
+            Me.PhraseKey = key
             If args Is Nothing Then
                 _arguments = New List(Of Object)()
             Else
@@ -44,21 +44,20 @@ Namespace Icm.Localization
         End Sub
 
         Public Overrides Function Translate(ByVal lcid As Integer, locRepo As ILocalizationRepository) As String
-            Dim claveConsulta As String
-            Dim clave = Key
+            Dim queryKey As String
             Dim args = Arguments.Select(Function(trans) TranslateObject(locRepo, trans)).ToArray
             ' La clave de la BD lleva un sufijo con el número de parámetros
             If args IsNot Nothing AndAlso args.Count > 0 Then
-                claveConsulta = String.Format("{0}_{1}", clave, args.Count)
+                queryKey = String.Format("{0}_{1}", PhraseKey, args.Count)
             Else
-                claveConsulta = clave
+                queryKey = PhraseKey
             End If
 
-            Dim translatedString = locRepo.ItemForCulture(lcid, claveConsulta)
+            Dim translatedString = locRepo(lcid, queryKey)
 
             If translatedString Is Nothing Then
 
-                translatedString = String.Format("{0}-{1}", clave, lcid)
+                translatedString = String.Format("{0}-{1}", PhraseKey, lcid)
                 If args IsNot Nothing AndAlso args.Count > 0 Then
                     args.Select(Function(obj) obj.ToString).JoinStr(",")
                     translatedString &= String.Format("({0})", args.Select(Function(obj) String.Format("'{0}'", obj)).JoinStr(","))

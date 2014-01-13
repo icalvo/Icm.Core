@@ -1,5 +1,3 @@
-Imports System.Globalization
-
 Namespace Icm.Localization
 
     Public Class ResourceLocalizationRepository
@@ -10,12 +8,6 @@ Namespace Icm.Localization
         Public Sub New(rman As System.Resources.ResourceManager)
             _resourceManager = rman
         End Sub
-
-        Default Public ReadOnly Property Item(key As String) As String Implements ILocalizationRepository.Item
-            Get
-                Return If(_resourceManager.GetString(key), key)
-            End Get
-        End Property
 
         Public ReadOnly Property ItemForCulture(lcid As Integer, key As String) As String Implements ILocalizationRepository.ItemForCulture
             Get

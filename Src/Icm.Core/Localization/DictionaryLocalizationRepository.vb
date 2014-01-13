@@ -1,5 +1,3 @@
-Imports System.Globalization
-
 Namespace Icm.Localization
 
     Public Class DictionaryLocalizationRepository
@@ -17,12 +15,6 @@ Namespace Icm.Localization
                 Me.Add(element.Key, element.Value)
             Next
         End Sub
-
-        Public ReadOnly Property LocItem(ByVal key As String) As String Implements ILocalizationRepository.Item
-            Get
-                Return ItemForCulture(CultureInfo.CurrentCulture.LCID, key)
-            End Get
-        End Property
 
         ReadOnly Property ItemForCulture(ByVal lcid As Integer, ByVal key As String) As String Implements ILocalizationRepository.ItemForCulture
             Get

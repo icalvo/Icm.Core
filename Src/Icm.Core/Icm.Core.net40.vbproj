@@ -175,10 +175,11 @@
     <Compile Include="IO\TextReaderExtensions.vb" />
     <Compile Include="Localization\DictionaryFixedCultureLocalizationRepository.vb" />
     <Compile Include="Localization\DictionaryLocalizationRepository.vb" />
+    <Compile Include="Localization\ILocalizationRepositoryExtensions.vb" />
     <Compile Include="Localization\ILocalizationService.vb" />
     <Compile Include="Localization\ILocalizationServiceExtensions.vb" />
+    <Compile Include="Localization\IPhraseExtensions.vb" />
     <Compile Include="Localization\LocalizationKey.vb" />
-    <Compile Include="Localization\PhraseBase.vb" />
     <Compile Include="Localization\ResourceLocalizationRepository.vb" />
     <Compile Include="Localization\Phrase.vb" />
     <Compile Include="Localization\IPhrase.vb" />
@@ -305,6 +306,7 @@
     <Compile Include="Tree\ITreeNodeExtensions.vb" />
     <Compile Include="Tree\TransformTreeElement.vb" />
     <Compile Include="Tree\TransformTreeNode.vb" />
+    <Compile Include="Tree\TraverseResult.vb" />
     <Compile Include="Tree\TreeElement.vb" />
     <Compile Include="Tree\TreeFactory.vb" />
     <Compile Include="Tuples\ModifiableTuplesFactory.vb" />

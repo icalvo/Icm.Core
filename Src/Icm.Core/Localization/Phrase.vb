@@ -17,10 +17,6 @@ Namespace Icm.Localization
             End If
         End Function
 
-
-        Public Function Translate(locRepo As ILocalizationRepository) As String Implements IPhrase.Translate
-            Return Translate(3082, locRepo)
-        End Function
     End Class
 
 End Namespace

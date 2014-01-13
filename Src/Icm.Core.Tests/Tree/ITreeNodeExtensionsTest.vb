@@ -18,8 +18,8 @@ Public Class ITreeNodeExtensionsTest
         Return New String(result.ToArray)
     End Function
 
-    Private Shared Function GetRepresentation(tupleResult As IEnumerable(Of Tuple(Of Char, Integer))) As String
-        Return tupleResult.Select(Function(tup) tup.Item1 & tup.Item2).JoinStr("")
+    Private Shared Function GetRepresentation(tupleResult As IEnumerable(Of TraverseResult(Of Char))) As String
+        Return tupleResult.Select(Function(tup) tup.Result & tup.Level).JoinStr("")
     End Function
 
     <Test>
