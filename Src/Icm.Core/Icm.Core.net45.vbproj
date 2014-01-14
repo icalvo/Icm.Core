@@ -187,6 +187,7 @@
     <Compile Include="Compilation\CSharpCompiledFunction.vb" />
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="IO\TextReaderExtensions.vb" />
+    <Compile Include="Localization\CompositeLocalizationRepository.vb" />
     <Compile Include="Localization\DictionaryFixedCultureLocalizationRepository.vb" />
     <Compile Include="Localization\DictionaryLocalizationRepository.vb" />
     <Compile Include="Localization\ILocalizationRepositoryExtensions.vb" />
