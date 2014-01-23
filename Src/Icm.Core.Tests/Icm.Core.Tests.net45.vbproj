@@ -134,6 +134,7 @@
     <Compile Include="Reflection\ObjectReflectionExtensionsTest.vb" />
     <Compile Include="Search and Replace\PlainStringGeneratorTest.vb" />
     <Compile Include="Search and Replace\ReplacerTest.vb" />
+    <Compile Include="StandardTokenParserTest.vb" />
     <Compile Include="Tree\ITreeNodeExtensionsTest.vb" />
     <Compile Include="Tree\TreeNodeTest.vb" />
     <Compile Include="WorkingDaysManagerTest.vb" />

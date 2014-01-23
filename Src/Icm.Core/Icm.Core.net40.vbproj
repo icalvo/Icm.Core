@@ -301,6 +301,9 @@
       <DependentUpon>Reflection.resx</DependentUpon>
     </Compile>
     <Compile Include="TimerExtensions.vb" />
+    <Compile Include="TokenParser\ITokenParser.vb" />
+    <Compile Include="TokenParser\ParseError.vb" />
+    <Compile Include="TokenParser\StandardTokenParser.vb" />
     <Compile Include="Tree\ITreeElement.vb" />
     <Compile Include="Tree\ITreeElementExtensions.vb" />
     <Compile Include="Tree\ITreeNode.vb" />
