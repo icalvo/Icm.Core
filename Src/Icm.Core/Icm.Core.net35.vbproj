@@ -257,6 +257,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reflection.resx</DependentUpon>
     </Compile>
+    <Compile Include="Repository\IEntity.vb" />
+    <Compile Include="Repository\IRepositoryOfTEntity.vb" />
+    <Compile Include="Repository\IRepositoryOfTEntityTKey.vb" />
+    <Compile Include="Repository\IRepositoryOfTEntityTKeyExtensions.vb" />
+    <Compile Include="Repository\MemoryEntityRepositoryOfTEntityTKey.vb" />
+    <Compile Include="Repository\MemoryEntityRepositoryOfTKey.vb" />
+    <Compile Include="Repository\MemoryRepositoryOfTEntity.vb" />
+    <Compile Include="Repository\MemoryRepositoryOfTEntityTKey.vb" />
     <Compile Include="TimerExtensions.vb" />
     <Compile Include="TokenParser\ITokenParser.vb" />
     <Compile Include="TokenParser\ParseError.vb" />

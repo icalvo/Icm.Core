@@ -203,6 +203,7 @@
     <Compile Include="Localization\PhraseAnd.vb" />
     <Compile Include="Nullable2\Nullable2.vb" />
     <Compile Include="Nullable2\Nullable2Conversion.vb" />
+    <Compile Include="PredicateBuilder\PredicateBuilder.vb" />
     <Compile Include="Reflection\ObjectCopyExtensions.vb" />
     <Compile Include="Reflection\ObjectReflectionExtensions.vb" />
     <Compile Include="Reflection\Reflection.es.Designer.vb">
@@ -314,6 +315,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reflection.resx</DependentUpon>
     </Compile>
+    <Compile Include="Repository\IEntity.vb" />
+    <Compile Include="Repository\IRepositoryOfTEntity.vb" />
+    <Compile Include="Repository\IRepositoryOfTEntityTKeyExtensions.vb" />
+    <Compile Include="Repository\IRepositoryOfTEntityTKey.vb" />
+    <Compile Include="Repository\MemoryEntityRepositoryOfTEntityTKey.vb" />
+    <Compile Include="Repository\MemoryEntityRepositoryOfTKey.vb" />
+    <Compile Include="Repository\MemoryRepositoryOfTEntityTKey.vb" />
+    <Compile Include="Repository\MemoryRepositoryOfTEntity.vb" />
     <Compile Include="TimerExtensions.vb" />
     <Compile Include="TokenParser\ITokenParser.vb" />
     <Compile Include="TokenParser\ParseError.vb" />
@@ -395,7 +404,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Icm.pfx" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">

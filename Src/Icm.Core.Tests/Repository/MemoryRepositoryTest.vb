@@ -75,4 +75,20 @@ Public Class MemoryRepositoryTest
             }))
     End Sub
 
+    <Test>
+    Public Sub Test2()
+        Dim repo As New Icm.Data.MemoryRepository(Of MyRegister)(
+            New HashSet(Of MyRegister) From {
+                MyRegister.Create(1, "rtyu"),
+                MyRegister.Create(2, "fghj"),
+                MyRegister.Create(3, "vbnm")
+            },
+            Function(reg) reg.Id)
+
+        Dim item = repo.GetById(2)
+
+        Assert.That(item, [Is].Not.Null)
+        Assert.That(item.Id, [Is].EqualTo(2))
+        Assert.That(item.Value, [Is].EqualTo("fghj"))
+    End Sub
 End Class
