@@ -1,10 +1,6 @@
-
-using Microsoft.VisualBasic;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
+
 namespace Icm
 {
 
@@ -47,15 +43,11 @@ namespace Icm
 						if (char.IsWhiteSpace(character)) {
 							if (currentToken.Length > 0) {
 								_tokens.Add(currentToken.ToString());
-								#if FrameworkNet35
-								currentToken = new System.Text.StringBuilder();
-								#elif
 								currentToken.Clear();
-								#endif
 							}
-						} else if (character == "\\") {
+						} else if (character == '\\') {
 							state = ParserState.OutsideQuotesEscaping;
-						} else if (character == "\"") {
+						} else if (character == '"') {
 							state = ParserState.InsideQuotesNotEscaping;
 						} else {
 							currentToken.Append(character);
@@ -68,10 +60,11 @@ namespace Icm
 						break;
 					case ParserState.InsideQuotesNotEscaping:
 						// Inside quotes and not escaping
-						if (character == "\\") {
+                        if (character == '\\')
+                        {
 							state = ParserState.InsideQuotesEscaping;
-						} else if (character == "\"") {
-							_tokens.Add(currentToken.ToString);
+						} else if (character == '"') {
+							_tokens.Add(currentToken.ToString());
 							currentToken.Clear();
 							state = ParserState.OutsideQuotesNotEscaping;
 						} else {
@@ -95,7 +88,7 @@ namespace Icm
 				index += 1;
 			}
 			if (currentToken.Length > 0) {
-				_tokens.Add(currentToken.ToString);
+				_tokens.Add(currentToken.ToString());
 			}
 			if (state != ParserState.OutsideQuotesNotEscaping) {
 				_errors.Add(new ParseError(1, index, errorStartIndex));

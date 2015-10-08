@@ -1,10 +1,4 @@
-
-using Microsoft.VisualBasic;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace Icm.Collections
@@ -40,7 +34,7 @@ namespace Icm.Collections
 		/// <param name="comparer"></param>
 		/// <returns></returns>
 		/// <remarks>
-		///   <see cref="List(Of T)"></see> have a BinarySearch method but IList not. This
+		///   <see cref="List{T}"></see> have a BinarySearch method but IList not. This
 		/// is an implementation for IList.
 		/// </remarks>
 		[Extension()]

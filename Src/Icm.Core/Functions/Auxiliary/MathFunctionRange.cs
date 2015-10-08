@@ -1,10 +1,5 @@
-
-using Microsoft.VisualBasic;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
+
 namespace Icm.Functions
 {
 	public class MathFunctionRange<TX, TY> where TX : struct, IComparable<TX> where TY : struct, IComparable<TY>

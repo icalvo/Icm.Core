@@ -72,17 +72,6 @@
     <Compile Include="Collections\SortedCollection\General\RepositorySortedCollection.cs" />
     <Compile Include="Collections\SortedCollection\IPeriodManager.cs" />
     <Compile Include="Collections\SortedCollection\RangeIntervalEnumerator.cs" />
-    <Compile Include="Collections\SortedCollection\StructKeyClassValue\BaseSortedCollection.cs" />
-    <Compile Include="Collections\SortedCollection\StructKeyClassValue\ISortedCollection.cs" />
-    <Compile Include="Collections\SortedCollection\StructKeyClassValue\ISortedCollectionRepository.cs" />
-    <Compile Include="Collections\SortedCollection\StructKeyClassValue\MemorySortedCollection.cs" />
-    <Compile Include="Collections\SortedCollection\StructKeyClassValue\MemorySortedCollectionRepository.cs" />
-    <Compile Include="Collections\SortedCollection\StructKeyClassValue\RepositorySortedCollection.cs" />
-    <Compile Include="Collections\SortedCollection\StructKeyStructValue\BaseSortedCollection.cs" />
-    <Compile Include="Collections\SortedCollection\StructKeyStructValue\ISortedCollection.cs" />
-    <Compile Include="Collections\SortedCollection\StructKeyStructValue\ISortedCollectionRepository.cs" />
-    <Compile Include="Collections\SortedCollection\StructKeyStructValue\MemorySortedCollection.cs" />
-    <Compile Include="Collections\SortedCollection\StructKeyStructValue\MemorySortedCollectionRepository.cs" />
     <Compile Include="Collections\SortedCollection\StructKeyStructValue\RepositorySortedCollection.cs" />
     <Compile Include="Collections\SortedCollection\TrivialPeriodManager.cs" />
     <Compile Include="Collections\SortedCollection\Vector2.cs" />
@@ -228,6 +217,9 @@
     <Compile Include="Tuples\Tuple3.cs" />
     <Compile Include="Tuples\Tuple4.cs" />
     <Compile Include="WorkingDaysManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Collections\SortedCollection\StructKeyClassValue\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

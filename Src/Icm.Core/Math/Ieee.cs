@@ -1,10 +1,5 @@
-
-using Microsoft.VisualBasic;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
+
 // Floating Point Example.
 // 
 // Copyright 2005, Extreme Optimization. (http://www.extremeoptimization.com)
