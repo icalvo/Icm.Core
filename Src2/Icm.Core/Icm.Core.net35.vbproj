@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <BaseAddress>285212672</BaseAddress>
+    <DocumentationFile>Icm.Core.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42353,42354,42355</NoWarn>
+    <DebugType>
+    </DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{884CD959-7100-4081-AF2D-57EE3E76926E}</ProjectGuid>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccProvider>
+    </SccProvider>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Icm.Core</AssemblyName>
+    <AssemblyOriginatorKeyFile>Icm.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionStrict>On</OptionStrict>
+    <RootNamespace>
+    </RootNamespace>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <MyType>Windows</MyType>
+    <SccAuxPath>
+    </SccAuxPath>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <SignAssembly>true</SignAssembly>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <OptionInfer>On</OptionInfer>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <PublishUrl>http://localhost/Icm/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\net35\</OutputPath>
+    <DocumentationFile>Icm.Core.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>FrameworkNet35</DefineConstants>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisRules>
+    </CodeAnalysisRules>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\net35\</OutputPath>
+    <DocumentationFile>Icm.Core.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>Framework=net35</DefineConstants>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>false</DefineTrace>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42353,42354,42355</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <BaseAddress>285212672</BaseAddress>
+    <DocumentationFile>Icm.Core.xml</DocumentationFile>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Globalization" />
+    <Import Include="System.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.vb">
+      <Link>SharedAssemblyInfo.vb</Link>
+    </Compile>
+    <Compile Include="Basic types extensions\CurryExtensions.net35.vb" />
+    <Compile Include="Basic types extensions\TimespanExtensions.vb" />
+    <Compile Include="Collections extensions\JoinStrExtensions.vb" />
+    <Compile Include="Collections extensions\ExtremeElements.vb" />
+    <Compile Include="Color console\ColorConsole.vb" />
+    <Compile Include="Color console\ColorSetting.vb" />
+    <Compile Include="Color console\ColorString.vb" />
+    <Compile Include="CommandLine\CommandLine.vb" />
+    <Compile Include="CommandLine\CommandLineExtensions.vb" />
+    <Compile Include="CommandLine\CommandLineTools.Designer.vb" />
+    <Compile Include="CommandLine\NamedParameter.vb" />
+    <Compile Include="CommandLine\SubArgument.vb" />
+    <Compile Include="CommandLine\SubArgumentType.vb" />
+    <Compile Include="CommandLine\UndefinedOptionException.vb" />
+    <Compile Include="CommandLine\UnnamedParameter.vb" />
+    <Compile Include="CommandLine\UnnamedParametersConfig.vb" />
+    <Compile Include="CommandLine\ValuesStore.vb" />
+    <Compile Include="Compilation\CSharpCompiledFunction.vb" />
+    <Compile Include="IO\TextReaderExtensions.vb" />
+    <Compile Include="Localization\CompositeLocalizationRepository.vb" />
+    <Compile Include="Localization\DictionaryFixedCultureLocalizationRepository.vb" />
+    <Compile Include="Localization\DictionaryLocalizationRepository.vb" />
+    <Compile Include="Localization\ILocalizationRepositoryExtensions.vb" />
+    <Compile Include="Localization\ILocalizationService.vb" />
+    <Compile Include="Localization\ILocalizationServiceExtensions.vb" />
+    <Compile Include="Localization\IPhraseExtensions.vb" />
+    <Compile Include="Localization\LocalizationKey.vb" />
+    <Compile Include="Localization\ResourceLocalizationRepository.vb" />
+    <Compile Include="Localization\Phrase.vb" />
+    <Compile Include="Localization\IPhrase.vb" />
+    <Compile Include="Localization\PhraseFormat.vb" />
+    <Compile Include="Localization\PhraseFactory.vb" />
+    <Compile Include="Localization\PhraseAnd.vb" />
+    <Compile Include="Nullable2\Nullable2.vb" />
+    <Compile Include="Nullable2\Nullable2Conversion.vb" />
+    <Compile Include="Reflection\ObjectCopyExtensions.vb" />
+    <Compile Include="Reflection\Reflection.es.Designer.vb">
+      <DependentUpon>Reflection.es.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reflection\ActivatorTools.vb" />
+    <Compile Include="Reflection\ExpressionExtensions.vb" />
+    <Compile Include="Reflection\ImplementorInstanceProvider.vb" />
+    <Compile Include="Reflection\MethodInfoExtensions.vb" />
+    <Compile Include="Reflection\ObjectReflectionExtensions.vb" />
+    <Compile Include="Reflection\TypeExtensions.vb" />
+    <Compile Include="Compilation\CompiledParameterInfo.vb" />
+    <Compile Include="Compilation\CompileException.vb" />
+    <Compile Include="Compilation\VBCompiledFunction.vb" />
+    <Compile Include="IO\CompositeWriter.vb" />
+    <Compile Include="Configuration\TypedValue.vb" />
+    <Compile Include="Configuration\GeneralSectionHandler.vb" />
+    <Compile Include="Configuration\Settings.vb" />
+    <Compile Include="Configuration\TypedDictionarySectionHandler.vb" />
+    <Compile Include="IO\DirectoryInfoExtensions.vb" />
+    <Compile Include="IO\MovementEventArgs.vb" />
+    <Compile Include="IO\TextWriterExtensions.vb" />
+    <Compile Include="Constants.vb" />
+    <Compile Include="IO\CSVWriter.vb" />
+    <Compile Include="Basic types extensions\DateExtensions.vb" />
+    <Compile Include="IO\DateStringWriter.vb" />
+    <Compile Include="IO\FileTools.vb" />
+    <Compile Include="EventArgs\ErrorEventArgs.vb" />
+    <Compile Include="EventArgs\EventArgs.vb" />
+    <Compile Include="Collections extensions\ICollectionExtensions.vb" />
+    <Compile Include="Collections extensions\IEnumerableExtensions.vb" />
+    <Compile Include="Collections extensions\ILookupExtensions.vb" />
+    <Compile Include="Collections extensions\LinkedListExtensions.vb" />
+    <Compile Include="AI Search\AaSearch.vb" />
+    <Compile Include="AI Search\INode.vb" />
+    <Compile Include="Basic types extensions\DoubleExtensions.vb" />
+    <Compile Include="IO\EnhancedFileSystemWatcher.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Basic types extensions\BooleanExtensions.vb" />
+    <Compile Include="HashAlgorithmExtensions.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Collections extensions\IDictionaryExtensions.vb" />
+    <Compile Include="Math\Ieee.vb" />
+    <Compile Include="Collections extensions\ArrayExtensions.vb" />
+    <Compile Include="Collections extensions\IListExtensions.vb" />
+    <Compile Include="INamed.vb" />
+    <Compile Include="DateTimeInterval.vb" />
+    <Compile Include="Localization\ILocalizationRepository.vb" />
+    <Compile Include="Basic types extensions\LongExtensions.vb" />
+    <Compile Include="IO\MailTextWriter.vb" />
+    <Compile Include="Math\LimitedQueue.vb" />
+    <Compile Include="Math\MathModule.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Math\NumberFiles.vb" />
+    <Compile Include="Math\STAT.vb" />
+    <Compile Include="Math\StatisticsGenerator.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Basic types extensions\NullableExtensions.vb" />
+    <Compile Include="IO\NullWriter.vb" />
+    <Compile Include="Basic types extensions\ObjectExtensions.vb" />
+    <Compile Include="Collections\OrderedDictionary.vb" />
+    <Compile Include="Reflection\Reflection.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reflection.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\IEntity.vb" />
+    <Compile Include="Repository\IRepositoryOfTEntity.vb" />
+    <Compile Include="Repository\IRepositoryOfTEntityTKey.vb" />
+    <Compile Include="Repository\IRepositoryOfTEntityTKeyExtensions.vb" />
+    <Compile Include="Repository\MemoryEntityRepositoryOfTEntityTKey.vb" />
+    <Compile Include="Repository\MemoryEntityRepositoryOfTKey.vb" />
+    <Compile Include="Repository\MemoryRepositoryOfTEntity.vb" />
+    <Compile Include="Repository\MemoryRepositoryOfTEntityTKey.vb" />
+    <Compile Include="TimerExtensions.vb" />
+    <Compile Include="TokenParser\ITokenParser.vb" />
+    <Compile Include="TokenParser\ParseError.vb" />
+    <Compile Include="TokenParser\StandardTokenParser.vb" />
+    <Compile Include="Tree\ITreeElement.vb" />
+    <Compile Include="Tree\ITreeElementExtensions.vb" />
+    <Compile Include="Tree\ITreeNode.vb" />
+    <Compile Include="Tree\ITreeNodeExtensions.vb" />
+    <Compile Include="Tree\TransformTreeElement.vb" />
+    <Compile Include="Tree\TransformTreeNode.vb" />
+    <Compile Include="Tree\TraverseResult.vb" />
+    <Compile Include="Tree\TreeElement.vb" />
+    <Compile Include="Tree\TreeFactory.vb" />
+    <Compile Include="Tuples\Tuple.vb" />
+    <Compile Include="Tuples\ModifiableTuplesFactory.vb" />
+    <Compile Include="Tuples\Pair.vb" />
+    <Compile Include="IO\PathManager.vb" />
+    <Compile Include="Collections\PriorityQueue.vb" />
+    <Compile Include="Search and Replace\AutoNumberGenerator.vb" />
+    <Compile Include="Search and Replace\PlainStringGenerator.vb" />
+    <Compile Include="Search and Replace\Replacer.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AI Search\ForcedDictionary.vb" />
+    <Compile Include="Collections extensions\SortedListExtensions.vb" />
+    <Compile Include="IO\TextReaderFactory.vb" />
+    <Compile Include="IO\TextWriterFactory.vb" />
+    <Compile Include="SharedCounter.vb" />
+    <Compile Include="StepBackgroundWorker\IStepWork.vb" />
+    <Compile Include="StepBackgroundWorker\IStepWorkState.vb" />
+    <Compile Include="StepBackgroundWorker\StepBackgroundWorker.vb" />
+    <Compile Include="EventArgs\StoppableEventArgs.vb" />
+    <Compile Include="Collections extensions\StringListExtensions.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Basic types extensions\StringExtensions.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Text\UsualRegularExpressions.vb" />
+    <Compile Include="Tools.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tree\TreeNode.vb" />
+    <Compile Include="Tuples\Tuple3.vb" />
+    <Compile Include="Tuples\Tuple4.vb" />
+    <Compile Include="Compilation\CompiledFunction.vb" />
+    <Compile Include="WorkingDaysManager.vb" />
+    <EmbeddedResource Include="CommandLine\CommandLineTools.resx" />
+    <EmbeddedResource Include="IO\EnhancedFileSystemWatcher.resx">
+      <DependentUpon>EnhancedFileSystemWatcher.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.es.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reflection\Reflection.es.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Reflection.es.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reflection\Reflection.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Reflection.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icm.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINNT\Microsoft.NET\Framework\v2.0.50727\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINNT\Microsoft.NET\Framework\v2.0.50727\System.configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+</Project>

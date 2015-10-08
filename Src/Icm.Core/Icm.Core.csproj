@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5C97B7BC-D4AA-4EB5-8E16-11B234463092}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Icm.Core</RootNamespace>
+    <AssemblyName>Icm.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AI Search\AaSearch.cs" />
+    <Compile Include="AI Search\ForcedDictionary.cs" />
+    <Compile Include="AI Search\INode.cs" />
+    <Compile Include="Basic types extensions\BooleanExtensions.cs" />
+    <Compile Include="Basic types extensions\CurryExtensions.cs" />
+    <Compile Include="Basic types extensions\DateExtensions.cs" />
+    <Compile Include="Basic types extensions\DoubleExtensions.cs" />
+    <Compile Include="Basic types extensions\LongExtensions.cs" />
+    <Compile Include="Basic types extensions\NullableExtensions.cs" />
+    <Compile Include="Basic types extensions\ObjectExtensions.cs" />
+    <Compile Include="Basic types extensions\StringExtensions.cs" />
+    <Compile Include="Basic types extensions\TimespanExtensions.cs" />
+    <Compile Include="Collections extensions\ArrayExtensions.cs" />
+    <Compile Include="Collections extensions\ExtremeElements.cs" />
+    <Compile Include="Collections extensions\ICollectionExtensions.cs" />
+    <Compile Include="Collections extensions\IDictionaryExtensions.cs" />
+    <Compile Include="Collections extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Collections extensions\IListExtensions.cs" />
+    <Compile Include="Collections extensions\ILookupExtensions.cs" />
+    <Compile Include="Collections extensions\JoinStrExtensions.cs" />
+    <Compile Include="Collections extensions\LinkedListExtensions.cs" />
+    <Compile Include="Collections extensions\SortedListExtensions.cs" />
+    <Compile Include="Collections extensions\StringListExtensions.cs" />
+    <Compile Include="Collections\OrderedDictionary.cs" />
+    <Compile Include="Collections\PriorityQueue.cs" />
+    <Compile Include="Collections\SortedCollection\General\BaseSortedCollection.cs" />
+    <Compile Include="Collections\SortedCollection\General\ISortedCollection.cs" />
+    <Compile Include="Collections\SortedCollection\General\ISortedCollectionRepository.cs" />
+    <Compile Include="Collections\SortedCollection\General\MemorySortedCollection.cs" />
+    <Compile Include="Collections\SortedCollection\General\MemorySortedCollectionRepository.cs" />
+    <Compile Include="Collections\SortedCollection\General\RepositorySortedCollection.cs" />
+    <Compile Include="Collections\SortedCollection\IPeriodManager.cs" />
+    <Compile Include="Collections\SortedCollection\RangeIntervalEnumerator.cs" />
+    <Compile Include="Collections\SortedCollection\StructKeyClassValue\BaseSortedCollection.cs" />
+    <Compile Include="Collections\SortedCollection\StructKeyClassValue\ISortedCollection.cs" />
+    <Compile Include="Collections\SortedCollection\StructKeyClassValue\ISortedCollectionRepository.cs" />
+    <Compile Include="Collections\SortedCollection\StructKeyClassValue\MemorySortedCollection.cs" />
+    <Compile Include="Collections\SortedCollection\StructKeyClassValue\MemorySortedCollectionRepository.cs" />
+    <Compile Include="Collections\SortedCollection\StructKeyClassValue\RepositorySortedCollection.cs" />
+    <Compile Include="Collections\SortedCollection\StructKeyStructValue\BaseSortedCollection.cs" />
+    <Compile Include="Collections\SortedCollection\StructKeyStructValue\ISortedCollection.cs" />
+    <Compile Include="Collections\SortedCollection\StructKeyStructValue\ISortedCollectionRepository.cs" />
+    <Compile Include="Collections\SortedCollection\StructKeyStructValue\MemorySortedCollection.cs" />
+    <Compile Include="Collections\SortedCollection\StructKeyStructValue\MemorySortedCollectionRepository.cs" />
+    <Compile Include="Collections\SortedCollection\StructKeyStructValue\RepositorySortedCollection.cs" />
+    <Compile Include="Collections\SortedCollection\TrivialPeriodManager.cs" />
+    <Compile Include="Collections\SortedCollection\Vector2.cs" />
+    <Compile Include="Collections\SortedCollection\YearManager.cs" />
+    <Compile Include="Color console\ColorConsole.cs" />
+    <Compile Include="Color console\ColorSetting.cs" />
+    <Compile Include="Color console\ColorString.cs" />
+    <Compile Include="CommandLine\CommandLine.cs" />
+    <Compile Include="CommandLine\CommandLineExtensions.cs" />
+    <Compile Include="CommandLine\CommandLineTools.Designer.cs" />
+    <Compile Include="CommandLine\NamedParameter.cs" />
+    <Compile Include="CommandLine\SubArgument.cs" />
+    <Compile Include="CommandLine\SubArgumentType.cs" />
+    <Compile Include="CommandLine\UndefinedOptionException.cs" />
+    <Compile Include="CommandLine\UnnamedParameter.cs" />
+    <Compile Include="CommandLine\UnnamedParametersConfig.cs" />
+    <Compile Include="CommandLine\ValuesStore.cs" />
+    <Compile Include="Compilation\CompiledFunction.cs" />
+    <Compile Include="Compilation\CompiledParameterInfo.cs" />
+    <Compile Include="Compilation\CompileException.cs" />
+    <Compile Include="Compilation\CSharpCompiledFunction.cs" />
+    <Compile Include="Compilation\VBCompiledFunction.cs" />
+    <Compile Include="Configuration\GeneralSectionHandler.cs" />
+    <Compile Include="Configuration\Settings.cs" />
+    <Compile Include="Configuration\TypedDictionarySectionHandler.cs" />
+    <Compile Include="Configuration\TypedValue.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="DateTimeInterval.cs" />
+    <Compile Include="EventArgs\ErrorEventArgs.cs" />
+    <Compile Include="EventArgs\EventArgs.cs" />
+    <Compile Include="EventArgs\StoppableEventArgs.cs" />
+    <Compile Include="Functions\Auxiliary\FunctionPoint.cs" />
+    <Compile Include="Functions\Auxiliary\FunctionPointPair.cs" />
+    <Compile Include="Functions\Auxiliary\MathFunctionRange.cs" />
+    <Compile Include="Functions\Auxiliary\RangeIterator.cs" />
+    <Compile Include="Functions\BaseKeyedMathFunction.cs" />
+    <Compile Include="Functions\Enumerations\AggregateType.cs" />
+    <Compile Include="Functions\Enumerations\ThresholdType.cs" />
+    <Compile Include="Functions\Enumerations\ThresholdTypeExtensions.cs" />
+    <Compile Include="Functions\IKeyedMathFunction.cs" />
+    <Compile Include="Functions\IMathFunction.cs" />
+    <Compile Include="Functions\InterpolatedKeyedFunction.cs" />
+    <Compile Include="Functions\InterpolatedValueLine.cs" />
+    <Compile Include="Functions\KeyedMathFunction.cs" />
+    <Compile Include="Functions\MathFunction.cs" />
+    <Compile Include="Functions\ReadonlyKeyedFunction.cs" />
+    <Compile Include="Functions\StepwiseKeyedFunction.cs" />
+    <Compile Include="Functions\StepwiseValueLine.cs" />
+    <Compile Include="Functions\TotalOrder\BaseTotalOrder.cs" />
+    <Compile Include="Functions\TotalOrder\DateTotalOrder.cs" />
+    <Compile Include="Functions\TotalOrder\DoubleTotalOrder.cs" />
+    <Compile Include="Functions\TotalOrder\ITotalOrder.cs" />
+    <Compile Include="Functions\TotalOrder\ITotalOrderExtensions.cs" />
+    <Compile Include="Functions\TotalOrder\LongTotalOrder.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="HashAlgorithmExtensions.cs" />
+    <Compile Include="INamed.cs" />
+    <Compile Include="IO\CompositeWriter.cs" />
+    <Compile Include="IO\CSVWriter.cs" />
+    <Compile Include="IO\DateStringWriter.cs" />
+    <Compile Include="IO\DirectoryInfoExtensions.cs" />
+    <Compile Include="IO\EnhancedFileSystemWatcher.cs" />
+    <Compile Include="IO\FileTools.cs" />
+    <Compile Include="IO\MailTextWriter.cs" />
+    <Compile Include="IO\MovementEventArgs.cs" />
+    <Compile Include="IO\NullWriter.cs" />
+    <Compile Include="IO\PathManager.cs" />
+    <Compile Include="IO\TextReaderExtensions.cs" />
+    <Compile Include="IO\TextReaderFactory.cs" />
+    <Compile Include="IO\TextWriterExtensions.cs" />
+    <Compile Include="IO\TextWriterFactory.cs" />
+    <Compile Include="Localization\CompositeLocalizationRepository.cs" />
+    <Compile Include="Localization\DictionaryFixedCultureLocalizationRepository.cs" />
+    <Compile Include="Localization\DictionaryLocalizationRepository.cs" />
+    <Compile Include="Localization\ILocalizationRepository.cs" />
+    <Compile Include="Localization\ILocalizationRepositoryExtensions.cs" />
+    <Compile Include="Localization\ILocalizationService.cs" />
+    <Compile Include="Localization\ILocalizationServiceExtensions.cs" />
+    <Compile Include="Localization\IPhrase.cs" />
+    <Compile Include="Localization\IPhraseExtensions.cs" />
+    <Compile Include="Localization\LocalizationKey.cs" />
+    <Compile Include="Localization\Phrase.cs" />
+    <Compile Include="Localization\PhraseAnd.cs" />
+    <Compile Include="Localization\PhraseFactory.cs" />
+    <Compile Include="Localization\PhraseFormat.cs" />
+    <Compile Include="Localization\ResourceLocalizationRepository.cs" />
+    <Compile Include="Math\Ieee.cs" />
+    <Compile Include="Math\LimitedQueue.cs" />
+    <Compile Include="Math\MathModule.cs" />
+    <Compile Include="Math\NumberFiles.cs" />
+    <Compile Include="Math\STAT.cs" />
+    <Compile Include="Math\StatisticsGenerator.cs" />
+    <Compile Include="Nullable2\Nullable2.cs" />
+    <Compile Include="Nullable2\Nullable2Conversion.cs" />
+    <Compile Include="PredicateBuilder\PredicateBuilder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\ActivatorTools.cs" />
+    <Compile Include="Reflection\ExpressionExtensions.cs" />
+    <Compile Include="Reflection\ImplementorInstanceProvider.cs" />
+    <Compile Include="Reflection\MethodInfoExtensions.cs" />
+    <Compile Include="Reflection\ObjectCopyExtensions.cs" />
+    <Compile Include="Reflection\ObjectReflectionExtensions.cs" />
+    <Compile Include="Reflection\Reflection.Designer.cs" />
+    <Compile Include="Reflection\Reflection.es.Designer.cs" />
+    <Compile Include="Reflection\TypeExtensions.cs" />
+    <Compile Include="Repository\IEntity.cs" />
+    <Compile Include="Repository\IRepositoryOfTEntity.cs" />
+    <Compile Include="Repository\IRepositoryOfTEntityTKey.cs" />
+    <Compile Include="Repository\IRepositoryOfTEntityTKeyExtensions.cs" />
+    <Compile Include="Repository\MemoryEntityRepositoryOfTEntityTKey.cs" />
+    <Compile Include="Repository\MemoryEntityRepositoryOfTKey.cs" />
+    <Compile Include="Repository\MemoryRepositoryOfTEntity.cs" />
+    <Compile Include="Repository\MemoryRepositoryOfTEntityTKey.cs" />
+    <Compile Include="Search and Replace\AutoNumberGenerator.cs" />
+    <Compile Include="Search and Replace\PlainStringGenerator.cs" />
+    <Compile Include="Search and Replace\Replacer.cs" />
+    <Compile Include="SharedCounter.cs" />
+    <Compile Include="StepBackgroundWorker\IStepWork.cs" />
+    <Compile Include="StepBackgroundWorker\IStepWorkState.cs" />
+    <Compile Include="StepBackgroundWorker\StepBackgroundWorker.cs" />
+    <Compile Include="Text\UsualRegularExpressions.cs" />
+    <Compile Include="TimerExtensions.cs" />
+    <Compile Include="Timers.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TokenParser\ITokenParser.cs" />
+    <Compile Include="TokenParser\ParseError.cs" />
+    <Compile Include="TokenParser\StandardTokenParser.cs" />
+    <Compile Include="Tools.cs" />
+    <Compile Include="Tree\ITreeElement.cs" />
+    <Compile Include="Tree\ITreeElementExtensions.cs" />
+    <Compile Include="Tree\ITreeNode.cs" />
+    <Compile Include="Tree\ITreeNodeExtensions.cs" />
+    <Compile Include="Tree\TransformTreeElement.cs" />
+    <Compile Include="Tree\TransformTreeNode.cs" />
+    <Compile Include="Tree\TraverseResult.cs" />
+    <Compile Include="Tree\TreeElement.cs" />
+    <Compile Include="Tree\TreeFactory.cs" />
+    <Compile Include="Tree\TreeNode.cs" />
+    <Compile Include="Tuples\ModifiableTuplesFactory.cs" />
+    <Compile Include="Tuples\Pair.cs" />
+    <Compile Include="Tuples\Tuple.cs" />
+    <Compile Include="Tuples\Tuple3.cs" />
+    <Compile Include="Tuples\Tuple4.cs" />
+    <Compile Include="WorkingDaysManager.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
