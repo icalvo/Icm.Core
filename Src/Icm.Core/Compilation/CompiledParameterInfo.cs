@@ -3,15 +3,9 @@ namespace Icm.Compilation
 
 	public abstract class CompiledParameterInfo
 	{
+	    public string Name { get; protected set; }
 
-
-		private string _name;
-		public string Name {
-			get { return _name; }
-			protected set { _name = value; }
-		}
-
-		public abstract string ArgType { get; }
+	    public abstract string ArgType { get; }
 
 	}
 
@@ -30,16 +24,7 @@ namespace Icm.Compilation
 			this.Name = name;
 		}
 
-		public override string ArgType {
-			get { return _argType; }
-		}
+		public override string ArgType => _argType;
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

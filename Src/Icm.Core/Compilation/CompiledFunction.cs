@@ -8,47 +8,42 @@ using System.Globalization;
 namespace Icm.Compilation
 {
 
-	/// <summary>
-	/// Compiles a function out of the source code.
-	/// </summary>
-	/// <typeparam name="T">Function return type</typeparam>
-	/// <remarks>
-	/// Use property <see cref="CompiledFunction(Of T).Code" /> to establish the code of
-	/// the function.
-	/// Use the method <see cref="CompiledFunction(Of T).AddParameter" />  to establish the
-	/// parameters of the function.
-	/// Use <see cref="CompiledFunction(Of T).CompileAsExpression" /> to compile 
-	/// a function that returns the given code. This method returns False if
-	/// the compilation fails. Use property <see cref="CompiledFunction.CompilerErrors" />
-	/// to obtain the compilation errors.
-	/// Use <see cref=" CompiledFunction(Of T).Evaluate">Evaluate</see> to execute the function
-	/// with some given arguments which must be type compatible with the previously configured
-	/// parameters.
-	/// </remarks>
-	public abstract class CompiledFunction<T> : IDisposable
+    /// <summary>
+    /// Compiles a function out of the source code.
+    /// </summary>
+    /// <typeparam name="T">Function return type</typeparam>
+    /// <remarks>
+    /// Use property <see cref="CompiledFunction{T}.Code" /> to establish the code of
+    /// the function.
+    /// Use the method <see cref="CompiledFunction{T}.AddParameter{TParam}" />  to establish the
+    /// parameters of the function.
+    /// Use <see cref="CompiledFunction{T}.CompileAsExpression" /> to compile 
+    /// a function that returns the given code. This method returns False if
+    /// the compilation fails. Use property <see cref="CompiledFunction{T}.CompilerErrors" />
+    /// to obtain the compilation errors.
+    /// Use <see cref=" CompiledFunction{T}.Evaluate">Evaluate</see> to execute the function
+    /// with some given arguments which must be type compatible with the previously configured
+    /// parameters.
+    /// </remarks>
+    public abstract class CompiledFunction<T> : IDisposable
 	{
 
-		private static readonly Dictionary<string, object> _instances = new Dictionary<string, object>();
-		private IList<string> _namespaces = new List<string>();
-		private readonly List<CompiledParameterInfo> _parameters = new List<CompiledParameterInfo>();
+		private static readonly Dictionary<string, object> Instances = new Dictionary<string, object>();
+        private readonly List<CompiledParameterInfo> _parameters = new List<CompiledParameterInfo>();
 
 		private readonly List<CompilerError> _compilerErrors = new List<CompilerError>();
 		protected CompilerParameters CompilerParameters { get; set; }
 		protected CodeDomProvider CodeProvider { get; set; }
 
-		protected IList<string> Namespaces {
-			get { return _namespaces; }
-		}
+		protected IList<string> Namespaces { get; } = new List<string>();
 
-		private object _execInstance;
+        private object _execInstance;
 
-		private MethodInfo _MethodInfo;
+		private MethodInfo _methodInfo;
 
-		public IList<CompiledParameterInfo> Parameters {
-			get { return _parameters; }
-		}
+		public IList<CompiledParameterInfo> Parameters => _parameters;
 
-		public string Code { get; set; }
+        public string Code { get; set; }
 
 
 		public void AddParameter<TParam>(string n)
@@ -74,25 +69,23 @@ namespace Icm.Compilation
 		/// <remarks></remarks>
 		public void CompileAsExpression()
 		{
-			CompilerResults compilerResults = default(CompilerResults);
-			Assembly assembly = default(Assembly);
-			Type type = default(Type);
-			string code = null;
+		    Type type;
 
-			code = GeneratedCode();
+		    var code = GeneratedCode();
 
 			CompilerErrors.Clear();
 
-			if (_instances.ContainsKey(code)) {
-				_execInstance = _instances(code);
-				type = _execInstance.GetType;
-				_MethodInfo = type.GetMethod("EvaluateIt");
+			if (Instances.ContainsKey(code)) {
+				_execInstance = Instances[code];
+				type = _execInstance.GetType();
+				_methodInfo = type.GetMethod("EvaluateIt");
 
-			} else {
-				// Compile and get results 
-				compilerResults = CodeProvider.CompileAssemblyFromSource(CompilerParameters, code);
+			} else
+			{
+			    // Compile and get results 
+			    var compilerResults = CodeProvider.CompileAssemblyFromSource(CompilerParameters, code);
 
-				// Check for compile time errors 
+			    // Check for compile time errors 
 				if (compilerResults.Errors.Count != 0) {
 					foreach (CompilerError compileError in compilerResults.Errors) {
 						CompilerErrors.Add(compileError);
@@ -102,11 +95,11 @@ namespace Icm.Compilation
 				} else {
 					// No Errors On Compile, so continue to process...
 
-					assembly = compilerResults.CompiledAssembly;
+					var assembly = compilerResults.CompiledAssembly;
 					_execInstance = assembly.CreateInstance("dValuate.EvalRunTime");
-					_instances.Add(code, _execInstance);
-					type = _execInstance.GetType;
-					_MethodInfo = type.GetMethod("EvaluateIt");
+					Instances.Add(code, _execInstance);
+					type = _execInstance?.GetType();
+					_methodInfo = type?.GetMethod("EvaluateIt");
 				}
 			}
 		}
@@ -131,12 +124,11 @@ namespace Icm.Compilation
 		/// </remarks>
 		public T Evaluate(params object[] args)
 		{
-			T oRetObj = default(T);
-
-			try {
-				oRetObj = (T)_MethodInfo.Invoke(_execInstance, args);
-				return oRetObj;
-			} catch (TargetInvocationException ex) {
+		    try
+			{
+			    return (T)_methodInfo.Invoke(_execInstance, args);
+			}
+			catch (TargetInvocationException ex) {
 				// Runtime exception caused by the compiled code
 				Debug.WriteLine(ex.InnerException.Message);
 				throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "{0}: {1}", Code, ex.InnerException.Message), ex.InnerException);
@@ -145,8 +137,6 @@ namespace Icm.Compilation
 				Debug.WriteLine(ex.Message);
 				throw;
 			}
-
-			return oRetObj;
 		}
 
 		public void Dispose()
@@ -155,21 +145,13 @@ namespace Icm.Compilation
 			GC.SuppressFinalize(this);
 		}
 
-		protected virtual void Dispose(bool disposing)
-		{
-			if (disposing) {
-				if (CodeProvider != null) {
-					CodeProvider.Dispose();
-					CodeProvider = null;
-				}
-			}
-		}
-
-		protected override void Finalize()
-		{
-			Dispose(false);
-		}
-
+	    private void Dispose(bool disposing)
+	    {
+	        if (!disposing) return;
+	        if (CodeProvider == null) return;
+	        CodeProvider.Dispose();
+	        CodeProvider = null;
+	    }
 	}
 
 	public static class CompiledFunctionFactories
@@ -187,10 +169,3 @@ namespace Icm.Compilation
 
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

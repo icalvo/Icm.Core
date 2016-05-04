@@ -14,8 +14,7 @@ namespace Icm
 		/// <param name="precision"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static double ChangePrecision(double num, int precision)
+		public static double ChangePrecision(this double num, int precision)
 		{
 			double result = 0;
 			result = num * (Math.Pow(10, precision));
@@ -31,8 +30,7 @@ namespace Icm
 		/// <param name="angle">Angle in degrees</param>
 		/// <returns>Angle in radians</returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static double Deg2Rad(double angle)
+		public static double Deg2Rad(this double angle)
 		{
 			return (angle * Math.PI) / 180;
 		}
@@ -43,19 +41,10 @@ namespace Icm
 		/// <param name="angle">Angle in radians</param>
 		/// <returns>Angle in degrees</returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static double Rad2Deg(double angle)
+		public static double Rad2Deg(this double angle)
 		{
 			return (angle * 180) / Math.PI;
 		}
 
 	}
 }
-
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

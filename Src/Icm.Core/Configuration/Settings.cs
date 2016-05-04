@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 
 namespace Icm.Configuration
 {
@@ -18,19 +19,7 @@ namespace Icm.Configuration
 		/// </history>
 		public static object GetCfg(string key)
 		{
-			try {
-				return System.Configuration.ConfigurationManager.GetSection(key);
-			} catch (Exception ex) {
-				throw;
-			}
+		    return ConfigurationManager.GetSection(key);
 		}
-
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

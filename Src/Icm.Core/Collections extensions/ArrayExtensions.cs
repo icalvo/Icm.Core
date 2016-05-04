@@ -29,24 +29,23 @@ namespace Icm.Collections
 		/// When iterating a jagged array, it may be that some of the
 		/// values of the iterated row are undefined.
 		/// </remarks>
-		[Extension()]
-		public static T[] MultiGetRow<T>(Array a, int iteratingDimension, params int[] fixedDimensionValues)
+		public static T[] MultiGetRow<T>(this Array a, int iteratingDimension, params int[] fixedDimensionValues)
 		{
 
 			int[] indices = new int[fixedDimensionValues.GetLength(0) + 1];
 			T[] result = new T[a.GetLength(iteratingDimension)];
 
-			for (i = 0; i <= iteratingDimension - 1; i++) {
-				indices(i) = fixedDimensionValues(i);
+			for (var i = 0; i <= iteratingDimension - 1; i++) {
+				indices[i] = fixedDimensionValues[i];
 			}
 
-			for (i = iteratingDimension + 1; i <= indices.GetUpperBound(0); i++) {
-				indices(i) = fixedDimensionValues(i - 1);
+			for (var i = iteratingDimension + 1; i <= indices.GetUpperBound(0); i++) {
+				indices[i] = fixedDimensionValues[i - 1];
 			}
 
-			for (i = 0; i <= a.GetUpperBound(iteratingDimension); i++) {
-				indices(iteratingDimension) = i;
-				result(i) = (T)a.GetValue(indices);
+			for (var i = 0; i <= a.GetUpperBound(iteratingDimension); i++) {
+				indices[iteratingDimension] = i;
+				result[i] = (T)a.GetValue(indices);
 			}
 
 			return result;
@@ -55,10 +54,3 @@ namespace Icm.Collections
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

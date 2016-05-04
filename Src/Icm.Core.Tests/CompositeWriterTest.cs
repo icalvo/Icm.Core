@@ -9,6 +9,7 @@ using System.Text;
 using System.IO;
 using System.IO.StringWriter;
 using Icm.IO;
+using NUnit.Framework;
 
 [TestFixture(), Category("Icm")]
 public class CompositeWriterTest

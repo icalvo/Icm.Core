@@ -2,42 +2,27 @@ using System;
 
 namespace Icm.Functions
 {
-
 	public class FunctionPoint<TX, TY> where TX : struct, IComparable<TX> where TY : struct, IComparable<TY>
 	{
-		private TX x_;
-		private TY y_;
+		private TX _x;
+		private TY _y;
 
-		private readonly IMathFunction<TX, TY> función_;
-		public TX X {
-			get { return x_; }
+	    public TX X {
+			get { return _x; }
 			set {
-				x_ = value;
-				y_ = MathFunction(x_);
+				_x = value;
+				_y = MathFunction[_x];
 			}
 		}
 
-		public TY Y {
-			get { return y_; }
-		}
+		public TY Y => _y;
 
-		public IMathFunction<TX, TY> MathFunction {
-			get { return función_; }
-		}
+	    public IMathFunction<TX, TY> MathFunction { get; }
 
-		public FunctionPoint(TX px, IMathFunction<TX, TY> f)
+	    public FunctionPoint(TX px, IMathFunction<TX, TY> f)
 		{
-			función_ = f;
+			MathFunction = f;
 			X = px;
 		}
-
 	}
-
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

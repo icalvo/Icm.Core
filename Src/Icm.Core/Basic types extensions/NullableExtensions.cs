@@ -1,6 +1,28 @@
+using System;
 
-CONVERSION ERROR: Code could not be converted. Details:
+namespace Icm
+{
+    public static class NullableExtensions
+    {
+        public static T V<T>(this T? n) where T: struct
+        {
+            if (n.HasValue)
+            {
+                return n.Value;
+            }
 
--- line 15 col 58: ")" expected
+            throw new InvalidOperationException();
+        }
 
-Please check for any errors in the original code and try again.
+        public static bool HasNotValue<T>(this T? n) where T : struct
+        {
+            return !n.HasValue;
+        }
+
+
+        public static object IfNull<T>(this T? o, object subst) where T : struct
+        {
+            return o ?? subst;
+        }
+    }
+}

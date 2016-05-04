@@ -7,6 +7,7 @@ using System.Data;
 using System.Diagnostics;
 
 using Icm.Collections.Generic;
+using NUnit.Framework;
 
 [TestFixture(), Category("Icm")]
 public class PriorityQueueTest

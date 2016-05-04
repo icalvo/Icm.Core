@@ -7,6 +7,7 @@ using System.Data;
 using System.Diagnostics;
 using Icm.Localization;
 using Icm.Collections;
+using NUnit.Framework;
 
 [TestFixture()]
 public class TranslationFormatTest

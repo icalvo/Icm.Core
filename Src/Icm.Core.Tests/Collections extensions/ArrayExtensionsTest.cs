@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using Icm.Collections;
+using NUnit.Framework;
 
 [TestFixture(), Category("Icm")]
 public class ArrayExtensionsTest
@@ -278,7 +279,7 @@ public class ArrayExtensionsTest
 	};
 
 	[Test()]
-	[TestCaseSource("MultiGetRow_NormalStringTestCases")]
+	[TestCaseSource(nameof(MultiGetRow_NormalStringTestCases))]
 	public void MultiGetRow_ReturnsExpected(string[,] target, int iteratingDimension, int[] fixedDimensionValues, string[] expected)
 	{
 		dynamic actual = target.MultiGetRow<string>(iteratingDimension, fixedDimensionValues);
@@ -286,7 +287,7 @@ public class ArrayExtensionsTest
 	}
 
 	[Test()]
-	[TestCaseSource("MultiGetRow_NormalIntegerTestCases")]
+	[TestCaseSource(nameof(MultiGetRow_NormalIntegerTestCases))]
 	public void MultiGetRow_ReturnsExpected(Array target, int iteratingDimension, int[] fixedDimensionValues, int[] expected)
 	{
 		dynamic actual = target.MultiGetRow<int>(iteratingDimension, fixedDimensionValues);
@@ -294,7 +295,7 @@ public class ArrayExtensionsTest
 	}
 
 	[Test()]
-	[TestCaseSource("MultiGetRow_ExceptionalStringTestCases")]
+	[TestCaseSource(nameof(MultiGetRow_ExceptionalStringTestCases))]
 	public void MultiGetRow_ThrowsIndexOutOfRange(Array target, int iteratingDimension, int[] fixedDimensionValues, Type exceptionType)
 	{
 		Assert.That(() => target.MultiGetRow<string>(iteratingDimension, fixedDimensionValues), Throws.TypeOf(exceptionType));

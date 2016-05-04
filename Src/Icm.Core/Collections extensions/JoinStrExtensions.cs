@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Runtime.CompilerServices;
 
@@ -17,27 +18,26 @@ namespace Icm.Collections
 		/// <param name="finalSeparator">Final separator, separates the two last ones.</param>
 		/// <returns></returns>
 		/// <remarks>Ignores null and empty strings.</remarks>
-		[Extension()]
-		public static string JoinStr(IEnumerable<string> list, string separator, string finalSeparator)
+		public static string JoinStr(this IEnumerable<string> list, string separator, string finalSeparator)
 		{
 			StringBuilder sb = new StringBuilder();
-			int i = list.Count;
+			int i = list.Count();
 
-			dynamic nonEmpty = list.Where(s => !string.IsNullOrEmpty(s));
+			var nonEmpty = list.Where(s => !string.IsNullOrEmpty(s)).ToString();
 
-			if (nonEmpty.Count >= 1) {
-				sb.Append(nonEmpty(0));
+			if (nonEmpty.Any()) {
+				sb.Append(nonEmpty[0]);
 			}
 
-			for (i = 1; i <= nonEmpty.Count - 2; i++) {
-				sb.Append(separator + nonEmpty(i));
+			for (i = 1; i <= nonEmpty.Count() - 2; i++) {
+				sb.Append(separator + nonEmpty[i]);
 			}
 
-			if (nonEmpty.Count >= 2) {
-				sb.Append(finalSeparator + nonEmpty(i));
+			if (nonEmpty.Count() >= 2) {
+				sb.Append(finalSeparator + nonEmpty[i]);
 			}
 
-			return sb.ToString;
+			return sb.ToString();
 		}
 
 
@@ -53,10 +53,9 @@ namespace Icm.Collections
 		/// 	[icalvo]	19/08/2004	Created
 		/// 	[icalvo]	07/03/2006	Documented
 		/// </history>
-		[Extension()]
-		public static string JoinStr(IEnumerable<string> list, string separator)
+		public static string JoinStr(this IEnumerable<string> list, string separator)
 		{
-			return string.Join(separator, list.Where(s => !string.IsNullOrEmpty(s)).ToArray);
+			return string.Join(separator, list.Where(s => !string.IsNullOrEmpty(s)).ToArray());
 		}
 
 		/// <summary>
@@ -87,17 +86,16 @@ namespace Icm.Collections
 		/// 	[icalvo]	07/03/2006	Created
 		/// 	[icalvo]	07/03/2006	Documented
 		/// </history>
-		[Extension()]
-		public static string JoinStr(IEnumerable<string> list, string globalprefix, string separator, string globalsuffix)
+		public static string JoinStr(this IEnumerable<string> list, string globalprefix, string separator, string globalsuffix)
 		{
-			if (list.Count == 0) {
+		    if (!list.Any()) {
 				return "";
-			} else {
-				return globalprefix + list.JoinStr(separator) + globalsuffix;
 			}
+
+		    return globalprefix + list.JoinStr(separator) + globalsuffix;
 		}
 
-		/// <summary>
+	    /// <summary>
 		///   Extended join, with item prefixes/suffixes, and global prefix/suffix.
 		/// </summary>
 		/// <param name="list"></param>
@@ -139,17 +137,16 @@ namespace Icm.Collections
 		/// 	[icalvo]	07/03/2006	Documented
 		///     [icalvo]    17/03/2006  BUG: first itemprefix and last itemsuffix added
 		/// </history>
-		[Extension()]
-		public static string JoinStr(IEnumerable<string> list, string globalprefix, string itemprefix, string itemsuffix, string globalsuffix)
-		{
-			if (list.Count == 0) {
+		public static string JoinStr(this IEnumerable<string> list, string globalprefix, string itemprefix, string itemsuffix, string globalsuffix)
+	    {
+	        if (!list.Any()) {
 				return "";
-			} else {
-				return globalprefix + itemprefix + list.JoinStr(itemsuffix + itemprefix) + itemsuffix + globalsuffix;
 			}
-		}
 
-		/// <summary>
+	        return globalprefix + itemprefix + list.JoinStr(itemsuffix + itemprefix) + itemsuffix + globalsuffix;
+	    }
+
+	    /// <summary>
 		///   Extended join, with item prefixes/suffixes, separators and global prefix/suffix.
 		/// </summary>
 		/// <param name="list"></param>
@@ -193,75 +190,87 @@ namespace Icm.Collections
 		/// 	[icalvo]	17/03/2006	Created
 		/// 	[icalvo]	17/03/2006	Documented
 		/// </history>
-		[Extension()]
-		public static string JoinStr(IEnumerable<string> list, string globalprefix, string itemprefix, string separator, string itemsuffix, string globalsuffix)
-		{
-			if (list.Count == 0) {
+		public static string JoinStr(this IEnumerable<string> list, string globalprefix, string itemprefix, string separator, string itemsuffix, string globalsuffix)
+	    {
+	        if (!list.Any()) {
 				return "";
-			} else {
-				return globalprefix + itemprefix + list.JoinStr(itemsuffix + separator + itemprefix) + itemsuffix + globalsuffix;
 			}
-		}
+
+	        return globalprefix + itemprefix + list.JoinStr(itemsuffix + separator + itemprefix) + itemsuffix + globalsuffix;
+	    }
 
 
-		/// <summary>
-		/// String join extension function for lists of strings. It also
-		/// accepts a mapping function for the strings.
-		/// </summary>
-		/// <param name="list"></param>
-		/// <param name="sep"></param>
-		/// <param name="conv"></param>
-		/// <returns></returns>
-		/// <remarks></remarks>
-		[Extension()]
-		public static string JoinStr<T>(IEnumerable<T> list, string sep, Func<T, string> conv = null)
+        /// <summary>
+        /// String join extension function for lists of strings. It also
+        /// accepts a mapping function for the strings.
+        /// </summary>
+        /// <param name="items"></param>
+        /// <param name="sep"></param>
+        /// <param name="conv"></param>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        public static string JoinStr<T>(this IEnumerable<T> items, string sep, Func<T, string> conv = null)
 		{
-			StringBuilder sb = new StringBuilder();
+			var sb = new StringBuilder();
 			int i = 0;
 			bool firstOne = true;
 			if (conv == null) {
-				conv = obj => obj.ToString;
+				conv = obj => obj.ToString();
 			}
-			do {
-				if (i > list.Count - 1) {
-					return sb.ToString;
-				} else if (string.IsNullOrEmpty(conv(list(i)))) {
-					i += 1;
-				} else {
-					if (firstOne) {
-						sb.Append(conv(list(i)));
-						firstOne = false;
-					} else {
-						sb.Append(sep + conv(list(i)));
-					}
-					i += 1;
+
+	        var list = items.ToList();
+
+			do
+			{
+			    if (i > list.Count - 1)
+                {
+					return sb.ToString();
 				}
+
+			    if (string.IsNullOrEmpty(conv(list[i])))
+                {
+			        i += 1;
+			    }
+                else
+                {
+			        if (firstOne)
+                    {
+			            sb.Append(conv(list[i]));
+			            firstOne = false;
+			        }
+                    else
+                    {
+			            sb.Append(sep + conv(list[i]));
+			        }
+
+			        i += 1;
+			    }
 			} while (true);
 		}
 
 
 
 
-		/// <summary>
-		/// String join extension function for collections of strings. It also
-		/// accepts a mapping function for the strings.
-		/// </summary>
-		/// <param name="list"></param>
-		/// <param name="sep"></param>
-		/// <param name="conv"></param>
-		/// <returns></returns>
-		/// <remarks></remarks>
-		[Extension()]
-		public static string JoinStr<T>(ICollection list, string sep, Func<T, string> conv)
+        /// <summary>
+        /// String join extension function for collections of strings. It also
+        /// accepts a mapping function for the strings.
+        /// </summary>
+        /// <param name="items"></param>
+        /// <param name="sep"></param>
+        /// <param name="conv"></param>
+        /// <returns></returns>
+        /// <remarks></remarks>
+        public static string JoinStr<T>(this ICollection items, string sep, Func<T, string> conv)
 		{
 			StringBuilder sb = new StringBuilder();
 			int i = 0;
 
+            var list = items.Cast<object>().ToList();
 			bool firstOne = true;
 			do {
-				dynamic item = (T)list(i);
+				var item = (T)list[i];
 				if (i > list.Count - 1) {
-					return sb.ToString;
+					return sb.ToString();
 				} else if (string.IsNullOrEmpty(conv(item))) {
 					i += 1;
 				} else {
@@ -290,8 +299,7 @@ namespace Icm.Collections
 		///     [icalvo]    31/03/2005  Documented
 		///     [icalvo]    31/03/2005  o declaration integrated in For
 		/// </history>
-		[Extension()]
-		public static string JoinStrCol(ICollection col, string separator)
+		public static string JoinStrCol(this ICollection col, string separator)
 		{
 			if (col == null) {
 				return "";
@@ -301,18 +309,12 @@ namespace Icm.Collections
 			int i = 0;
 
 			foreach (object o in col) {
-				a(i) = o.ToString();
+				a[i] = o.ToString();
 				i += 1;
 			}
+
 			return string.Join(separator, a);
 		}
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

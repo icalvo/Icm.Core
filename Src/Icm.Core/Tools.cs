@@ -17,32 +17,28 @@ namespace Icm
 		public static string JoinStr(string sep, params string[] strs)
 		{
 			StringBuilder sb = new StringBuilder();
-			int i = Information.LBound(strs);
+			int i = strs.GetLowerBound(0);
 			bool firstOne = true;
-			do {
-				if (i > Information.UBound(strs)) {
-					return sb.ToString;
-				} else if (string.IsNullOrEmpty(strs(i))) {
-					i += 1;
-				} else {
-					if (firstOne) {
-						sb.Append(strs(i));
-						firstOne = false;
-					} else {
-						sb.Append(sep + strs(i));
-					}
-					i += 1;
+			do
+			{
+			    if (i > strs.GetUpperBound(0)) {
+					return sb.ToString();
 				}
+
+			    if (string.IsNullOrEmpty(strs[i])) {
+			        i += 1;
+			    } else {
+			        if (firstOne)
+                    {
+			            sb.Append(strs[i]);
+			            firstOne = false;
+			        } else {
+			            sb.Append(sep + strs[i]);
+			        }
+
+			        i += 1;
+			    }
 			} while (true);
 		}
-
 	}
-
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

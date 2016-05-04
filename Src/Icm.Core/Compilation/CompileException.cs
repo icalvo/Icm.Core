@@ -5,12 +5,12 @@ using System.Runtime.Serialization;
 namespace Icm.Compilation
 {
 
-	[Serializable()]
+	[Serializable]
 	public class CompileException : Exception
 	{
 
 
-		public readonly CompilerErrorCollection ErrorList;
+		public CompilerErrorCollection ErrorList { get; }
 		public CompileException() : base("Error compiling expression")
 		{
 			ErrorList = new CompilerErrorCollection();
@@ -37,10 +37,3 @@ namespace Icm.Compilation
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using Icm.Collections.Generic;
+using NUnit.Framework;
 
 [Category("Icm")]
 [TestFixture()]
@@ -138,19 +139,19 @@ public class DictionaryExtensionsTest
 		};
 	}
 
-	[TestCaseSource(typeof(DictionaryExtensionsTestCases), "GetItemOrDefaultCases")]
+	[TestCaseSource(typeof(DictionaryExtensionsTestCases), nameof(DictionaryExtensionsTestCases.GetItemOrDefaultCases))]
 	public string ItemOrDefault(IDictionary<string, string> target, string key, string defaultResult)
 	{
 		return target.ItemOrDefault(key, defaultResult);
 	}
 
-	[TestCaseSource(typeof(DictionaryExtensionsTestCases), "GetItemOrDefaultCases_WithConverter")]
+	[TestCaseSource(typeof(DictionaryExtensionsTestCases), nameof(DictionaryExtensionsTestCases.GetItemOrDefaultCases_WithConverter))]
 	public string ItemOrDefault_WithConverter(IDictionary<string, string> target, string key, Converter<string, string> converter, string defaultResult)
 	{
 		return target.ItemOrDefault(key, converter, defaultResult);
 	}
 
-	[TestCaseSource(typeof(DictionaryExtensionsTestCases), "GetMergeCases")]
+	[TestCaseSource(typeof(DictionaryExtensionsTestCases), nameof(DictionaryExtensionsTestCases.GetMergeCases))]
 	public void Merge(IDictionary<string, string> target, IDictionary<string, string> other, IDictionary<string, string> expectedTarget)
 	{
 		Dictionary<string, string> cloneOther = new Dictionary<string, string>(other);

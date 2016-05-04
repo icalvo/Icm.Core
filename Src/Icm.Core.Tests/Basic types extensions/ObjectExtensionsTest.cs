@@ -5,6 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using Icm;
+using NUnit.Framework;
+
 [TestFixture()]
 public class ObjectExtensionsTest
 {
@@ -17,7 +20,7 @@ public class ObjectExtensionsTest
 		new TestCaseData(DBNull.Value, "subst").Returns("subst")
 
 	};
-	[TestCaseSource("IfNothingTestCases")]
+	[TestCaseSource(nameof(IfNothingTestCases))]
 	public string IfNothing_Test(object target, string subst)
 	{
 		return ObjectExtensions.IfNothing(target, subst);
@@ -28,22 +31,22 @@ public class ObjectExtensionsTest
 		"maria",
 		"pato",
 		"perro"
-	}, "hola", Result = true)]
+	}, "hola", ExpectedResult = true)]
 	[TestCase({
 		"hola",
 		"maria",
 		"pato",
 		"perro"
-	}, "adios", Result = false)]
+	}, "adios", ExpectedResult = false)]
 	[TestCase({
 		"hola",
 		"maria",
 		"pato",
 		"perro"
-	}, null, Result = false)]
-	[TestCase(new string[], "hola", Result = false)]
-	[TestCase(null, "hola", Result = false)]
-	[TestCase(null, null, Result = false)]
+	}, null, ExpectedResult = false)]
+	[TestCase(new string[], "hola", ExpectedResult = false)]
+	[TestCase(null, "hola", ExpectedResult = false)]
+	[TestCase(null, null, ExpectedResult = false)]
 	public bool IsOneOf_Test(string[] sa, string s)
 	{
 		return s.IsOneOf(sa);

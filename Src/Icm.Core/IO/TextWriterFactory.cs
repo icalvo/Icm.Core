@@ -1,9 +1,9 @@
+using System.Globalization;
 using System.IO;
 using System.Text;
 
 namespace Icm.IO
 {
-
 	/// <summary>
 	/// 
 	/// </summary>
@@ -15,7 +15,6 @@ namespace Icm.IO
 	/// </remarks>
 	public class TextWriterFactory
 	{
-
 		/// <summary>
 		/// Get a TextWriter given a file name.
 		/// </summary>
@@ -49,13 +48,5 @@ namespace Icm.IO
 		{
 			return new StringWriter(sb, CultureInfo.CurrentCulture);
 		}
-
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

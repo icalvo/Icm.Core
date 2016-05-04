@@ -9,10 +9,3 @@ namespace Icm
 		public static readonly IFormatProvider InvariantProvider = System.Globalization.CultureInfo.InvariantCulture;
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

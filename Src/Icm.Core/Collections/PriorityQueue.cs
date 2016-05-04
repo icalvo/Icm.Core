@@ -39,7 +39,7 @@ namespace Icm.Collections.Generic
 		/// <remarks></remarks>
 		public void Enqueue(T val)
 		{
-			store_(0).Enqueue(val);
+			store_[0].Enqueue(val);
 			count_ += 1;
 		}
 
@@ -54,7 +54,7 @@ namespace Icm.Collections.Generic
 			Debug.Assert(prio >= 0, "The maximum priority must be greater or equal than zero");
 			Debug.Assert(prio < store_.Count - 1, "The priority is greater than the maximum priority defined for this queue");
 
-			store_(prio).Enqueue(val);
+			store_[prio].Enqueue(val);
 			count_ += 1;
 		}
 
@@ -69,8 +69,8 @@ namespace Icm.Collections.Generic
 			Debug.Assert(prio >= 0, "The maximum priority must be greater or equal than zero");
 			Debug.Assert(prio < store_.Count - 1, "The priority is greater than the maximum priority defined for this queue");
 
-			return store_(prio).Dequeue();
-			count_ -= 1;
+		    count_ -= 1;
+		    return store_[prio].Dequeue();
 		}
 
 		/// <summary>
@@ -81,9 +81,9 @@ namespace Icm.Collections.Generic
 		public T Dequeue()
 		{
 			for (int i = store_.Count - 1; i >= 0; i += -1) {
-				if (store_(i).Count > 0) {
+				if (store_[i].Count > 0) {
 					count_ -= 1;
-					return store_(i).Dequeue;
+					return store_[i].Dequeue();
 				}
 			}
 			throw new InvalidOperationException("The priority queue is empty");

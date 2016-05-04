@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Icm.Collections;
 
 namespace Icm.Localization
 {
@@ -7,46 +9,37 @@ namespace Icm.Localization
 
 
 		private List<object> _arguments;
-		public ICollection<object> Arguments {
-			get { return _arguments; }
+		public ICollection<object> Arguments => _arguments;
+
+	    public PhraseAnd(params object[] args)
+	    {
+	        _arguments = args == null ? new List<object>() : new List<object>(args);
+	    }
+
+	    public PhraseAnd(IEnumerable<object> args)
+		{
+		    _arguments = args == null ? new List<object>() : new List<object>(args);
 		}
 
-		public PhraseAnd(params object[] args)
+	    public override string Translate(int lcid, ILocalizationRepository locRepo)
 		{
-			if (args == null) {
-				_arguments = new List<object>();
-			} else {
-				_arguments = new List<object>(args);
-			}
-		}
+			var args = Arguments.Select(trans => TranslateObject(locRepo, trans).ToString()).ToArray();
 
-		public PhraseAnd(IEnumerable<object> args)
-		{
-			if (args == null) {
-				_arguments = new List<object>();
-			} else {
-				_arguments = new List<object>(args);
-			}
-		}
-
-		public override string Translate(int lcid, ILocalizationRepository locRepo)
-		{
-			dynamic args = Arguments.Select(trans => TranslateObject(locRepo, trans).ToString);
-
-			if (args.Count == 0) {
+			if (!args.Any()) {
 				return "";
 			}
 
-			dynamic primaryLang = lcid & 0x3ff;
+			var primaryLang = lcid & 0x3ff;
 
-			if (primaryLang == 10) {
-				return args.Take(args.Count - 1).JoinStr(", ") + args.Count <= 1 ? "" : " y " + args.Last;
-			} else if (primaryLang == 22) {
-				return args.Take(args.Count - 1).JoinStr(", ") + args.Count <= 1 ? "" : " y " + args.Last;
-			} else {
-				return args.Take(args.Count - 1).JoinStr(", ") + args.Count <= 1 ? "" : args.Count == 2 ? " and " : ", and " + args.Last;
+			switch (primaryLang)
+			{
+			    case 10:
+			        return args.Take(args.Count() - 1).JoinStr(", ") + (args.Count() <= 1 ? "" : " y " + args.Last());
+			    case 22:
+			        return args.Take(args.Count() - 1).JoinStr(", ") + (args.Count() <= 1 ? "" : " y " + args.Last());
+			    default:
+			        return args.Take(args.Count() - 1).JoinStr(", ") + (args.Count() <= 1 ? "" : args.Count() == 2 ? " and " : ", and " + args.Last());
 			}
-			return args.JoinStr(", ");
 		}
 
 	}

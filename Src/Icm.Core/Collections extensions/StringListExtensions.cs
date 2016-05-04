@@ -30,8 +30,7 @@ namespace Icm.Collections
 		/// 	[icalvo]	23/06/2005	Created
 		///     [icalvo]    07/03/2006  Documented
 		/// </history>
-		[Extension()]
-		public static void AppendFormat(IList<string> list, string fmt, params object[] @params)
+		public static void AppendFormat(this IList<string> list, string fmt, params object[] @params)
 		{
 			list.Add(string.Format(CultureInfo.CurrentCulture, fmt, @params));
 		}
@@ -50,8 +49,7 @@ namespace Icm.Collections
 		/// 	[icalvo]	23/06/2005	Created
 		///     [icalvo]    07/03/2006  Documented
 		/// </history>
-		[Extension()]
-		public static void AppendFormat(IList<string> list, IFormatProvider fp, string fmt, params object[] @params)
+		public static void AppendFormat(this IList<string> list, IFormatProvider fp, string fmt, params object[] @params)
 		{
 			list.Add(string.Format(fp, fmt, @params));
 		}
@@ -69,8 +67,7 @@ namespace Icm.Collections
 		/// 	[icalvo]	23/06/2005	Created
 		///     [icalvo]    07/03/2006  Documented
 		/// </history>
-		[Extension()]
-		public static void PrependFormat(IList<string> list, string fmt, params object[] @params)
+		public static void PrependFormat(this IList<string> list, string fmt, params object[] @params)
 		{
 			list.Insert(0, string.Format(CultureInfo.CurrentCulture, fmt, @params));
 		}
@@ -89,8 +86,7 @@ namespace Icm.Collections
 		/// 	[icalvo]	23/06/2005	Created
 		///     [icalvo]    07/03/2006  Documented
 		/// </history>
-		[Extension()]
-		public static void PrependFormat(IList<string> list, IFormatProvider fp, string fmt, params object[] @params)
+		public static void PrependFormat(this IList<string> list, IFormatProvider fp, string fmt, params object[] @params)
 		{
 			list.Insert(0, string.Format(fp, fmt, @params));
 		}
@@ -109,8 +105,7 @@ namespace Icm.Collections
 		/// 	[icalvo]	23/06/2005	Created
 		///     [icalvo]    07/03/2006  Documented
 		/// </history>
-		[Extension()]
-		public static void InsertFormat(IList<string> list, int idx, string fmt, params object[] @params)
+		public static void InsertFormat(this IList<string> list, int idx, string fmt, params object[] @params)
 		{
 			list.Insert(idx, string.Format(CultureInfo.CurrentCulture, fmt, @params));
 		}
@@ -130,8 +125,7 @@ namespace Icm.Collections
 		/// 	[icalvo]	23/06/2005	Created
 		///     [icalvo]    07/03/2006  Documented
 		/// </history>
-		[Extension()]
-		public static void InsertFormat(IList<string> list, int idx, IFormatProvider fp, string fmt, params object[] @params)
+		public static void InsertFormat(this IList<string> list, int idx, IFormatProvider fp, string fmt, params object[] @params)
 		{
 			list.Insert(idx, string.Format(fp, fmt, @params));
 		}
@@ -139,10 +133,3 @@ namespace Icm.Collections
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

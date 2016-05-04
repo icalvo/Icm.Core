@@ -230,8 +230,7 @@ namespace Icm
 		/// <history>
 		/// 	[icalvo]	14/11/2005	Created
 		/// </history>
-		[Extension()]
-		public static string HumanFileSize(long bytes, bool decimalUnits, bool bigUnitNames, string format)
+		public static string HumanFileSize(this long bytes, bool decimalUnits, bool bigUnitNames, string format)
 		{
 
 			return HumanUnit(bytes, 0, decimalUnits, bigUnitNames, "B", "byte", "bytes", format);
@@ -262,8 +261,7 @@ namespace Icm
 		/// <history>
 		/// 	[icalvo]	14/11/2005	Created
 		/// </history>
-		[Extension()]
-		public static string HumanUnit(long mantissa, int addedExponent, bool decimalUnits, bool bigUnitNames, string smallUnitName, string bigUnitNameSingular, string bigUnitNamePlural, string numberFormat)
+		public static string HumanUnit(this long mantissa, int addedExponent, bool decimalUnits, bool bigUnitNames, string smallUnitName, string bigUnitNameSingular, string bigUnitNamePlural, string numberFormat)
 		{
 
 			string formattedNumber = null;
@@ -330,8 +328,7 @@ namespace Icm
 		/// <history>
 		/// 	[icalvo]	14/11/2005	Created
 		/// </history>
-		[Extension()]
-		public static string HumanFileSize(long bytes)
+		public static string HumanFileSize(this long bytes)
 		{
 			return HumanFileSize(bytes, decimalUnits: true, bigUnitNames: false, format: "0.00");
 		}
@@ -339,9 +336,3 @@ namespace Icm
 	}
 }
 
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

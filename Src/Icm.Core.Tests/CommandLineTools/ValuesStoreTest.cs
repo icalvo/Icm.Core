@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using Icm.CommandLineTools;
+using NUnit.Framework;
 
 ///<summary>
 ///This is a test class for ValuesStore

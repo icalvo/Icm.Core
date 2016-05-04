@@ -7,63 +7,43 @@ namespace Icm.Net.Mail
 
 	public class MailTextWriter : TextWriter
 	{
+	    private readonly StringBuilder _sb;
 
-		protected MailMessage message_;
-		protected SmtpClient smtp_ = new SmtpClient();
-
-		protected StringBuilder sb_;
-		public MailTextWriter()
+        public MailTextWriter()
 		{
-			message_ = new MailMessage();
-			sb_ = new StringBuilder();
+			Message = new MailMessage();
+			_sb = new StringBuilder();
 		}
 
-		public MailMessage Message {
-			get { return message_; }
-		}
+		public MailMessage Message { get; }
 
-		public SmtpClient SMTP {
-			get { return smtp_; }
-		}
+	    public SmtpClient Smtp { get; } = new SmtpClient();
 
-		public override void Write(char c)
+	    public override void Write(char c)
 		{
-			sb_.Append(c);
+			_sb.Append(c);
 		}
 
 		public override void Write(string s)
 		{
-			sb_.Append(s);
+			_sb.Append(s);
 		}
 
 		public void Send()
 		{
-			message_.Body = sb_.ToString;
-			SMTP.Send(message_);
-			sb_.Length = 0;
+			Message.Body = _sb.ToString();
+			Smtp.Send(Message);
+			_sb.Length = 0;
 		}
 
 		public void Send(string header, string footer)
 		{
-			message_.Body = header + sb_.ToString + footer;
-			SMTP.Send(message_);
-			sb_.Length = 0;
+			Message.Body = header + _sb + footer;
+			Smtp.Send(Message);
+			_sb.Length = 0;
 		}
 
-		public override Encoding Encoding {
-			get {
-				Encoding functionReturnValue = default(Encoding);
-				return functionReturnValue.Default;
-				return functionReturnValue;
-			}
-		}
+		public override Encoding Encoding => Encoding.Default;
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

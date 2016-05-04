@@ -16,16 +16,9 @@ namespace Icm.Timers
 		}
 
 		public System.DateTime NextElapsed {
-			get { return Now.Add(new TimeSpan(0, 0, 0, 0, Convert.ToInt32(Interval))); }
-			set { Interval = value.Subtract(Now).TotalMilliseconds; }
+			get { return DateTime.Now.Add(new TimeSpan(0, 0, 0, 0, Convert.ToInt32(Interval))); }
+			set { Interval = value.Subtract(DateTime.Now).TotalMilliseconds; }
 		}
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

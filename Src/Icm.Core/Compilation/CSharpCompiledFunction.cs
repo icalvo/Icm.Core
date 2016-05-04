@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.CSharp;
 using System.Text;
 using System.Globalization;
+using System.Linq;
 
 namespace Icm.Compilation
 {
@@ -43,8 +44,7 @@ namespace Icm.Compilation
 			StringBuilder sb = new StringBuilder();
 
 			// Imports
-			foreach (void ns_loopVariable in Namespaces) {
-				ns = ns_loopVariable;
+			foreach (var ns in Namespaces) {
 				sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "import {0}", ns));
 			}
 
@@ -54,28 +54,21 @@ namespace Icm.Compilation
 
 			sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "  {0} EvaluateIt(", typeof(T).Name));
 
-			foreach (void p_loopVariable in Parameters.Take(Parameters.Count - 1)) {
-				p = p_loopVariable;
+			foreach (var p in Parameters.Take(Parameters.Count - 1)) {
 				sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "   {1} {0},", p.Name, p.ArgType));
 			}
-			var _with1 = Parameters.Last;
-			sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "   {1} {0}", _with1.Name, _with1.ArgType));
+
+			var with1 = Parameters.Last();
+			sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "   {1} {0}", with1.Name, with1.ArgType));
 			sb.AppendLine("  )");
 			sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "    return {0};", Code));
 			sb.AppendLine("  }");
 			sb.AppendLine(" }");
 			sb.AppendLine("}");
 
-			return sb.ToString;
+			return sb.ToString();
 		}
 
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

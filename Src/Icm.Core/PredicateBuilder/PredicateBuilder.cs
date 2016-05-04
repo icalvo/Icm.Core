@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 namespace Icm
 {
 	/// <summary>
-	/// Enables the efficient, dynamic composition of query predicates.
+	/// Enables the efficient, var composition of query predicates.
 	/// </summary>
 	/// <remarks>Pete Montgomery's Universal Predicate Builder. See https://petemontgomery.wordpress.com/2011/02/10/a-universal-predicatebuilder/ for mor information.</remarks>
 	public static class PredicateBuilder
@@ -39,8 +40,7 @@ namespace Icm
 		/// <summary>
 		/// Combines the first predicate with the second using the logical "and".
 		/// </summary>
-		[Extension()]
-		public static Expression<Func<T, bool>> And<T>(Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
+		public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
 		{
 			return first.Compose(second, Expression.AndAlso);
 		}
@@ -48,8 +48,7 @@ namespace Icm
 		/// <summary>
 		/// Combines the first predicate with the second using the logical "or".
 		/// </summary>
-		[Extension()]
-		public static Expression<Func<T, bool>> Or<T>(Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
+		public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
 		{
 			return first.Compose(second, Expression.OrElse);
 		}
@@ -57,40 +56,37 @@ namespace Icm
 		/// <summary>
 		/// Negates the predicate.
 		/// </summary>
-		[Extension()]
-		public static Expression<Func<T, bool>> Not<T>(Expression<Func<T, bool>> expr)
+		public static Expression<Func<T, bool>> Not<T>(this Expression<Func<T, bool>> expr)
 		{
-			dynamic negated = Expression.Not(expr.Body);
+			var negated = Expression.Not(expr.Body);
 			return Expression.Lambda<Func<T, bool>>(negated, expr.Parameters);
 		}
 
 		/// <summary>
 		/// Combines the first expression with the second using the specified merge function.
 		/// </summary>
-		[Extension()]
-		private static Expression<T> Compose<T>(Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
+		private static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
 		{
 			// zip parameters (map from parameters of second to parameters of first)
-			dynamic map = first.Parameters.Select((f, i) => new {
+			var map = first.Parameters.Select((f, i) => new {
 				f,
-				s = second.Parameters(i)
+				s = second.Parameters[i]
 			}).ToDictionary(p => p.s, p => p.f);
 
 			// replace parameters in the second lambda expression with the parameters in the first
-			dynamic secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);
+			var secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);
 
 			// create a merged lambda expression with parameters from the first expression
-			return Expression.Lambda<T>(merge(first.Body, (Expression)secondBody), first.Parameters);
+			return Expression.Lambda<T>(merge(first.Body, secondBody), first.Parameters);
 		}
 
 		private class ParameterRebinder : ExpressionVisitor
 		{
+			private readonly Dictionary<ParameterExpression, ParameterExpression> _map;
 
-
-			private readonly Dictionary<ParameterExpression, ParameterExpression> map;
-			private ParameterRebinder(Dictionary<ParameterExpression, ParameterExpression> map)
+            private ParameterRebinder(Dictionary<ParameterExpression, ParameterExpression> map)
 			{
-				this.map = map ?? new Dictionary<ParameterExpression, ParameterExpression>();
+				this._map = map ?? new Dictionary<ParameterExpression, ParameterExpression>();
 			}
 
 			public static Expression ReplaceParameters(Dictionary<ParameterExpression, ParameterExpression> map, Expression exp)
@@ -100,23 +96,14 @@ namespace Icm
 
 			protected override Expression VisitParameter(ParameterExpression p)
 			{
-				ParameterExpression replacement = null;
+				ParameterExpression replacement;
 
-				if (map.TryGetValue(p, replacement)) {
+				if (_map.TryGetValue(p, out replacement)) {
 					p = replacement;
 				}
 
 				return base.VisitParameter(p);
 			}
 		}
-
 	}
-
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

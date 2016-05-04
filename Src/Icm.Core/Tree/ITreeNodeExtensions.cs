@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 namespace Icm.Tree
 {
@@ -18,8 +17,7 @@ namespace Icm.Tree
 		/// <param name="transform"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static ITreeNode<T2> Select<T1, T2>(ITreeNode<T1> tn, Func<T1, T2> transform)
+		public static ITreeNode<T2> Select<T1, T2>(this ITreeNode<T1> tn, Func<T1, T2> transform)
 		{
 			return new TransformTreeNode<T1, T2>(tn, transform);
 		}
@@ -31,13 +29,12 @@ namespace Icm.Tree
 		/// <param name="tn"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static IEnumerable<T> ProperAncestors<T>(ITreeNode<T> tn)
+		public static IEnumerable<T> ProperAncestors<T>(this ITreeNode<T> tn)
 		{
-			dynamic current = tn.GetParent;
-			while (!(current == null)) {
+			var current = tn.GetParent();
+			while (current != null) {
 				yield return current.Value;
-				current = current.GetParent;
+				current = current.GetParent();
 			}
 		}
 
@@ -48,22 +45,14 @@ namespace Icm.Tree
 		/// <param name="tn"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static IEnumerable<T> Ancestors<T>(ITreeNode<T> tn)
+		public static IEnumerable<T> Ancestors<T>(this ITreeNode<T> tn)
 		{
-			dynamic current = tn;
+			var current = tn;
 			do {
 				yield return current.Value;
-				current = current.GetParent;
-			} while (!(current == null));
+				current = current.GetParent();
+			} while (current != null);
 		}
 
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

@@ -5,22 +5,24 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using Icm;
+using NUnit.Framework;
 
 [TestFixture(), Category("Icm")]
 public class DateExtensionsTest
 {
 
 	static readonly object[] SeasonTestCases = {
-		new TestCaseData(new System.DateTime(2010, 4, 2)).Returns(Seasons.Spring),
-		new TestCaseData(new System.DateTime(2010, 12, 25)).Returns(Seasons.Winter),
-		new TestCaseData(new System.DateTime(2010, 10, 27)).Returns(Seasons.Fall),
-		new TestCaseData(new System.DateTime(2010, 7, 23)).Returns(Seasons.Summer)
+		new TestCaseData(new System.DateTime(2010, 4, 2)).Returns(DateExtensions.Seasons.Spring),
+		new TestCaseData(new System.DateTime(2010, 12, 25)).Returns(DateExtensions.Seasons.Winter),
+		new TestCaseData(new System.DateTime(2010, 10, 27)).Returns(DateExtensions.Seasons.Fall),
+		new TestCaseData(new System.DateTime(2010, 7, 23)).Returns(DateExtensions.Seasons.Summer)
 
 	};
-	[TestCaseSource("SeasonTestCases")]
-	public Seasons Season_Test(System.DateTime d)
+	[TestCaseSource(nameof(SeasonTestCases))]
+	public DateExtensions.Seasons Season_Test(System.DateTime d)
 	{
-		return d.Season;
+		return d.Season();
 	}
 
 	static readonly object[] AddSTestCases = {
@@ -31,7 +33,7 @@ public class DateExtensionsTest
 		new TestCaseData(new System.DateTime(2010, 4, 2), TimeSpan.Zero).Returns(new System.DateTime(2010, 4, 2))
 
 	};
-	[TestCaseSource("AddSTestCases")]
+	[TestCaseSource(nameof(AddSTestCases))]
 	public System.DateTime AddS_Test(System.DateTime d, TimeSpan dur)
 	{
 		return d.AddS(dur);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using Microsoft.CodeAnalysis;
 using CS = Microsoft.CodeAnalysis.CSharp;
 using VB = Microsoft.CodeAnalysis.VisualBasic;
@@ -126,9 +125,9 @@ namespace Gekka.Roslyn.TranslateViewer
                 {
                     break;
                 }
-                text = this.InputText;
-                this.OutputText = "";
-                language = this.InputLanguage;
+                text = InputText;
+                OutputText = "";
+                language = InputLanguage;
                 changed = false;
                 doConvert.Reset();
                 if (string.IsNullOrWhiteSpace(text))
@@ -140,28 +139,28 @@ namespace Gekka.Roslyn.TranslateViewer
                 try
                 {
                     Item item;
-                    if (this.InputLanguage == TargetLanguage.VB)
+                    if (InputLanguage == TargetLanguage.VB)
                     {
                         var vbTree = VB.VisualBasicSyntaxTree.ParseText(text);
                         var vbRoot = (VB.VisualBasicSyntaxNode)vbTree.GetRoot();
 
                         var vbRoot2 = vbRoot.NormalizeWhitespace();
-                        this.OutputText = vbRoot2.ToFullString();
+                        OutputText = vbRoot2.ToFullString();
 
                         item = Item.Create(vbRoot);
                     }
                     else
                     {
-                        var csTree = CS.CSharpSyntaxTree.ParseText(this.InputText);
+                        var csTree = CS.CSharpSyntaxTree.ParseText(InputText);
                         var csRoot = (CS.CSharpSyntaxNode)csTree.GetRoot();
 
-                        Gekka.Roslyn.Translator.CS2VB.ResetCounter();
-                        var vbRoot = Gekka.Roslyn.Translator.CS2VB.Translate(text).NormalizeWhitespace();
-                        this.OutputText = vbRoot.ToFullString();
+                        Translator.CS2VB.ResetCounter();
+                        var vbRoot = Translator.CS2VB.Translate(text).NormalizeWhitespace();
+                        OutputText = vbRoot.ToFullString();
                         item = Item.Create(csRoot);
                     }
 
-                    this.Result = item;
+                    Result = item;
 
                     GenerateItems(item);
                 }
@@ -211,11 +210,11 @@ namespace Gekka.Roslyn.TranslateViewer
             public Pack(Item item)
             {
                 this.item = item;
-                this.ie = null;
+                ie = null;
                 var x = item.GetItemObjects();
                 if (x != null)
                 {
-                    this.ie = x.GetEnumerator();
+                    ie = x.GetEnumerator();
                 }
             }
         }
@@ -232,7 +231,7 @@ namespace Gekka.Roslyn.TranslateViewer
 
         public void Dispose()
         {
-            this.background.CancelAsync();
+            background.CancelAsync();
             doConvert.Set();
         }
     }
@@ -267,18 +266,18 @@ namespace Gekka.Roslyn.TranslateViewer
 
         private Item(SyntaxTrivia t)
         {
-            this.ItemType = ItemType.Trivia;
-            this.Value = t;
-            this.Text = t.ToFullString();
+            ItemType = ItemType.Trivia;
+            Value = t;
+            Text = t.ToFullString();
             bool isVB = IsVB(t.Language);
-            this.Language = isVB ? TargetLanguage.VB : TargetLanguage.CS;
-            if (this.Language == TargetLanguage.VB)
+            Language = isVB ? TargetLanguage.VB : TargetLanguage.CS;
+            if (Language == TargetLanguage.VB)
             {
                 foreach (var k in kindsVB)
                 {
                     if (t.IsKind(k))
                     {
-                        this.Text = k.ToString();
+                        Text = k.ToString();
                         break;
                     }
                 }
@@ -289,7 +288,7 @@ namespace Gekka.Roslyn.TranslateViewer
                 {
                     if (t.IsKind(k))
                     {
-                        this.Text = k.ToString();
+                        Text = k.ToString();
                         break;
                     }
                 }
@@ -297,21 +296,21 @@ namespace Gekka.Roslyn.TranslateViewer
         }
         private Item(SyntaxNodeOrToken x)
         {
-            this.SyntaxNodeOrToken = x;
-            this.ChildList = x.ChildNodesAndTokens();
-            this.Language = IsVB(x.Language) ? TargetLanguage.VB : TargetLanguage.CS;
-            if (this.SyntaxNodeOrToken.IsToken)
+            SyntaxNodeOrToken = x;
+            ChildList = x.ChildNodesAndTokens();
+            Language = IsVB(x.Language) ? TargetLanguage.VB : TargetLanguage.CS;
+            if (SyntaxNodeOrToken.IsToken)
             {
-                Value = this.Token = x.AsToken();
-                Text = this.Token.Text;
+                Value = Token = x.AsToken();
+                Text = Token.Text;
 
-                if (this.Language == TargetLanguage.VB)
+                if (Language == TargetLanguage.VB)
                 {
                     foreach (var k in kindsVB)
                     {
-                        if (this.Token.IsKind(k))
+                        if (Token.IsKind(k))
                         {
-                            this.Kind = k;
+                            Kind = k;
                             break;
                         }
                     }
@@ -320,31 +319,31 @@ namespace Gekka.Roslyn.TranslateViewer
                 {
                     foreach (var k in kindsCS)
                     {
-                        if (this.Token.IsKind(k))
+                        if (Token.IsKind(k))
                         {
-                            this.Kind = k;
+                            Kind = k;
                             break;
                         }
                     }
                 }
-                this.ItemType = ItemType.Token;
+                ItemType = ItemType.Token;
             }
             else
             {
-                Value = this.Node = x.AsNode();
+                Value = Node = x.AsNode();
 
-                if (this.Node is VB.VisualBasicSyntaxNode)
+                if (Node is VB.VisualBasicSyntaxNode)
                 {
-                    var node = (VB.VisualBasicSyntaxNode)this.Node;
-                    this.Kind = node.Kind();
-                    this.Text = this.Kind.ToString();
+                    var node = (VB.VisualBasicSyntaxNode)Node;
+                    Kind = node.Kind();
+                    Text = Kind.ToString();
                 }
                 else
                 {
-                    this.Text = ((CS.CSharpSyntaxNode)Node).Kind().ToString();
+                    Text = ((CS.CSharpSyntaxNode)Node).Kind().ToString();
                     //Text = this.Node.ToString();
                 }
-                this.ItemType = ItemType.Node;
+                ItemType = ItemType.Node;
             }
 
         }
@@ -372,16 +371,16 @@ namespace Gekka.Roslyn.TranslateViewer
         {
             get
             {
-                if (this.ItemType == ItemType.Token)
+                if (ItemType == ItemType.Token)
                 {
 
-                    return ConvertTrivia(this.Token.LeadingTrivia);
+                    return ConvertTrivia(Token.LeadingTrivia);
 
                 }
-                else if (this.ItemType == ItemType.Node)
+                else if (ItemType == ItemType.Node)
                 {
 
-                    return ConvertTrivia(this.Node.GetLeadingTrivia());
+                    return ConvertTrivia(Node.GetLeadingTrivia());
                 }
                 return new SyntaxTrivia[0];
             }
@@ -392,13 +391,13 @@ namespace Gekka.Roslyn.TranslateViewer
         {
             get
             {
-                if (this.ItemType == ItemType.Token)
+                if (ItemType == ItemType.Token)
                 {
-                    return ConvertTrivia(this.Token.TrailingTrivia);
+                    return ConvertTrivia(Token.TrailingTrivia);
                 }
-                else if (this.ItemType == ItemType.Node)
+                else if (ItemType == ItemType.Node)
                 {
-                    return ConvertTrivia(this.Node.GetTrailingTrivia());
+                    return ConvertTrivia(Node.GetTrailingTrivia());
                 }
                 return new SyntaxTrivia[0];
             }
@@ -408,7 +407,7 @@ namespace Gekka.Roslyn.TranslateViewer
 
         internal IEnumerable<object> GetItemObjects()
         {
-            if (this.ItemType == ItemType.Trivia)
+            if (ItemType == ItemType.Trivia)
             {
                 SyntaxTrivia t = (SyntaxTrivia)Value;
                 foreach (Diagnostic d in t.GetDiagnostics())
@@ -418,9 +417,9 @@ namespace Gekka.Roslyn.TranslateViewer
             }
             else
             {
-                if (this.ChildList != null)
+                if (ChildList != null)
                 {
-                    foreach (SyntaxNodeOrToken c in this.ChildList)
+                    foreach (SyntaxNodeOrToken c in ChildList)
                     {
                         if (c.IsKind(CS.SyntaxKind.EmptyStatement) || c.IsKind(VB.SyntaxKind.EmptyStatement))
                         {

@@ -13,18 +13,10 @@ namespace Icm.IO
 		/// <param name="relativeFilename"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static FileInfo GetFile(DirectoryInfo di, string relativeFilename)
+		public static FileInfo GetFile(this DirectoryInfo di, string relativeFilename)
 		{
 			return new FileInfo(Path.Combine(di.FullName, relativeFilename));
 		}
 
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

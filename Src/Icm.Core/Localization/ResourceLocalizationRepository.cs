@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Icm.Localization
 {
 
@@ -11,19 +13,13 @@ namespace Icm.Localization
 			_resourceManager = rman;
 		}
 
-		public string ItemForCulture {
-			get {
-				dynamic culture = CultureInfo.GetCultureInfo(lcid);
-				return _resourceManager.GetString(key, culture) ?? key;
-			}
-		}
+	    public string this[int lcid, string key]
+	    {
+	        get {
+                var culture = CultureInfo.GetCultureInfo(lcid);
+                return _resourceManager.GetString(key, culture) ?? key;
+            }
+	    }
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

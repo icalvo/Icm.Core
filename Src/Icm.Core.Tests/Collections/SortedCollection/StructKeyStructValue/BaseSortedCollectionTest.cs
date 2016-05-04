@@ -5,7 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using Icm;
 using Icm.Collections.Generic.StructKeyStructValue;
+using NUnit.Framework;
 
 [TestFixture()]
 public class StructKeyStructValue_BaseSortedCollectionTest

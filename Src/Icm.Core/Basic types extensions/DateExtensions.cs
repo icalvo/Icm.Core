@@ -21,8 +21,7 @@ namespace Icm
 		/// <param name="d"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static Seasons Season(System.DateTime d)
+		public static Seasons Season(this DateTime d)
 		{
 			int monthDay = d.Month * 100 + d.Day;
 			if (monthDay >= 101 && monthDay < 321) {
@@ -45,8 +44,7 @@ namespace Icm
 		/// <param name="dur">Duration to add</param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static System.DateTime AddS(System.DateTime d, TimeSpan dur)
+		public static System.DateTime AddS(this DateTime d, TimeSpan dur)
 		{
 			if (dur < TimeSpan.Zero) {
 				throw new ArgumentException("Cannot accept negative durations", "dur");
@@ -54,7 +52,7 @@ namespace Icm
 			if (dur == TimeSpan.MaxValue) {
 				return System.DateTime.MaxValue;
 			} else {
-				dynamic maxDate = System.DateTime.MaxValue.Subtract(dur);
+				var maxDate = System.DateTime.MaxValue.Subtract(dur);
 				if (d > maxDate) {
 					return System.DateTime.MaxValue;
 				} else {
@@ -67,9 +65,3 @@ namespace Icm
 
 }
 
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

@@ -8,21 +8,9 @@ namespace Icm.Localization
 
 		protected static object TranslateObject(ILocalizationRepository locRepo, object trans)
 		{
-			dynamic translit = trans as IPhrase;
-			if (translit == null) {
-				return trans;
-			} else {
-				return translit.Translate(locRepo);
-			}
+		    var translit = trans as IPhrase;
+		    return translit == null ? trans : translit.Translate(locRepo);
 		}
-
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

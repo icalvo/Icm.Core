@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
@@ -1022,8 +1021,8 @@ namespace Gekka.Roslyn.Translator
             {
                 if (vbFor == null) throw new ArgumentNullException("vbFor");
 
-                this._vbFor = vbFor;
-                this.Label = gotoLabel;
+                _vbFor = vbFor;
+                Label = gotoLabel;
             }
             private VBS.ForBlockSyntax _vbFor;
             public string Label { get; private set; }
@@ -1042,7 +1041,7 @@ namespace Gekka.Roslyn.Translator
                         }
                         if (parent.IsKind(VB.SyntaxKind.ForBlock))
                         {
-                            if (parent == this._vbFor)
+                            if (parent == _vbFor)
                             {
                                 HasContinueFor = true;
                                 var vbLabel = VB.SyntaxFactory.IdentifierLabel(Label);
@@ -2073,7 +2072,7 @@ namespace Gekka.Roslyn.Translator
                     || csLiteral.Token.Value is int
                     || csLiteral.Token.Value is long)
                 {
-                    long l = ((System.IConvertible)csLiteral.Token.Value).ToInt64(null);
+                    long l = ((IConvertible)csLiteral.Token.Value).ToInt64(null);
                     ulong ul = (ulong)Math.Abs(l);
                     vbToken = VB.SyntaxFactory.IntegerLiteralToken(sValue, VBS.LiteralBase.Decimal, VBS.TypeCharacter.Integer, ul);
                     if (l < 0)
@@ -2088,13 +2087,13 @@ namespace Gekka.Roslyn.Translator
                      || csLiteral.Token.Value is uint
                      || csLiteral.Token.Value is ulong)
                 {
-                    ulong ul = ((System.IConvertible)csLiteral.Token.Value).ToUInt64(null);
+                    ulong ul = ((IConvertible)csLiteral.Token.Value).ToUInt64(null);
                     vbToken = VB.SyntaxFactory.IntegerLiteralToken(sValue, VBS.LiteralBase.Decimal, VBS.TypeCharacter.Integer, ul);
                     return VB.SyntaxFactory.LiteralExpression(VB.SyntaxKind.NumericLiteralExpression, vbToken);
                 }
                 else if (csLiteral.Token.Value is float || csLiteral.Token.Value is double)
                 {
-                    var dbl = ((System.IConvertible)csLiteral.Token.Value).ToDouble(null);
+                    var dbl = ((IConvertible)csLiteral.Token.Value).ToDouble(null);
                     vbToken = VB.SyntaxFactory.FloatingLiteralToken(sValue, VBS.TypeCharacter.Single, dbl);
                     return VB.SyntaxFactory.LiteralExpression(VB.SyntaxKind.NumericLiteralExpression, vbToken);
                 }

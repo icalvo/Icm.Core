@@ -5,8 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Linq;
 using Icm.Collections;
-
+using NUnit.Framework;
 
 
 [Category("Icm")]
@@ -52,7 +53,7 @@ public class IListExtensionsTest
 		Assert.That(originalList.All(e => e == 0));
 	}
 
-	[TestCaseSource("InitializeTestCases")]
+	[TestCaseSource(nameof(InitializeTestCases))]
 	public void Initialize_NormalTestEmptyClass(List<EmptyClass> originalList, int providedCount, int expectedCount)
 	{
 		originalList.Initialize(providedCount);

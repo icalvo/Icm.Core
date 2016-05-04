@@ -24,8 +24,7 @@ namespace Icm
 		/// <param name="length">Length, that can be negative.</param>
 		/// <returns></returns>
 		/// <remarks>Where PHP's substr returns FALSE, this function throws an ArgumentOutOfRangeException</remarks>
-		[Extension()]
-		public static string Substr(string s, int startIdx, int length)
+		public static string Substr(this string s, int startIdx, int length)
 		{
 			int startIdx2 = 0;
 			int length2 = 0;
@@ -56,8 +55,7 @@ namespace Icm
 		/// <param name="endIdx"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static string Med(string s, int startIdx, int endIdx)
+		public static string Med(this string s, int startIdx, int endIdx)
 		{
 			return s.Substring(startIdx, endIdx - startIdx + 1);
 		}
@@ -70,8 +68,7 @@ namespace Icm
 		/// <param name="endLength"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static string SkipBoth(string s, int startLength, int endLength)
+		public static string SkipBoth(this string s, int startLength, int endLength)
 		{
 			return s.Substring(startLength, s.Length - startLength - endLength);
 		}
@@ -83,8 +80,7 @@ namespace Icm
 		/// <param name="length"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static string Left(string s, int length)
+		public static string Left(this string s, int length)
 		{
 			return s.Substring(0, length);
 		}
@@ -96,8 +92,7 @@ namespace Icm
 		/// <param name="length"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static string Right(string s, int length)
+		public static string Right(this string s, int length)
 		{
 			return s.Substring(s.Length - length);
 		}
@@ -110,8 +105,7 @@ namespace Icm
 		/// <param name="endS"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static bool SurroundedBy(string s, string startS, string endS)
+		public static bool SurroundedBy(this string s, string startS, string endS)
 		{
 			return s.StartsWith(startS) && s.EndsWith(endS);
 		}
@@ -128,8 +122,7 @@ namespace Icm
 		/// 	[icalvo]	26/11/2004	Created
 		///     [icalvo]    31/03/2005  Documented
 		/// </history>
-		[Extension()]
-		public static string Repeat(string s, int count)
+		public static string Repeat(this string s, int count)
 		{
 			if (count == 0) {
 				return "";
@@ -138,7 +131,7 @@ namespace Icm
 			for (int i = 1; i <= count; i++) {
 				sb.Append(s);
 			}
-			return sb.ToString;
+			return sb.ToString();
 		}
 
 		/// <summary>
@@ -153,25 +146,23 @@ namespace Icm
 		/// 	[icalvo]	19/08/2004	Created
 		///     [icalvo]    31/03/2005  Documented
 		/// </history>
-		[Extension()]
-		public static string ToUpperFirst(string s)
+		public static string ToUpperFirst(this string s)
 		{
-			if (s == null || string.IsNullOrEmpty(s)) {
+		    if (string.IsNullOrEmpty(s)) {
 				return "";
-			} else {
-				return char.ToUpper(s.Chars(0), CultureInfo.CurrentCulture) + s.Substring(1, s.Length - 1);
 			}
+
+		    return char.ToUpper(s[0], CultureInfo.CurrentCulture) + s.Substring(1, s.Length - 1);
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// If string is String.Empty, return a substitution
 		/// </summary>
 		/// <param name="s"></param>
 		/// <param name="emptyString"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static string IfEmpty(string s, string emptyString)
+		public static string IfEmpty(this string s, string emptyString)
 		{
 			return s != null && s == string.Empty ? emptyString : s;
 		}
@@ -182,18 +173,9 @@ namespace Icm
 		/// <param name="s"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static bool IsEmpty(string s)
+		public static bool IsEmpty(this string s)
 		{
 			return s != null && s == string.Empty;
 		}
 	}
-
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

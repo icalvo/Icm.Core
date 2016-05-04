@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace Icm.Configuration
 {
@@ -24,29 +25,27 @@ namespace Icm.Configuration
 		/// </history>
 		public object ManageSection(System.Xml.XmlNode section)
 		{
-			switch (section.Attributes("type").Value) {
+			switch (section.Attributes?["type"].Value) {
 				case "array":
 					return BuildArray(section);
 				case "hash":
 					return BuildHash(section);
 				default:
-					throw new InvalidOperationException(section.Attributes("type").Value + ": Not valid element type");
+					throw new InvalidOperationException(section.Attributes?["type"].Value + ": Not valid element type");
 			}
 		}
 
 		public IList<object> BuildArray(System.Xml.XmlNode section)
 		{
-			Generic.List<object> lo = new Generic.List<object>();
+			List<object> lo = new List<object>();
 
-			foreach (Xml.XmlNode child in section.ChildNodes) {
+			foreach (XmlNode child in section.ChildNodes) {
 				switch (child.Name) {
 					case "add":
-						if (child.Attributes("type") == null) {
-							lo.Add(child.Attributes("value").Value);
-						} else {
-							lo.Add(ManageSection(child));
-						}
-						break;
+				        lo.Add(child.Attributes?["type"] == null 
+                            ? child.Attributes?["value"].Value 
+                            : ManageSection(child));
+				        break;
 					case "#comment":
 						break;
 					// Ignore comments
@@ -60,19 +59,19 @@ namespace Icm.Configuration
 
 		public IDictionary<string, object> BuildHash(System.Xml.XmlNode section)
 		{
-			Generic.Dictionary<string, object> ht = new Generic.Dictionary<string, object>();
-			foreach (Xml.XmlNode child in section.ChildNodes) {
+			var ht = new Dictionary<string, object>();
+			foreach (XmlNode child in section.ChildNodes) {
 				switch (child.Name) {
 					case "add":
-						if (child.Attributes("type") == null) {
-							ht.Add(child.Attributes("key").Value, child.Attributes("value").Value);
-						} else {
-							ht.Add(child.Attributes("key").Value, ManageSection(child));
-						}
-						break;
+				        ht.Add(child.Attributes?["key"].Value,
+				            child.Attributes?["type"] == null 
+                            ? child.Attributes?["value"].Value 
+                            : ManageSection(child));
+				        break;
 					case "remove":
-						ht.Remove(child.Attributes("value").Value);
-						break;
+				        if (ht.ContainsKey(child.Attributes["value"].Value))
+                            ht.Remove(child.Attributes["value"].Value);
+				        break;
 					case "#comment":
 						break;
 					// Ignore comments
@@ -86,10 +85,3 @@ namespace Icm.Configuration
 
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

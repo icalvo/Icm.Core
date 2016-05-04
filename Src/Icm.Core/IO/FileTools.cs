@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.IO;
 
 namespace Icm.IO
@@ -31,13 +32,13 @@ namespace Icm.IO
 		/// </history>
 		public static string FormatFile(string templatefn, params object[] args)
 		{
-			dynamic sr = File.OpenText(templatefn);
+			var sr = File.OpenText(templatefn);
 			return FormatFile(sr, args);
 		}
 
 		public static string FormatFile(TextReader tr, params object[] args)
 		{
-			dynamic template = tr.ReadToEnd;
+			var template = tr.ReadToEnd();
 			tr.Close();
 			return string.Format(CultureInfo.CurrentCulture, template, args);
 		}
@@ -45,11 +46,3 @@ namespace Icm.IO
 	}
 
 }
-
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

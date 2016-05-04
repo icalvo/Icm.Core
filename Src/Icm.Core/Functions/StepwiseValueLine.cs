@@ -1,3 +1,5 @@
+using Icm.Collections.Generic.StructKeyStructValue;
+
 namespace Icm.Functions
 {
 
@@ -15,16 +17,9 @@ namespace Icm.Functions
 
 		public override IMathFunction<System.DateTime, double> EmptyClone()
 		{
-			return new StepwiseValueLine(V0, KeyStore);
+			return new StepwiseValueLine(V0(), KeyStore);
 		}
 
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

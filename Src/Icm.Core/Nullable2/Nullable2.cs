@@ -2,7 +2,6 @@ using System;
 
 namespace Icm
 {
-
 	/// <summary>
 	/// Represents a nullable entity that, unlike Nullable(Of T), can enclose either a class or a struct.
 	/// </summary>
@@ -15,49 +14,47 @@ namespace Icm
 	/// </remarks>
 	public struct Nullable2<T>
 	{
+		private T _value;
+		private bool _hasStructValue;
 
-		private T value_;
-		private bool hasStructValue_;
-
-		private static readonly bool isClass_;
-		static Nullable2()
-		{
-			isClass_ = typeof(T).IsClass;
-		}
-
-		public T Value {
-			get {
-				if (HasValue) {
-					return value_;
-				} else {
-					throw new InvalidOperationException("Null value");
+		private static readonly bool IsClass = typeof(T).IsClass;
+        
+		public T Value
+        {
+			get
+			{
+			    if (HasValue)
+                {
+					return _value;
 				}
+
+			    throw new InvalidOperationException("Null value");
 			}
-			set {
-				value_ = value;
-				hasStructValue_ = true;
+		    set
+            {
+				_value = value;
+				_hasStructValue = true;
 			}
 		}
 
-		public T V {
+		public T V
+        {
 			get { return Value; }
 			set { this.Value = value; }
 		}
 
-		public bool HasValue {
-			get { return isClass_ || hasStructValue_; }
-		}
+		public bool HasValue => IsClass || _hasStructValue;
 
-
-		public bool HasSomething {
-			get {
-				if (isClass_) {
-					return value_ != null;
-				} else {
-					return hasStructValue_;
+	    public bool HasSomething {
+			get
+			{
+			    if (IsClass) {
+					return _value != null;
 				}
+
+			    return _hasStructValue;
 			}
-		}
+	    }
 
 		public static implicit operator T(Nullable2<T> d)
 		{
@@ -72,10 +69,3 @@ namespace Icm
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

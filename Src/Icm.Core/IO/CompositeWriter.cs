@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace Icm.IO
@@ -18,23 +19,21 @@ namespace Icm.IO
 	{
 
 
-		private readonly List<TextWriter> textWriters_ = new List<TextWriter>();
-		protected IList<TextWriter> TextWriters {
-			get { return textWriters_; }
-		}
+		private readonly List<TextWriter> _textWriters = new List<TextWriter>();
+		protected IList<TextWriter> TextWriters => _textWriters;
 
-		public CompositeWriter(params TextWriter[] tws) : base(CultureInfo.CurrentCulture)
+	    public CompositeWriter(params TextWriter[] tws) : base(CultureInfo.CurrentCulture)
 		{
 			Add(tws);
 		}
 
 		public void Add(params TextWriter[] tws)
 		{
-			foreach (void tw_loopVariable in tws) {
-				tw = tw_loopVariable;
+			foreach (var tw in tws) {
 				if (tw == null) {
-					throw new ArgumentNullException("tws");
+					throw new ArgumentNullException(nameof(tws));
 				}
+
 				TextWriters.Add(tw);
 			}
 		}
@@ -82,10 +81,3 @@ namespace Icm.IO
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

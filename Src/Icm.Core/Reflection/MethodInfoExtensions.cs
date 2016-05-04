@@ -1,13 +1,11 @@
 using System;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using System.Reflection;
 
 namespace Icm.Reflection
 {
-
 	public static class MethodInfoExtensions
 	{
-
 		/// <summary>
 		/// Get the attributes of a given method.
 		/// </summary>
@@ -16,8 +14,7 @@ namespace Icm.Reflection
 		/// <param name="inherit"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static T[] GetAttributes<T>(MethodInfo mi, bool inherit) where T : Attribute
+		public static T[] GetAttributes<T>(this MethodInfo mi, bool inherit) where T : Attribute
 		{
 			return (T[])mi.GetCustomAttributes(typeof(T), inherit);
 		}
@@ -31,10 +28,9 @@ namespace Icm.Reflection
 		/// <param name="inherit"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static bool HasAttribute<T>(MethodInfo mi, bool inherit) where T : Attribute
+		public static bool HasAttribute<T>(this MethodInfo mi, bool inherit) where T : Attribute
 		{
-			return ((T[])mi.GetCustomAttributes(typeof(T), inherit)).Count > 0;
+			return ((T[])mi.GetCustomAttributes(typeof(T), inherit)).Length > 0;
 		}
 
 		/// <summary>
@@ -45,19 +41,9 @@ namespace Icm.Reflection
 		/// <param name="inherit"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static T GetAttribute<T>(MethodInfo mi, bool inherit) where T : Attribute
+		public static T GetAttribute<T>(this MethodInfo mi, bool inherit) where T : Attribute
 		{
-			return ((T[])mi.GetCustomAttributes(typeof(T), inherit)).Single;
+			return ((T[])mi.GetCustomAttributes(typeof(T), inherit)).Single();
 		}
-
 	}
-
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

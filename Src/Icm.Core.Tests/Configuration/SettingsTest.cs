@@ -9,6 +9,7 @@ using System.Diagnostics;
 
 using Icm.Configuration;
 using System.Configuration;
+using NUnit.Framework;
 
 
 ///<summary>

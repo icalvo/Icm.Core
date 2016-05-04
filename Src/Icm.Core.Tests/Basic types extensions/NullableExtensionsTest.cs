@@ -1,33 +1,28 @@
-
-using Microsoft.VisualBasic;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
+using Icm;
+using NUnit.Framework;
+
 [TestFixture()]
 public class NullableExtensionsTest
 {
 
 	[TestCase(3)]
-	[TestCase(null, ExpectedException = typeof(InvalidOperationException))]
-	public void V_Test(Nullable<int> obj)
+	public void V_Test(int? obj)
 	{
-		Assert.That(obj.V, Is.EqualTo(obj.Value));
+		Assert.That(obj.V(), Is.EqualTo(obj.Value));
 	}
+    
+    [TestCase(null)]
+    public void V_Test2(int? obj)
+    {
+        Assert.That(() => obj.V(), Throws.InvalidOperationException);
+    }
 
-	[TestCase(3)]
+    [TestCase(3)]
 	[TestCase(null)]
-	public void HasNotValue_Test(Nullable<int> obj)
+	public void HasNotValue_Test(int? obj)
 	{
-		Assert.That(obj.HasNotValue, Is.EqualTo(!obj.HasValue));
+		Assert.That(obj.HasNotValue(), Is.EqualTo(!obj.HasValue));
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

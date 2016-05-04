@@ -72,17 +72,15 @@ namespace Icm.Tree
 
 		public void AddChildren(IEnumerable<T> l)
 		{
-			List<TreeNode<T>> result = new List<TreeNode<T>>();
-			foreach (void element_loopVariable in l) {
-				element = element_loopVariable;
-				result.Add(AddChild(element));
-			}
-		}
+            foreach (var element in l)
+            {
+                AddChild(element);
+            }
+        }
 
 		public void AddChildren(IEnumerable<TreeNode<T>> l)
 		{
-			foreach (void element_loopVariable in l) {
-				element = element_loopVariable;
+			foreach (var element in l) {
 				AddChild(element);
 			}
 		}
@@ -102,30 +100,15 @@ namespace Icm.Tree
 			return Parent;
 		}
 
-		private IEnumerable<ITreeElement<T>> GetChildElements()
+		public IEnumerable<ITreeElement<T>> GetChildElements()
 		{
-			#if FrameworkNet35
-			return _children.ConvertAll<ITreeElement<T>>(elem => elem);
-			#elif
-			return _children;
-			#endif
-		}
+            return _children;
+        }
 
-		private IEnumerable<ITreeNode<T>> GetChildNodes()
+        public IEnumerable<ITreeNode<T>> GetChildNodes()
 		{
-			#if FrameworkNet35
-			return _children.ConvertAll<ITreeNode<T>>(elem => elem);
-			#elif
-			return _children;
-			#endif
-		}
-	}
+            return _children;
+        }
+    }
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

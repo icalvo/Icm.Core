@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using Icm.Localization;
+using static Icm.Localization.PhraseFactory;
 
 namespace Icm
 {
@@ -14,61 +15,54 @@ namespace Icm
 	[DebuggerDisplay("{Description()}")]
 	public class DateTimeInterval
 	{
-
-		private System.DateTime start_;
-
-		private System.DateTime end_;
-		public System.DateTime Start {
-			get { return start_; }
-		}
+	    private DateTime end_;
+		public DateTime Start { get; private set; }
 
 
-		public System.DateTime End {
+	    public DateTime End {
 			get { return end_; }
-			set { SetInterval(start_, value); }
+			set { SetInterval(Start, value); }
 		}
 
-		public DateTimeInterval(System.DateTime i, System.DateTime f)
+		public DateTimeInterval(DateTime i, DateTime f)
 		{
 			SetInterval(i, f);
 		}
 
-		public DateTimeInterval(System.DateTime i, TimeSpan dur)
+		public DateTimeInterval(DateTime i, TimeSpan dur)
 		{
 			SetInterval(i, dur);
 		}
 
-		public DateTimeInterval(System.DateTime point)
+		public DateTimeInterval(DateTime point)
 		{
 			SetInterval(point, point);
 		}
 
-		public TimeSpan Duration {
-			get { return End.Subtract(Start); }
-		}
+		public TimeSpan Duration => End.Subtract(Start);
 
-		public void StartWith(System.DateTime newStart)
+	    public void StartWith(DateTime newStart)
 		{
 			Offset(newStart.Subtract(Start));
 		}
 
 		public void Offset(TimeSpan offsetSpan)
 		{
-			System.DateTime newEnd = default(System.DateTime);
-			if (System.DateTime.MaxValue.Subtract(end_) > offsetSpan) {
+			DateTime newEnd = default(DateTime);
+			if (DateTime.MaxValue.Subtract(end_) > offsetSpan) {
 				newEnd = end_.Add(offsetSpan);
 			} else {
-				newEnd = System.DateTime.MaxValue;
+				newEnd = DateTime.MaxValue;
 			}
-			SetInterval(start_.Add(offsetSpan), newEnd);
+			SetInterval(Start.Add(offsetSpan), newEnd);
 		}
 
 		public void SetDuration(TimeSpan newDuration)
 		{
 			if (newDuration < TimeSpan.Zero)
-				throw new ArgumentOutOfRangeException("Duration must not be negative");
+				throw new ArgumentOutOfRangeException(nameof(newDuration), "Duration must not be negative");
 
-			SetInterval(start_, start_.Add(newDuration));
+			SetInterval(Start, Start.Add(newDuration));
 		}
 
 		/// <summary>
@@ -78,51 +72,43 @@ namespace Icm
 		/// <param name="startDate"></param>
 		/// <param name="endDate"></param>
 		/// <remarks></remarks>
-		public void SetInterval(System.DateTime startDate, System.DateTime endDate)
+		public void SetInterval(DateTime startDate, DateTime endDate)
 		{
 			if (startDate > endDate)
 				throw new ArgumentException("Start date must be less or equal than end date");
-			if (startDate == System.DateTime.MaxValue)
-				throw new ArgumentOutOfRangeException("Start date must not be Date.MaxValue");
+			if (startDate == DateTime.MaxValue)
+				throw new ArgumentOutOfRangeException(nameof(startDate), "Start date must not be Date.MaxValue");
 
-			start_ = startDate;
+			Start = startDate;
 			end_ = endDate;
 		}
 
-		public void SetInterval(System.DateTime startDate, TimeSpan dur)
+		public void SetInterval(DateTime startDate, TimeSpan dur)
 		{
 			if (dur < TimeSpan.Zero)
 				throw new ArgumentOutOfRangeException("Duration must not be negative");
 			SetInterval(startDate, startDate.Add(dur));
 		}
 
-		public void SetPoint(System.DateTime pointDate)
+		public void SetPoint(DateTime pointDate)
 		{
 			SetInterval(pointDate, pointDate);
 		}
 
 		public virtual Phrase Description()
 		{
-			if (End == System.DateTime.MaxValue) {
+		    if (End == DateTime.MaxValue) {
 				return PhrF("from {0:dd/MM/yyyy HH:mm:ss}, indefinitely", Start);
-			} else if (End == System.DateTime.MinValue) {
-				return PhrF("{0:dd/MM/yyyy HH:mm:ss}", Start);
-			} else {
-				return PhrF("between {0:dd/MM/yyyy HH:mm:ss} and {1:dd/MM/yyyy HH:mm:ss} ({2})", Start, End, Duration.ToAbbrev);
 			}
+		    if (End == DateTime.MinValue) {
+		        return PhrF("{0:dd/MM/yyyy HH:mm:ss}", Start);
+		    }
+		    return PhrF("between {0:dd/MM/yyyy HH:mm:ss} and {1:dd/MM/yyyy HH:mm:ss} ({2})", Start, End, Duration.ToAbbrev());
 		}
 
-		public bool Contains(System.DateTime aDate)
+	    public bool Contains(DateTime aDate)
 		{
 			return Start <= aDate && aDate < End;
 		}
-
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

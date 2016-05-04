@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Icm.Reflection
@@ -23,19 +24,17 @@ namespace Icm.Reflection
 		/// A list of instance providers that are available.
 		/// </summary>
 
-		private readonly Dictionary<string, T> implementorInstances_;
+		private readonly Dictionary<string, T> _implementorInstances;
 		public ImplementorInstanceProvider()
 		{
-			implementorInstances_ = new Dictionary<string, T>();
+			_implementorInstances = new Dictionary<string, T>();
 			CreateList();
-			AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(AssemblyLoaded);
+			AppDomain.CurrentDomain.AssemblyLoad += AssemblyLoaded;
 		}
 
-		public List<T> ImplementorsInstances {
-			get { return implementorInstances_.Values.ToList; }
-		}
+		public List<T> ImplementorsInstances => _implementorInstances.Values.ToList();
 
-		/// <summary>
+	    /// <summary>
 		/// Updates the list of instance providers with any found in the newly loaded assembly.
 		/// </summary>
 		/// <param name="sender">The object that sent the event.</param>
@@ -60,24 +59,14 @@ namespace Icm.Reflection
 		/// <param name="assembly">The assembly with which the list of instance providers will be updated.</param>
 		private void UpdateList(Assembly assembly)
 		{
-			dynamic newInstances = GetInstanceDictionaryOfAllImplementors<T>(assembly);
-			foreach (void inst_loopVariable in newInstances) {
-				inst = inst_loopVariable;
-				if (implementorInstances_.ContainsKey(inst.Key)) {
-					implementorInstances_(inst.Key) = inst.Value;
+			var newInstances = ActivatorTools.GetInstanceDictionaryOfAllImplementors<T>(assembly);
+			foreach (var inst in newInstances) {
+				if (_implementorInstances.ContainsKey(inst.Key)) {
+					_implementorInstances[inst.Key] = inst.Value;
 				} else {
-					implementorInstances_.Add(inst.Key, inst.Value);
+					_implementorInstances.Add(inst.Key, inst.Value);
 				}
 			}
 		}
-
 	}
-
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

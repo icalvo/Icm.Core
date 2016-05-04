@@ -15,18 +15,17 @@ namespace Icm.Reflection
 		/// <param name="action"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static string GetInfo<T>(Expression<Func<T, object>> action) where T : class
+		public static string GetInfo<T>(this Expression<Func<T, object>> action) where T : class
 		{
-			dynamic expression = GetMemberInfo(action);
+			var expression = GetMemberInfo(action);
 			return expression.Member.Name;
 		}
 
 		private static MemberExpression GetMemberInfo(Expression method)
 		{
-			dynamic lambda = method as LambdaExpression;
+			var lambda = method as LambdaExpression;
 			if (lambda == null) {
-				throw new ArgumentNullException("method");
+				throw new ArgumentNullException(nameof(method));
 			}
 
 			MemberExpression memberExpr = null;
@@ -45,12 +44,4 @@ namespace Icm.Reflection
 			return memberExpr;
 		}
 	}
-
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

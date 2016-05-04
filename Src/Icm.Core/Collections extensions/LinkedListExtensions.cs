@@ -14,25 +14,14 @@ namespace Icm.Collections
 		/// <param name="l1"></param>
 		/// <param name="l2"></param>
 		/// <remarks></remarks>
-		[Extension()]
-		public static void CopyInto<T>(LinkedList<T> l1, LinkedList<T> l2) where T : ICloneable
+		public static void CopyInto<T>(this LinkedList<T> l1, LinkedList<T> l2) where T : ICloneable
 		{
-			LinkedListNode<T> itNode = default(LinkedListNode<T>);
-
-			itNode = l1.First;
-			while (!(itNode == null)) {
-				T copia = (T)itNode.Value.Clone;
+		    var itNode = l1.First;
+		    while (itNode != null) {
+				T copia = (T)itNode.Value.Clone();
 				l2.AddLast(copia);
 				itNode = itNode.Next;
 			}
 		}
-
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

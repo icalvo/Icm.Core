@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Gekka.Roslyn.TranslateViewer
 {
@@ -24,7 +13,7 @@ namespace Gekka.Roslyn.TranslateViewer
 
         private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            this.pg.SelectedObject = e.NewValue;
+            pg.SelectedObject = e.NewValue;
         }
 
 
@@ -82,7 +71,7 @@ namespace Gekka.Roslyn.TranslateViewer
                     using (var stream = dlg.OpenFile())
                     {
                         var sr = new System.IO.StreamReader(stream);
-                        this.input.Text= sr.ReadToEnd();
+                        input.Text= sr.ReadToEnd();
                     }
                 }
                 catch(Exception ex)

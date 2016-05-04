@@ -4,37 +4,14 @@ namespace Icm.Localization
 {
 	public class DictionaryFixedCultureLocalizationRepository : Dictionary<string, string>, ILocalizationRepository
 	{
-
-		public DictionaryFixedCultureLocalizationRepository() : base()
+		public DictionaryFixedCultureLocalizationRepository(Dictionary<string, string> dict)
 		{
-		}
-
-		public DictionaryFixedCultureLocalizationRepository(Dictionary<string, string> dict) : base()
-		{
-
-			foreach (void element_loopVariable in dict) {
-				element = element_loopVariable;
+			foreach (var element in dict) {
 				Add(element.Key, element.Value);
 			}
 		}
 
-		public string ItemForCulture {
-			get {
-				if (ContainsKey(key)) {
-					return Item(key);
-				} else {
-					return null;
-				}
-			}
-		}
-
+        string ILocalizationRepository.this[int lcid, string key] 
+            => ContainsKey(key) ? this[key] : null;
 	}
-
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

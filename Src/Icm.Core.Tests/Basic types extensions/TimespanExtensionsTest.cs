@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using Icm;
+using NUnit.Framework;
 
 [TestFixture(), Category("Icm")]
 public class TimespanExtensionsTest
@@ -18,7 +20,7 @@ public class TimespanExtensionsTest
 		new TestCaseData(TimeSpan.FromHours(3), 0).Throws(typeof(OverflowException))
 
 	};
-	[TestCaseSource("DividedByTestCases")]
+	[TestCaseSource(nameof(DividedByTestCases))]
 	public TimeSpan DividedBy_Test(TimeSpan span, float divisor)
 	{
 		return span.DividedBy(divisor);
@@ -30,7 +32,7 @@ public class TimespanExtensionsTest
 		new TestCaseData(TimeSpan.Zero).Returns(true)
 
 	};
-	[TestCaseSource("IsZeroTestCases")]
+	[TestCaseSource(nameof(IsZeroTestCases))]
 	public bool IsZero_Test(TimeSpan target)
 	{
 		return target.IsZero();
@@ -42,7 +44,7 @@ public class TimespanExtensionsTest
 		new TestCaseData(TimeSpan.Zero).Returns(false)
 
 	};
-	[TestCaseSource("IsNotZeroTestCases")]
+	[TestCaseSource(nameof(IsNotZeroTestCases))]
 	public bool IsNotZero_Test(TimeSpan target)
 	{
 		return target.IsNotZero();
@@ -55,7 +57,7 @@ public class TimespanExtensionsTest
 		new TestCaseData(new TimeSpan(-5, 14, 18)).Returns("-4h45'42''")
 
 	};
-	[TestCaseSource("ToAbbrevTestCases")]
+	[TestCaseSource(nameof(ToAbbrevTestCases))]
 	public string ToAbbrev_Test(TimeSpan target)
 	{
 		return target.ToAbbrev;
@@ -68,7 +70,7 @@ public class TimespanExtensionsTest
 		new TestCaseData(new TimeSpan(-5, 14, 18)).Returns("-04:45")
 
 	};
-	[TestCaseSource("ToHHmmTestCases")]
+	[TestCaseSource(nameof(ToHHmmTestCases))]
 	public string ToHHmm_Test(TimeSpan target)
 	{
 		return target.ToHHmm;
@@ -81,7 +83,7 @@ public class TimespanExtensionsTest
 		new TestCaseData(new TimeSpan(-5, 14, 18)).Returns("-04:45:42")
 
 	};
-	[TestCaseSource("ToHHmmssTestCases")]
+	[TestCaseSource(nameof(ToHHmmssTestCases))]
 	public string ToHHmmss_Test(TimeSpan target)
 	{
 		return target.ToHHmmss;
@@ -94,7 +96,7 @@ public class TimespanExtensionsTest
 		new TestCaseData(new TimeSpan(-5, 14, 18)).Returns("-285:42.000")
 
 	};
-	[TestCaseSource("TommsstttTestCases")]
+	[TestCaseSource(nameof(TommsstttTestCases))]
 	public string Tommssttt_Test(TimeSpan target)
 	{
 		return target.Tommssttt;
@@ -107,7 +109,7 @@ public class TimespanExtensionsTest
 		new TestCaseData(new TimeSpan(-5, 14, 18)).Returns("-04:45:42.000")
 
 	};
-	[TestCaseSource("ToHHmmsstttTestCases")]
+	[TestCaseSource(nameof(ToHHmmsstttTestCases))]
 	public string ToHHmmssttt_Test(TimeSpan target)
 	{
 		return target.ToHHmmssttt;
@@ -120,7 +122,7 @@ public class TimespanExtensionsTest
 		new TestCaseData(new TimeSpan(-5, 14, 18)).Returns(-17142000000L)
 
 	};
-	[TestCaseSource("TotalMicrosecondsTestCases")]
+	[TestCaseSource(nameof(TotalMicrosecondsTestCases))]
 	public long TotalMicroseconds_Test(TimeSpan target)
 	{
 		return target.TotalMicroseconds;

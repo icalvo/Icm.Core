@@ -7,6 +7,7 @@ using System.Data;
 using System.Diagnostics;
 using Icm.Reflection;
 using System.Reflection;
+using NUnit.Framework;
 
 [TestFixture()]
 public class ObjectReflectionExtensionsTest
@@ -34,7 +35,7 @@ public class ObjectReflectionExtensionsTest
 		new TestCaseData(new MyExample(), "ArrayProp[2]").Throws(typeof(ArgumentException))
 
 	};
-	[TestCaseSource("GetFieldTestCases")]
+	[TestCaseSource(nameof(GetFieldTestCases))]
 	public string GetField_Test(MyExample obj, string fieldName)
 	{
 		return obj.GetField<string>(fieldName);
@@ -48,7 +49,7 @@ public class ObjectReflectionExtensionsTest
 		new TestCaseData(new MyExample(), "myfield", "NEWVALUE").Returns("NEWVALUE")
 
 	};
-	[TestCaseSource("SetFieldTestCases")]
+	[TestCaseSource(nameof(SetFieldTestCases))]
 	public string SetField_Test(MyExample obj, string fieldName, object value)
 	{
 		obj.SetField(fieldName, value);
@@ -62,7 +63,7 @@ public class ObjectReflectionExtensionsTest
 		new TestCaseData(new MyExample(), "inexistent").Returns(false)
 
 	};
-	[TestCaseSource("HasFieldTestCases")]
+	[TestCaseSource(nameof(HasFieldTestCases))]
 	public bool HasField_Test(MyExample obj, string fieldName)
 	{
 		return obj.HasField(fieldName);
@@ -90,7 +91,7 @@ public class ObjectReflectionExtensionsTest
 		new TestCaseData(new MyExample(), "ArrayProp[2]").Throws(typeof(IndexOutOfRangeException))
 
 	};
-	[TestCaseSource("GetPropTestCases")]
+	[TestCaseSource(nameof(GetPropTestCases))]
 	public string GetProp_Test(MyExample obj, string fieldName)
 	{
 		return obj.GetProp<string>(fieldName);
@@ -126,7 +127,7 @@ public class ObjectReflectionExtensionsTest
 		new TestCaseData(new MyExample(), "ArrayProp[2]", null).Throws(typeof(IndexOutOfRangeException))
 
 	};
-	[TestCaseSource("GetMemberTestCases")]
+	[TestCaseSource(nameof(GetMemberTestCases))]
 	public string GetMember_Test(MyExample obj, string fieldName, params object[] args)
 	{
 		return obj.GetMember<string>(fieldName, args);
@@ -141,7 +142,7 @@ public class ObjectReflectionExtensionsTest
 		new TestCaseData(new MyExample(), "MyProp", "NEWVALUE").Returns("NEWVALUE")
 
 	};
-	[TestCaseSource("SetPropTestCases")]
+	[TestCaseSource(nameof(SetPropTestCases))]
 	public string SetProp_Test(MyExample obj, string fieldName, object value)
 	{
 		obj.SetProp(fieldName, value);
@@ -155,7 +156,7 @@ public class ObjectReflectionExtensionsTest
 		new TestCaseData(new MyExample(), "inexistent").Returns(false)
 
 	};
-	[TestCaseSource("HasPropTestCases")]
+	[TestCaseSource(nameof(HasPropTestCases))]
 	public bool HasProp_Test(MyExample obj, string fieldName)
 	{
 		return obj.HasProp(fieldName);

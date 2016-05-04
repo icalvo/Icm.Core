@@ -13,8 +13,7 @@ namespace Icm.Functions
 		/// <param name="tu"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static ThresholdType Opposed(ThresholdType tu)
+		public static ThresholdType Opposed(this ThresholdType tu)
 		{
 			switch (tu) {
 				case ThresholdType.LeftOpen:
@@ -64,8 +63,7 @@ namespace Icm.Functions
 		/// <para>The equivalent operator for a threshold type is OP, where:</para>
 		/// <code>X OP THRESHOLD</code>
 		/// </remarks>
-		[Extension()]
-		public static string GetOperator(ThresholdType tu)
+		public static string GetOperator(this ThresholdType tu)
 		{
 			switch (tu) {
 				case ThresholdType.LeftClosed:

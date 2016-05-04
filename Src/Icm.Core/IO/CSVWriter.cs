@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace Icm.IO
@@ -20,8 +21,7 @@ namespace Icm.IO
 
 		public void AddHeader(params string[] fields)
 		{
-			foreach (void field_loopVariable in fields) {
-				field = field_loopVariable;
+			foreach (var field in fields) {
 				_tw.Write(field + ";");
 			}
 			_tw.WriteLine();
@@ -29,8 +29,7 @@ namespace Icm.IO
 
 		public void AddHeaderPart(params string[] fields)
 		{
-			foreach (void field_loopVariable in fields) {
-				field = field_loopVariable;
+			foreach (var field in fields) {
 				_tw.Write("{0};", field);
 			}
 		}
@@ -66,6 +65,7 @@ namespace Icm.IO
 				_tw.Write(string.Format(CultureInfo.InvariantCulture, "{{0:{0}}};", format), val);
 			}
 		}
+
 		public void AddNull()
 		{
 			_tw.Write(";");

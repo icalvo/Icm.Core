@@ -18,75 +18,78 @@ namespace Icm.ComponentModel
 		public event EventHandler<EventArgs<TState>> Stopped;
 		public event EventHandler<ErrorEventArgs<TState>> ErrorHappened;
 
-		private BackgroundWorker withEventsField_worker_ = new BackgroundWorker();
-		private BackgroundWorker worker_ {
-			get { return withEventsField_worker_; }
+		private BackgroundWorker _withEventsFieldWorker = new BackgroundWorker();
+	    private readonly IStepWork<TState> _work;
+
+	    private BackgroundWorker Worker
+        {
+			get { return _withEventsFieldWorker; }
 			set {
-				if (withEventsField_worker_ != null) {
-					withEventsField_worker_.Disposed -= worker__Disposed;
-					withEventsField_worker_.DoWork -= worker__DoWork;
-					withEventsField_worker_.ProgressChanged -= worker__ProgressChanged;
-					withEventsField_worker_.RunWorkerCompleted -= worker__RunWorkerCompleted;
+				if (_withEventsFieldWorker != null) {
+					_withEventsFieldWorker.Disposed -= worker__Disposed;
+					_withEventsFieldWorker.DoWork -= worker__DoWork;
+					_withEventsFieldWorker.ProgressChanged -= worker__ProgressChanged;
+					_withEventsFieldWorker.RunWorkerCompleted -= worker__RunWorkerCompleted;
 				}
-				withEventsField_worker_ = value;
-				if (withEventsField_worker_ != null) {
-					withEventsField_worker_.Disposed += worker__Disposed;
-					withEventsField_worker_.DoWork += worker__DoWork;
-					withEventsField_worker_.ProgressChanged += worker__ProgressChanged;
-					withEventsField_worker_.RunWorkerCompleted += worker__RunWorkerCompleted;
+				_withEventsFieldWorker = value;
+				if (_withEventsFieldWorker != null) {
+					_withEventsFieldWorker.Disposed += worker__Disposed;
+					_withEventsFieldWorker.DoWork += worker__DoWork;
+					_withEventsFieldWorker.ProgressChanged += worker__ProgressChanged;
+					_withEventsFieldWorker.RunWorkerCompleted += worker__RunWorkerCompleted;
 				}
 			}
 		}
 
-		private IStepWork<TState> work_;
-
-		public StepBackgroundWorker(IStepWork<TState> _work)
+	    public StepBackgroundWorker(IStepWork<TState> work)
 		{
-			worker_.WorkerSupportsCancellation = true;
-			worker_.WorkerReportsProgress = true;
-			work_ = _work;
+			Worker.WorkerSupportsCancellation = true;
+			Worker.WorkerReportsProgress = true;
+			this._work = work;
 
 		}
 
 		private void worker__Disposed(object sender, System.EventArgs e)
 		{
-			work_.Dispose();
+			_work.Dispose();
 		}
 
 		private void worker__DoWork(object sender, DoWorkEventArgs e)
 		{
-			work_.StartExecution();
+			_work.StartExecution();
 			do {
-				if (work_.WorkIsDone) {
+				if (_work.WorkIsDone()) {
 					e.Cancel = false;
-					e.Result = work_.StateData;
+					e.Result = _work.StateData;
 					break; // TODO: might not be correct. Was : Exit Do
 				}
-				work_.DoStep();
-				work_.StateData.StepNumber += 1;
-				worker_.ReportProgress(0, work_.StateData);
-				if (work_.WorkIsDone) {
+
+				_work.DoStep();
+				_work.StateData.StepNumber += 1;
+				Worker.ReportProgress(0, _work.StateData);
+				if (_work.WorkIsDone()) {
 					e.Cancel = false;
-					e.Result = work_.StateData;
+					e.Result = _work.StateData;
 					break; // TODO: might not be correct. Was : Exit Do
 				}
-				if (worker_.CancellationPending) {
+
+				if (Worker.CancellationPending) {
 					e.Cancel = true;
-					e.Result = work_.StateData;
+					e.Result = _work.StateData;
 					break; // TODO: might not be correct. Was : Exit Do
 				}
 			} while (true);
-			work_.EndExecution();
+			_work.EndExecution();
 		}
 
 		public void RunAsync()
 		{
-			worker_.RunWorkerAsync(work_.StateData);
+			Worker.RunWorkerAsync(_work.StateData);
 		}
 
 		public void CancelAsync()
 		{
-			worker_.CancelAsync();
+			Worker.CancelAsync();
 		}
 
 		public void ToggleAsync()
@@ -98,31 +101,26 @@ namespace Icm.ComponentModel
 			}
 		}
 
-		public bool IsBusy {
-			get { return worker_.IsBusy; }
+		public bool IsBusy => Worker.IsBusy;
+
+	    private void worker__ProgressChanged(object sender, ProgressChangedEventArgs e)
+		{
+		    ProgressChanged?.Invoke(sender, new EventArgs<TState>((TState)e.UserState));
 		}
 
-		private void worker__ProgressChanged(object sender, ProgressChangedEventArgs e)
+	    private void worker__RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
-			if (ProgressChanged != null) {
-				ProgressChanged(sender, new EventArgs<TState>((TState)e.UserState));
+			if (e.Error != null)
+			{
+			    ErrorHappened?.Invoke(sender, new ErrorEventArgs<TState>(_work.StateData, e.Error));
 			}
-		}
-
-		private void worker__RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			if (e.Error != null) {
-				if (ErrorHappened != null) {
-					ErrorHappened(sender, new ErrorEventArgs<TState>(work_.StateData, e.Error));
-				}
-			} else if (e.Cancelled) {
-				if (Stopped != null) {
-					Stopped(sender, new EventArgs<TState>(work_.StateData));
-				}
-			} else {
-				if (Completed != null) {
-					Completed(sender, new EventArgs<TState>(work_.StateData));
-				}
+			else if (e.Cancelled)
+			{
+			    Stopped?.Invoke(sender, new EventArgs<TState>(_work.StateData));
+			}
+			else
+			{
+			    Completed?.Invoke(sender, new EventArgs<TState>(_work.StateData));
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Icm.Tree
 {
@@ -15,22 +16,19 @@ namespace Icm.Tree
 	{
 
 		private readonly ITreeElement<T1> _baseElement;
-		private readonly Func<T1, T2> _transform;
 
-		private T2 _value;
+	    private T2 _value;
 		public TransformTreeElement(ITreeElement<T1> node, Func<T1, T2> transform)
 		{
 			_baseElement = node;
-			_transform = transform;
+			Transform = transform;
 		}
 
-		protected Func<T1, T2> Transform {
-			get { return _transform; }
-		}
+		protected Func<T1, T2> Transform { get; }
 
-		public IEnumerable<ITreeElement<T2>> GetChildren()
+	    public IEnumerable<ITreeElement<T2>> GetChildren()
 		{
-			return _baseElement.GetChildElements.Select(child => new TransformTreeElement<T1, T2>(child, Transform));
+			return _baseElement.GetChildElements().Select(child => new TransformTreeElement<T1, T2>(child, Transform));
 		}
 		IEnumerable<ITreeElement<T2>> ITreeElement<T2>.GetChildElements()
 		{

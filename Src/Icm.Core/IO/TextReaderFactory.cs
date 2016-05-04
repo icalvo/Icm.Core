@@ -3,7 +3,6 @@ using System.Text;
 
 namespace Icm.IO
 {
-
 	/// <summary>
 	/// </summary>
 	/// <remarks>
@@ -14,7 +13,6 @@ namespace Icm.IO
 	/// </remarks>
 	public class TextReaderFactory
 	{
-
 		/// <summary>
 		/// Get a TextReader given a string.
 		/// </summary>
@@ -51,10 +49,3 @@ namespace Icm.IO
 
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

@@ -16,14 +16,12 @@ namespace Icm.Localization
 			return new PhraseAnd(args);
 		}
 
-		[Extension()]
-		public static string TransF(ILocalizationRepository repo, string key, params object[] args)
+		public static string TransF(this ILocalizationRepository repo, string key, params object[] args)
 		{
 			return PhrF(key, args).Translate(repo);
 		}
 
-		[Extension()]
-		public static string TransAnd(ILocalizationRepository repo, params object[] args)
+		public static string TransAnd(this ILocalizationRepository repo, params object[] args)
 		{
 			return PhrAnd(args).Translate(repo);
 		}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Icm.Tree
 {
@@ -25,7 +26,7 @@ namespace Icm.Tree
 
 		public ITreeNode<T2> GetParent()
 		{
-			dynamic sourceParent = _baseNode.GetParent;
+			var sourceParent = _baseNode.GetParent();
 			if (sourceParent == null) {
 				return null;
 			} else {
@@ -35,14 +36,7 @@ namespace Icm.Tree
 
 		public IEnumerable<ITreeNode<T2>> GetChildNodes()
 		{
-			return _baseNode.GetChildNodes.Select(child => new TransformTreeNode<T1, T2>(child, Transform));
+			return _baseNode.GetChildNodes().Select(child => new TransformTreeNode<T1, T2>(child, Transform));
 		}
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

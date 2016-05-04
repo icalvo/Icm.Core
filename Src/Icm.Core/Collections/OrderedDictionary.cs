@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Icm
 {
@@ -14,47 +15,46 @@ namespace Icm
 	{
 
 
-		private readonly List<TValue> list_ = new List<TValue>();
-		private readonly Dictionary<TKey, int> dictIndices_ = new Dictionary<TKey, int>();
-		private readonly Dictionary<TKey, TValue> dict_ = new Dictionary<TKey, TValue>();
+		private readonly List<TValue> _list = new List<TValue>();
+		private readonly Dictionary<TKey, int> _dictIndices = new Dictionary<TKey, int>();
+		private readonly Dictionary<TKey, TValue> _dict = new Dictionary<TKey, TValue>();
 
-		private bool isReadOnly_ = false;
-		private ICollection<KeyValuePair<TKey, TValue>> Coll {
-			get { return dict_; }
+		private bool _isReadOnly = false;
+
+		private ICollection<KeyValuePair<TKey, TValue>> Coll => _dict;
+
+	    public void SetReadOnly()
+		{
+			_isReadOnly = true;
 		}
 
-		public void SetReadOnly()
+	    void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
 		{
-			isReadOnly_ = true;
-		}
-
-		private void Add(KeyValuePair<TKey, TValue> item)
-		{
-			if (isReadOnly_) {
+			if (_isReadOnly) {
 				throw new NotSupportedException("Add is not supported on read-only dictionaries");
 			}
 			Coll.Add(item);
-			list_.Add(item.Value);
-			dictIndices_.Add(item.Key, list_.Count - 1);
+			_list.Add(item.Value);
+			_dictIndices.Add(item.Key, _list.Count - 1);
 		}
 
 		public void Clear()
 		{
-			if (isReadOnly_) {
+			if (_isReadOnly) {
 				throw new NotSupportedException("Clear is not supported on read-only dictionaries");
 			}
-			dict_.Clear();
-			list_.Clear();
-			dictIndices_.Clear();
+			_dict.Clear();
+			_list.Clear();
+			_dictIndices.Clear();
 		}
 
 		public void Append(OrderedDictionary<TKey, TValue> other)
 		{
-			if (isReadOnly_) {
+			if (_isReadOnly) {
 				throw new NotSupportedException("Append is not supported on read-only dictionaries");
 			}
-			for (i = 0; i <= other.Count - 1; i++) {
-				Add(other.Keys(i), other.Values(i));
+			for (var i = 0; i <= other.Count - 1; i++) {
+				Add(other.Keys.ElementAt(i), other.Values.ElementAt(i));
 			}
 		}
 
@@ -67,27 +67,23 @@ namespace Icm
 			return Contains1(item);
 		}
 
-		private void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
 		{
 			Coll.CopyTo(array, arrayIndex);
 		}
 
-		public int Count {
-			get { return dict_.Count; }
-		}
+		public int Count => _dict.Count;
 
-		private bool IsReadOnly {
-			get { return isReadOnly_; }
-		}
+	    bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly => _isReadOnly;
 
-		private bool Remove1(KeyValuePair<TKey, TValue> item)
+	    private bool Remove1(KeyValuePair<TKey, TValue> item)
 		{
-			if (isReadOnly_) {
+			if (_isReadOnly) {
 				throw new NotSupportedException("Remove is not supported on read-only dictionaries");
 			}
 			if (Coll.Remove(item)) {
-				list_.RemoveAt(dictIndices_(item.Key));
-				dictIndices_.Remove(item.Key);
+				_list.RemoveAt(_dictIndices[item.Key]);
+				_dictIndices.Remove(item.Key);
 				return true;
 			} else {
 				return false;
@@ -100,60 +96,58 @@ namespace Icm
 
 		public bool ContainsKey(TKey key)
 		{
-			return dict_.ContainsKey(key);
+			return _dict.ContainsKey(key);
 		}
 
 		public TValue this[TKey key] {
-			get { return dict_(key); }
+			get { return _dict[key]; }
 			set {
-				if (isReadOnly_) {
+				if (_isReadOnly) {
 					throw new NotSupportedException("Item set is not supported on read-only dictionaries");
 				}
-				dict_(key) = value;
-				list_(dictIndices_(key)) = value;
+				_dict[key] = value;
+				_list[_dictIndices[key]] = value;
 			}
 		}
 
-		public ICollection<TKey> Keys {
-			get { return dict_.Keys; }
-		}
+		public ICollection<TKey> Keys => _dict.Keys;
 
-		public bool RemoveKey(TKey key)
+	    public bool RemoveKey(TKey key)
 		{
-			if (isReadOnly_) {
+			if (_isReadOnly) {
 				throw new NotSupportedException("RemoveKey is not supported on read-only dictionaries");
 			}
-			if (dict_.Remove(key)) {
-				list_.RemoveAt(dictIndices_(key));
-				dictIndices_.Remove(key);
+			if (_dict.Remove(key)) {
+				_list.RemoveAt(_dictIndices[key]);
+				_dictIndices.Remove(key);
 				return true;
 			} else {
 				return false;
 			}
 		}
+
 		bool IDictionary<TKey, TValue>.Remove(TKey key)
 		{
 			return RemoveKey(key);
 		}
 
-		public bool TryGetValue(TKey key, ref TValue value)
+		public bool TryGetValue(TKey key, out TValue value)
 		{
-			return dict_.TryGetValue(key, value);
+			return _dict.TryGetValue(key, out value);
 		}
 
-		public ICollection<TValue> Values {
-			get { return list_; }
-		}
+		public ICollection<TValue> Values => _list;
 
-		private IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+	    IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
 		{
-			return dict_.GetEnumerator;
+			return _dict.GetEnumerator();
 		}
 
 		private System.Collections.IEnumerator GetEnumerator2()
 		{
-			return dict_.GetEnumerator;
+			return _dict.GetEnumerator();
 		}
+
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator2();
@@ -161,20 +155,13 @@ namespace Icm
 
 		public void Add(TKey key, TValue value)
 		{
-			if (isReadOnly_) {
+			if (_isReadOnly) {
 				throw new NotSupportedException("Add is not supported on read-only dictionaries");
 			}
-			dict_.Add(key, value);
-			list_.Add(value);
-			dictIndices_.Add(key, list_.Count - 1);
+			_dict.Add(key, value);
+			_list.Add(value);
+			_dictIndices.Add(key, _list.Count - 1);
 		}
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

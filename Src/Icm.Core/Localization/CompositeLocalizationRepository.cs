@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Icm.Localization
 {
@@ -12,11 +13,11 @@ namespace Icm.Localization
 		public CompositeLocalizationRepository(IEnumerable<ILocalizationRepository> subrepositories)
 		{
 			if (subrepositories == null) {
-				throw new ArgumentNullException("subrepositories");
+				throw new ArgumentNullException(nameof(subrepositories));
 			}
 
-			if (subrepositories.Count == 0) {
-				throw new ArgumentException("subrepositories");
+			if (!subrepositories.Any()) {
+				throw new ArgumentException("msg", nameof(subrepositories));
 			}
 
 			_subrepositories = subrepositories.ToList();
@@ -25,28 +26,23 @@ namespace Icm.Localization
 		public CompositeLocalizationRepository(params ILocalizationRepository[] subrepositories)
 		{
 			if (subrepositories == null) {
-				throw new ArgumentNullException("subrepositories");
+				throw new ArgumentNullException(nameof(subrepositories));
 			}
 
-			if (subrepositories.Count == 0) {
-				throw new ArgumentException("subrepositories");
+			if (!subrepositories.Any()) {
+				throw new ArgumentException("msg", nameof(subrepositories));
 			}
 
 			_subrepositories = subrepositories.ToList();
 		}
 
 		public string this[int lcid, string key] {
-			get {
-				foreach (void subrepository_loopVariable in _subrepositories) {
-					subrepository = subrepository_loopVariable;
-					string result = subrepository.ItemForCulture(lcid, key);
-					if (result != null) {
-						return result;
-					}
-				}
-
-				return null;
-			}
+		    get
+		    {
+		        return _subrepositories
+                    .Select(subrepository => subrepository[lcid, key])
+                    .FirstOrDefault(result => result != null);
+		    }
 		}
 	}
 

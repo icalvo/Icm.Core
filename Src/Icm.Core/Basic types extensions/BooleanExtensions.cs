@@ -12,8 +12,7 @@ namespace Icm
 		/// <param name="b">Boolean to convert</param>
 		/// <returns>0 if b is false, 1 otherwise</returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static int ToInteger(bool b)
+		public static int ToInteger(this bool b)
 		{
 			if (b) {
 				return 1;
@@ -32,11 +31,10 @@ namespace Icm
 		/// <param name="nullPart">Value returned if bool has no value</param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static T IfN<T>(bool? @bool, T truePart, T falsePart, T nullPart)
+		public static T IfN<T>(this bool? @bool, T truePart, T falsePart, T nullPart)
 		{
 			if (@bool.HasValue) {
-				if (@bool.V) {
+				if (@bool.Value) {
 					return truePart;
 				} else {
 					return falsePart;
@@ -47,10 +45,3 @@ namespace Icm
 		}
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

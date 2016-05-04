@@ -1,30 +1,17 @@
-using System.Runtime.CompilerServices;
+using System;
 
 namespace Icm.Timers
 {
-
 	public static class TimerExtensions
 	{
-
-		[Extension()]
-		public static System.DateTime GetNextElapsed(System.Timers.Timer timer)
+		public static DateTime GetNextElapsed(this System.Timers.Timer timer)
 		{
-			return Now.AddMilliseconds(timer.Interval);
+			return DateTime.Now.AddMilliseconds(timer.Interval);
 		}
 
-		[Extension()]
-		public static void SetNextElapsed(System.Timers.Timer timer, System.DateTime d)
+		public static void SetNextElapsed(this System.Timers.Timer timer, DateTime d)
 		{
-			timer.Interval = d.Subtract(Now).TotalMilliseconds;
+			timer.Interval = d.Subtract(DateTime.Now).TotalMilliseconds;
 		}
-
 	}
-
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

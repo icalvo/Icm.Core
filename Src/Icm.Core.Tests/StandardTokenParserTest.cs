@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using Icm;
 using NUnit.Framework;
 
 [TestFixture()]
@@ -46,7 +47,7 @@ public class StandardTokenParserTest
 	}
 
 	[Test()]
-	[TestCaseSource("ParseTestSource")]
+	[TestCaseSource(nameof(ParseTestSource))]
 	public void ParseTest(string line, IEnumerable<string> tokens, IEnumerable<ParseError> errors)
 	{
 		StandardTokenParser parser = new StandardTokenParser();

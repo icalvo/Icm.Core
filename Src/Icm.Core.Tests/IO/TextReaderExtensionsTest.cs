@@ -7,6 +7,7 @@ using System.Data;
 using System.Diagnostics;
 using Icm.IO;
 using System.IO;
+using NUnit.Framework;
 
 [TestFixture(), Category("Icm")]
 public class TextReaderExtensionsTest
@@ -18,7 +19,7 @@ public class TextReaderExtensionsTest
 	[TestCase("la casa {0} esta en la calle {1}", {
 		"roja",
 		"Luna"
-	}, Result = "la casa roja esta en la calle Luna")]
+	}, ExpectedResult = "la casa roja esta en la calle Luna")]
 	public string Format_Test(string format, object[] args)
 	{
 		StringReader template = new StringReader(format);

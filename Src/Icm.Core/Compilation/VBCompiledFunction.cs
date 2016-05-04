@@ -3,6 +3,7 @@ using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
+using System.Linq;
 
 namespace Icm.Compilation
 {
@@ -44,8 +45,7 @@ namespace Icm.Compilation
 			StringBuilder sb = new StringBuilder();
 
 			// Add Imports
-			foreach (void ns_loopVariable in Namespaces) {
-				ns = ns_loopVariable;
+			foreach (var ns in Namespaces) {
 				sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "Imports {0}", ns));
 			}
 
@@ -55,19 +55,18 @@ namespace Icm.Compilation
 
 			sb.AppendLine("  Public Function EvaluateIt( _");
 
-			foreach (void p_loopVariable in Parameters.Take(Parameters.Count - 1)) {
-				p = p_loopVariable;
+			foreach (var p in Parameters.Take(Parameters.Count - 1)) {
 				sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "   ByVal {0} As {1}, _", p.Name, p.ArgType));
 			}
-			var _with1 = Parameters.Last;
-			sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "   ByVal {0} As {1} _", _with1.Name, _with1.ArgType));
+			var with1 = Parameters.Last();
+			sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "   ByVal {0} As {1} _", with1.Name, with1.ArgType));
 			sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "  ) As {0}", typeof(T).Name));
 			sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "    Return {0}", Code));
 			sb.AppendLine("  End Function");
 			sb.AppendLine(" End Class ");
 			sb.AppendLine("End Namespace");
 
-			return sb.ToString;
+			return sb.ToString();
 		}
 
 	}

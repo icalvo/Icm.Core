@@ -1,24 +1,16 @@
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 namespace Icm.Localization
 {
 
-	public static class ILocalizationRepositoryExtensions
+	public static class LocalizationRepositoryExtensions
 	{
-
-		[Extension()]
-		public static string Trans(ILocalizationRepository locRepo, string key)
+		public static string Trans(this ILocalizationRepository locRepo, string key)
 		{
-			return locRepo(CultureInfo.CurrentCulture.LCID, key);
+			return locRepo[CultureInfo.CurrentCulture.LCID, key];
 		}
 
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Xml;
 
 namespace Icm.Configuration
 {
@@ -7,20 +10,20 @@ namespace Icm.Configuration
 
 		public object Create(object parent, object configContext, System.Xml.XmlNode section)
 		{
-
-			Generic.Dictionary<string, TypedValue> ht = new Generic.Dictionary<string, TypedValue>();
-			TypedValue tv = default(TypedValue);
-			Type t = default(Type);
-			foreach (Xml.XmlNode child in section.ChildNodes) {
+            
+			var ht = new Dictionary<string, TypedValue>();
+		    foreach (XmlNode child in section.ChildNodes) {
 				switch (child.Name) {
 					case "add":
-						if (child.Attributes("type") == null) {
-							tv = new TypedValue(typeof(string), child.Attributes("value").Value);
-						} else {
-							t = Type.GetType("System." + child.Attributes("type").Value);
-							tv = new TypedValue(t, Convert.ChangeType(child.Attributes("value").Value, Type.GetTypeCode(t), CultureInfo.InvariantCulture));
-						}
-						ht.Add(child.Attributes("key").Value, tv);
+				        TypedValue tv;
+				        if (child.Attributes["type"] == null) {
+							tv = new TypedValue(typeof(string), child.Attributes["value"].Value);
+						} else
+				        {
+				            var t = Type.GetType("System." + child.Attributes["type"].Value);
+				            tv = new TypedValue(t, Convert.ChangeType(child.Attributes["value"].Value, Type.GetTypeCode(t), CultureInfo.InvariantCulture));
+				        }
+				        ht.Add(child.Attributes["key"].Value, tv);
 						break;
 					case "#comment":
 						break;

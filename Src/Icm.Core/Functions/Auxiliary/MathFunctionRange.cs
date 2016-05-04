@@ -35,7 +35,7 @@ namespace Icm.Functions
 
 		public FunctionPoint<TX, TY> MinXY()
 		{
-			return MathFunction.MinXY(RangeStart, RangeEnd, ThresholdType.RightOpen, MathFunction.Gst);
+			return MathFunction.MinXY(RangeStart, RangeEnd, ThresholdType.RightOpen, MathFunction.Gst());
 		}
 
 
@@ -46,7 +46,7 @@ namespace Icm.Functions
 
 		public FunctionPoint<TX, TY> MaxXY()
 		{
-			return MathFunction.MaxXY(RangeStart, RangeEnd, ThresholdType.RightOpen, MathFunction.Gst);
+			return MathFunction.MaxXY(RangeStart, RangeEnd, ThresholdType.RightOpen, MathFunction.Gst());
 		}
 
 
@@ -57,7 +57,7 @@ namespace Icm.Functions
 
 		public FunctionPoint<TX, TY> FstXY()
 		{
-			return MathFunction.FstXY(RangeStart, RangeEnd, ThresholdType.RightOpen, MathFunction.Gst);
+			return MathFunction.FstXY(RangeStart, RangeEnd, ThresholdType.RightOpen, MathFunction.Gst());
 		}
 
 
@@ -68,7 +68,7 @@ namespace Icm.Functions
 
 		public FunctionPoint<TX, TY> LstXY()
 		{
-			return MathFunction.LstXY(RangeStart, RangeEnd, ThresholdType.RightOpen, MathFunction.Gst);
+			return MathFunction.LstXY(RangeStart, RangeEnd, ThresholdType.RightOpen, MathFunction.Gst());
 		}
 
 		public virtual TY Max()
@@ -111,12 +111,12 @@ namespace Icm.Functions
 
 		public TY VS()
 		{
-			return MathFunction.V(RangeStart);
+			return MathFunction[RangeStart];
 		}
 
 		public TY VE()
 		{
-			return MathFunction.V(RangeEnd);
+			return MathFunction[RangeEnd];
 		}
 
 

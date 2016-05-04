@@ -33,8 +33,7 @@ namespace Icm.Tree
 
 		public virtual void AddChildren(IEnumerable<T> l)
 		{
-			foreach (void element_loopVariable in l) {
-				element = element_loopVariable;
+			foreach (var element in l) {
 				Add(AddChild(element));
 			}
 		}
@@ -45,10 +44,3 @@ namespace Icm.Tree
 		}
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

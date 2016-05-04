@@ -27,15 +27,8 @@ namespace Icm
 
 		public override double Next(double t)
 		{
-			return Extreme.FloatingPoint.NextAfter(t, double.MaxValue);
+			return Extreme.FloatingPoint.FloatingPointModule.NextAfter(t, double.MaxValue);
 		}
 
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

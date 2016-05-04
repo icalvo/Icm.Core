@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Icm.Collections;
 
 namespace Icm.Localization
 {
@@ -20,53 +22,43 @@ namespace Icm.Localization
 
 
 		private List<object> _arguments;
-		public ICollection<object> Arguments {
-			get { return _arguments; }
-		}
+		public ICollection<object> Arguments => _arguments;
 
-		public PhraseFormat(string key, params object[] args)
-		{
-			this.PhraseKey = key;
-			if (args == null) {
-				_arguments = new List<object>();
-			} else {
-				_arguments = new List<object>(args);
-			}
-		}
+	    public PhraseFormat(string key, params object[] args)
+	    {
+	        this.PhraseKey = key;
+	        _arguments = args == null ? new List<object>() : new List<object>(args);
+	    }
 
-		public PhraseFormat(string key, IEnumerable<object> args)
-		{
-			this.PhraseKey = key;
-			if (args == null) {
-				_arguments = new List<object>();
-			} else {
-				_arguments = new List<object>(args);
-			}
-		}
+	    public PhraseFormat(string key, IEnumerable<object> args)
+	    {
+	        this.PhraseKey = key;
+	        _arguments = args == null ? new List<object>() : new List<object>(args);
+	    }
 
-		public override string Translate(int lcid, ILocalizationRepository locRepo)
+	    public override string Translate(int lcid, ILocalizationRepository locRepo)
 		{
 			string queryKey = null;
-			dynamic args = Arguments.Select(trans => TranslateObject(locRepo, trans)).ToArray;
+			var args = Arguments.Select(trans => TranslateObject(locRepo, trans)).ToArray();
 			// La clave de la BD lleva un sufijo con el n�mero de par�metros
-			if (args != null && args.Count > 0) {
-				queryKey = string.Format("{0}_{1}", PhraseKey, args.Count);
+			if (args.Any()) {
+				queryKey = $"{PhraseKey}_{args.Length}";
 			} else {
 				queryKey = PhraseKey;
 			}
 
-			dynamic translatedString = locRepo(lcid, queryKey);
+			var translatedString = locRepo[lcid, queryKey];
 
 
 			if (translatedString == null) {
-				translatedString = string.Format("{0}-{1}", PhraseKey, lcid);
-				if (args != null && args.Count > 0) {
-					args.Select(obj => obj.ToString).JoinStr(",");
+				translatedString = $"{PhraseKey}-{lcid}";
+				if (args.Length > 0) {
+					args.Select(obj => obj.ToString()).JoinStr(",");
 					translatedString += string.Format("({0})", args.Select(obj => string.Format("'{0}'", obj)).JoinStr(","));
 				}
 				return translatedString;
 			} else {
-				if (args != null && args.Length > 0) {
+				if (args.Length > 0) {
 					return string.Format(translatedString, args);
 				} else {
 					return translatedString;
@@ -77,10 +69,3 @@ namespace Icm.Localization
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

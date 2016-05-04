@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Icm
@@ -15,27 +16,27 @@ namespace Icm
 		/// <param name="subst"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static T IfNothing<T>(object o, T subst)
+		public static T IfNothing<T>(this object o, T subst)
 		{
-			if (o == null) {
+		    if (o == null) {
 				return subst;
-			} else if (Information.IsDBNull(o)) {
-				return subst;
-			} else {
-				return (T)o;
 			}
+
+		    if (Convert.IsDBNull(o)) {
+		        return subst;
+		    }
+
+		    return (T)o;
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// If obj is not Nothing, execute action over obj
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="obj"></param>
 		/// <param name="act"></param>
 		/// <remarks></remarks>
-		[Extension()]
-		public static void DoIfAny<T>(T obj, Action<T> act)
+		public static void DoIfAny<T>(this T obj, Action<T> act)
 		{
 			if (obj == null) {
 				// Do nothing
@@ -53,24 +54,20 @@ namespace Icm
 		/// <param name="act"></param>
 		/// <returns>If o is not null, act applied to o; otherwise null.</returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static TResult GetIfAny<TObject, TResult>(TObject o, Func<TObject, TResult> act)
+		public static TResult GetIfAny<TObject, TResult>(this TObject o, Func<TObject, TResult> act)
 		{
-			if (o == null) {
-				return null;
-			} else {
-				return act(o);
-			}
+		    return o == null 
+                ? default(TResult) 
+                : act(o);
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Abbreviation of "IsNot Nothing".
 		/// </summary>
 		/// <param name="o"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static bool IsSomething(object o)
+		public static bool IsSomething(this object o)
 		{
 			return o != null;
 		}
@@ -94,8 +91,7 @@ namespace Icm
 		/// 
 		/// A little bit shorter than CType, and with a pleasant object syntax.
 		/// </remarks>
-		[Extension()]
-		public static T As<T>(object o)
+		public static T As<T>(this object o)
 		{
 			return (T)o;
 		}
@@ -107,21 +103,9 @@ namespace Icm
 		/// <param name="sa"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static bool IsOneOf<T>(T s, params T[] sa)
+		public static bool IsOneOf<T>(this T s, params T[] sa)
 		{
-			if (sa == null) {
-				return false;
-			}
-			return sa.Contains(s);
+		    return sa != null && sa.Contains(s);
 		}
-
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

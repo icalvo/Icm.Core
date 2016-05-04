@@ -37,12 +37,12 @@ namespace Icm.Functions
 
 
 		public override TY this[TX d] {
-			get { return fc_.V(d); }
+			get { return fc_[d]; }
 		}
 
 		public override IMathFunction<TX, TY> EmptyClone()
 		{
-			return fc_.EmptyClone;
+			return fc_.EmptyClone();
 		}
 
 		public override FunctionPoint<TX, TY> MaxXY(TX rangeStart, TX rangeEnd, ThresholdType tumbral, TY cantidad)
@@ -87,20 +87,13 @@ namespace Icm.Functions
 
 		public override FunctionPoint<TX, TY> AbsMaxXY()
 		{
-			return fc_.AbsMaxXY;
+			return fc_.AbsMaxXY();
 		}
 
 		public override FunctionPoint<TX, TY> AbsMinXY()
 		{
-			return fc_.AbsMinXY;
+			return fc_.AbsMinXY();
 		}
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

@@ -5,6 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using Icm;
+using NUnit.Framework;
+
 [TestFixture()]
 public class DateTimeIntervalTest
 {
@@ -14,7 +17,7 @@ public class DateTimeIntervalTest
 		new TestCaseData(System.DateTime.MaxValue).Throws(typeof(ArgumentOutOfRangeException)),
 		new TestCaseData(System.DateTime.MinValue)
 	};
-	[TestCaseSource("Constructor1TestCases")]
+	[TestCaseSource(nameof(Constructor1TestCases))]
 	public void Constructor1_Test(System.DateTime point)
 	{
 		DateTimeInterval dti = new DateTimeInterval(point);
@@ -30,7 +33,7 @@ public class DateTimeIntervalTest
 		new TestCaseData(System.DateTime.MaxValue, System.DateTime.MaxValue).Throws(typeof(ArgumentOutOfRangeException)),
 		new TestCaseData(System.DateTime.MinValue, new System.DateTime(2010, 4, 7))
 	};
-	[TestCaseSource("Constructor2TestCases")]
+	[TestCaseSource(nameof(Constructor2TestCases))]
 	public void Constructor2_Test(System.DateTime startInt, System.DateTime endInt)
 	{
 		DateTimeInterval dti = new DateTimeInterval(startInt, endInt);
@@ -46,7 +49,7 @@ public class DateTimeIntervalTest
 		new TestCaseData(System.DateTime.MaxValue, TimeSpan.Zero, System.DateTime.MaxValue).Throws(typeof(ArgumentOutOfRangeException)),
 		new TestCaseData(System.DateTime.MinValue, TimeSpan.FromDays(2), new System.DateTime(1, 1, 3))
 	};
-	[TestCaseSource("Constructor3TestCases")]
+	[TestCaseSource(nameof(Constructor3TestCases))]
 	public void Constructor3_Test(System.DateTime startInt, TimeSpan ts, System.DateTime expectedEnd)
 	{
 		DateTimeInterval dti = new DateTimeInterval(startInt, ts);

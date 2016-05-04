@@ -1,3 +1,5 @@
+using System;
+using System.Globalization;
 using System.IO;
 
 namespace Icm.IO
@@ -12,16 +14,9 @@ namespace Icm.IO
 
 		public override void WriteLine(string value)
 		{
-			base.WriteLine("{0:dd/MM/yyyy HH:mm:ss} {1}", Now, value);
+			base.WriteLine("{0:dd/MM/yyyy HH:mm:ss} {1}", DateTime.Now, value);
 		}
 
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

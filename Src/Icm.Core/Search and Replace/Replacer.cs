@@ -34,18 +34,17 @@ namespace Icm.Text
 			TagEnd = 3
 		}
 
-		#region " Attributes "
-		private readonly Dictionary<string, IEnumerator<string>> replacements_ = new Dictionary<string, IEnumerator<string>>();
-		private string tagStart_;
-			#endregion
-		private string tagEnd_;
+	    private readonly Dictionary<string, IEnumerator<string>> _replacements = new Dictionary<string, IEnumerator<string>>();
+		private string _tagStart;
+
+	    private string _tagEnd;
 
 		public Replacer(TextReader tr, TextWriter tw, string tgstart = "__", string tgend = "__")
 		{
 			if (tr == null)
-				throw new ArgumentNullException("tr");
+				throw new ArgumentNullException(nameof(tr));
 			if (tw == null)
-				throw new ArgumentNullException("tw");
+				throw new ArgumentNullException(nameof(tw));
 			Input = tr;
 			Output = tw;
 			TagStart = tgstart;
@@ -53,26 +52,26 @@ namespace Icm.Text
 		}
 
 		public string TagStart {
-			get { return tagStart_; }
-			set {
-				if (value == null || string.IsNullOrEmpty(value)) {
-					throw new ArgumentException("Empty start tag not admitted", "Value");
-					return;
-				} else {
-					tagStart_ = value;
+			get { return _tagStart; }
+			set
+			{
+			    if (value == null || string.IsNullOrEmpty(value)) {
+					throw new ArgumentException("Empty start tag not admitted", nameof(value));
 				}
+
+			    _tagStart = value;
 			}
 		}
 
 		public string TagEnd {
-			get { return tagEnd_; }
-			set {
-				if (value == null || string.IsNullOrEmpty(value)) {
-					throw new ArgumentException("Empty start tag not admitted", "Value");
-					return;
-				} else {
-					tagEnd_ = value;
+			get { return _tagEnd; }
+			set
+			{
+			    if (value == null || string.IsNullOrEmpty(value)) {
+					throw new ArgumentException("Empty start tag not admitted", nameof(value));
 				}
+
+			    _tagEnd = value;
 			}
 		}
 
@@ -99,7 +98,7 @@ namespace Icm.Text
 		public void AddReplacement(string search, IEnumerator<string> replacement)
 		{
 			replacement.MoveNext();
-			replacements_.Add(search, replacement);
+			_replacements.Add(search, replacement);
 		}
 
 		public void ModifyReplacement(string search, string replacement)
@@ -121,7 +120,7 @@ namespace Icm.Text
 		public void ModifyReplacement(string search, IEnumerator<string> replacement)
 		{
 			replacement.MoveNext();
-			replacements_(search) = replacement;
+			_replacements[search] = replacement;
 		}
 
 		/// <summary>
@@ -132,18 +131,18 @@ namespace Icm.Text
 		{
 			int tagStartP = 0;
 			int tagEndP = 0;
-			StringBuilder bufferStart = new StringBuilder(tagStart_.Length - 1);
-			StringBuilder bufferEnd = new StringBuilder(tagEnd_.Length - 1);
+			StringBuilder bufferStart = new StringBuilder(_tagStart.Length - 1);
+			StringBuilder bufferEnd = new StringBuilder(_tagEnd.Length - 1);
 			StringBuilder bufferTag = new StringBuilder();
-			char lastchar = '\0';
-			dynamic st = State.BeforeTag;
+		    var st = State.BeforeTag;
 
-			while (!(Input.Peek == -1)) {
-				lastchar = Strings.ChrW(Input.Read);
-				switch (st) {
+			while (Input.Peek() != -1)
+			{
+			    var lastchar = (char)Input.Read();
+			    switch (st) {
 					case State.BeforeTag:
-						if (lastchar == tagStart_.Chars(0)) {
-							if (tagStart_.Length == 1) {
+						if (lastchar == _tagStart[0]) {
+							if (_tagStart.Length == 1) {
 								bufferTag.Length = 0;
 								st = State.TagContent;
 							} else {
@@ -157,28 +156,28 @@ namespace Icm.Text
 						}
 						break;
 					case State.TagStart:
-						if (lastchar == tagStart_.Chars(tagStartP)) {
+						if (lastchar == _tagStart[tagStartP]) {
 							bufferStart.Append(lastchar);
 							tagStartP += 1;
-							if (tagStartP == tagStart_.Length) {
+							if (tagStartP == _tagStart.Length) {
 								bufferTag.Length = 0;
 								st = State.TagContent;
 							}
 						} else {
 							st = State.BeforeTag;
-							Output.Write(bufferStart.ToString);
+							Output.Write(bufferStart.ToString());
 						}
 						break;
 					case State.TagContent:
-						if (lastchar == tagEnd_.Chars(0)) {
-							if (tagEnd_.Length == 1) {
-								if (replacements_.ContainsKey(bufferTag.ToString)) {
-									replacements_(bufferTag.ToString).MoveNext();
-									Output.Write(replacements_(bufferTag.ToString).Current);
+						if (lastchar == _tagEnd[0]) {
+							if (_tagEnd.Length == 1) {
+								if (_replacements.ContainsKey(bufferTag.ToString())) {
+									_replacements[bufferTag.ToString()].MoveNext();
+									Output.Write(_replacements[bufferTag.ToString()].Current);
 								} else {
-									Output.Write(tagStart_);
-									Output.Write(bufferTag.ToString);
-									Output.Write(tagEnd_);
+									Output.Write(_tagStart);
+									Output.Write(bufferTag.ToString());
+									Output.Write(_tagEnd);
 								}
 								st = State.BeforeTag;
 							} else {
@@ -193,33 +192,33 @@ namespace Icm.Text
 						break;
 					case State.TagEnd:
 						bufferEnd.Append(lastchar);
-						if (lastchar == tagEnd_.Chars(tagEndP)) {
+						if (lastchar == _tagEnd[tagEndP]) {
 							tagEndP += 1;
-							if (tagEndP == tagEnd_.Length) {
-								if (replacements_.ContainsKey(bufferTag.ToString)) {
-									replacements_(bufferTag.ToString).MoveNext();
-									Output.Write(replacements_(bufferTag.ToString).Current);
+							if (tagEndP == _tagEnd.Length) {
+								if (_replacements.ContainsKey(bufferTag.ToString())) {
+									_replacements[bufferTag.ToString()].MoveNext();
+									Output.Write(_replacements[bufferTag.ToString()].Current);
 								} else {
-									Output.Write(tagStart_);
-									Output.Write(bufferTag.ToString);
-									Output.Write(tagEnd_);
+									Output.Write(_tagStart);
+									Output.Write(bufferTag.ToString());
+									Output.Write(_tagEnd);
 								}
 								st = State.BeforeTag;
 							}
 						} else {
 							st = State.TagContent;
-							bufferTag.Append(bufferEnd.ToString);
+							bufferTag.Append(bufferEnd);
 						}
 						break;
 				}
 			}
-			if (st == State.TagContent) {
-				if (replacements_.ContainsKey(bufferTag.ToString)) {
-					replacements_(bufferTag.ToString).MoveNext();
-					Output.Write(replacements_(bufferTag.ToString).Current);
+		    if (st == State.TagContent) {
+				if (_replacements.ContainsKey(bufferTag.ToString())) {
+					_replacements[bufferTag.ToString()].MoveNext();
+					Output.Write(_replacements[bufferTag.ToString()].Current);
 				} else {
-					Output.Write(tagStart_);
-					Output.Write(bufferTag.ToString);
+					Output.Write(_tagStart);
+					Output.Write(bufferTag.ToString());
 					// Don't output tag end because it is not present in the input
 				}
 				st = State.BeforeTag;
@@ -250,10 +249,3 @@ namespace Icm.Text
 		}
 	}
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

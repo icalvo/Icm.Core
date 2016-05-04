@@ -7,6 +7,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using Icm.Text;
+using NUnit.Framework;
 
 [TestFixture(), Category("Icm")]
 public class ReplacerTest
@@ -21,7 +22,7 @@ public class ReplacerTest
 		new TestCaseData(null, new StringWriter(), "{", "}").Throws(typeof(ArgumentNullException))
 
 	};
-	[TestCaseSource("ConstructorTestCases")]
+	[TestCaseSource(nameof(ConstructorTestCases))]
 	public void Constructor_Test(StringReader sr, StringWriter sw, string tgstart, string tgend)
 	{
 		Replacer target = new Replacer(sr, sw, tgstart, tgend);
@@ -94,7 +95,7 @@ public class ReplacerTest
 		}).Returns("HOLA SOY {<{<NOMBRE>}>} HOY ES 25/04/2010")
 
 	};
-	[TestCaseSource("ReplaceTestCases")]
+	[TestCaseSource(nameof(ReplaceTestCases))]
 	public string ReplaceAndClose_Test(string source, string tgstart, string tgend, string[,] replacements)
 	{
 		StringWriter sw = new StringWriter();

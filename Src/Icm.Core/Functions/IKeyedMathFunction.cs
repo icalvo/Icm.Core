@@ -1,6 +1,21 @@
+using Microsoft.VisualBasic;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
+using Icm.Collections.Generic.StructKeyStructValue;
 
-CONVERSION ERROR: Code could not be converted. Details:
+namespace Icm.Functions
+{
+    public interface IKeyedMathFunction<TX, TY> : IMathFunction<TX, TY> where TX : struct, IComparable<TX> where TY : struct, IComparable<TY>
+    {
 
--- line 11 col 52: this symbol not expected in EndOfStmt
-
-Please check for any errors in the original code and try again.
+        RangeIterator<TX, TY> Range(TX rangeStart, TX rangeEnd, bool includeExtremes);
+        RangeIterator<TX, TY> RangeFrom(TX rangeStart, bool includeExtremes);
+        RangeIterator<TX, TY> RangeTo(TX rangeEnd, bool includeExtremes);
+        RangeIterator<TX, TY> TotalRange(bool includeExtremes);
+        TX? PreviousOrLst(TX d);
+        ISortedCollection<TX, TY> KeyStore { get; }
+    }
+}

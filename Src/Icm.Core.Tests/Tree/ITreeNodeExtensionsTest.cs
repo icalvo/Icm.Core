@@ -5,9 +5,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Linq;
 using Icm.Collections;
 using Icm.Tree;
 using Icm.Tree.TreeFactory;
+using NUnit.Framework;
 
 [TestFixture()]
 public class ITreeNodeExtensionsTest

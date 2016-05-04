@@ -5,8 +5,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using Icm;
 using Icm.Collections.Generic;
 using Icm.Collections.Generic.StructKeyClassValue;
+using NUnit.Framework;
 
 [TestFixture()]
 public class RepositorySortedCollectionTest

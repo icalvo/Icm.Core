@@ -22,24 +22,24 @@ namespace Icm.ComponentModel
 		/// Use StateData.StepNumber = 0 to identify the initial call and place
 		/// work-wide initializations.
 		/// </remarks>
-
 		void StartExecution();
+
 		/// <summary>
 		/// Do one step of work.
 		/// </summary>
 		/// <remarks>
 		/// To signal an unrecoverable error, throw an exception.
 		/// </remarks>
-
 		void DoStep();
+
 		/// <summary>
 		/// Method executed after executing steps.
 		/// </summary>
 		/// <remarks>
 		/// Use WorkIsDone to identify if it is the last call or just a stop.
 		/// </remarks>
-
 		void EndExecution();
+
 		/// <summary>
 		/// Is the whole work done?
 		/// </summary>
@@ -49,10 +49,3 @@ namespace Icm.ComponentModel
 	}
 
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

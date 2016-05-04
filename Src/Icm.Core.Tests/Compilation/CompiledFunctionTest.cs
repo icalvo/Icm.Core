@@ -6,18 +6,20 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.CodeDom.Compiler;
+using Icm;
 using Icm.Compilation;
+using NUnit.Framework;
 
 [TestFixture(), Category("Icm")]
 public class CompiledFunctionTest
 {
 
-	[TestCase("Nothing", 1, 1, Result = 0)]
-	[TestCase("Nothing", 2, 5, Result = 0)]
-	[TestCase("x+y", 1, 1, Result = 2)]
-	[TestCase("x+y", 2, 5, Result = 7)]
-	[TestCase("x*y", 1, 1, Result = 1)]
-	[TestCase("x*y", 2, 5, Result = 10)]
+	[TestCase("Nothing", 1, 1, ExpectedResult = 0)]
+	[TestCase("Nothing", 2, 5, ExpectedResult = 0)]
+	[TestCase("x+y", 1, 1, ExpectedResult = 2)]
+	[TestCase("x+y", 2, 5, ExpectedResult = 7)]
+	[TestCase("x*y", 1, 1, ExpectedResult = 1)]
+	[TestCase("x*y", 2, 5, ExpectedResult = 10)]
 	[TestCase("x..y", 1, 1, ExpectedException = typeof(CompileException))]
 	public int Evaluate_Test(string code, int param1, int param2)
 	{

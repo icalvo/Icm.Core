@@ -1,9 +1,9 @@
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace Icm.IO
 {
-
 	/// <summary>
 	///   TextWriter that does do nothing (similar to /dev/null)
 	/// </summary>
@@ -30,12 +30,4 @@ namespace Icm.IO
 			get { return System.Text.Encoding.Default; }
 		}
 	}
-
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

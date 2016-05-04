@@ -1,12 +1,10 @@
 using System;
-using System.Runtime.CompilerServices;
+using System.Linq;
 
 namespace Icm.Reflection
 {
-
 	public static class TypeExtensions
 	{
-
 		/// <summary>
 		/// Get attributes of a type
 		/// </summary>
@@ -15,8 +13,7 @@ namespace Icm.Reflection
 		/// <param name="inherit"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static T[] GetAttributes<T>(Type type, bool inherit) where T : Attribute
+		public static T[] GetAttributes<T>(this Type type, bool inherit) where T : Attribute
 		{
 			return (T[])type.GetCustomAttributes(typeof(T), inherit);
 		}
@@ -29,10 +26,9 @@ namespace Icm.Reflection
 		/// <param name="inherit"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static bool HasAttribute<T>(Type type, bool inherit) where T : Attribute
+		public static bool HasAttribute<T>(this Type type, bool inherit) where T : Attribute
 		{
-			return ((T[])type.GetCustomAttributes(typeof(T), inherit)).Count > 0;
+			return ((T[])type.GetCustomAttributes(typeof(T), inherit)).Length > 0;
 		}
 
 		/// <summary>
@@ -43,10 +39,9 @@ namespace Icm.Reflection
 		/// <param name="inherit"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static T GetAttribute<T>(Type type, bool inherit) where T : Attribute
+		public static T GetAttribute<T>(this Type type, bool inherit) where T : Attribute
 		{
-			return ((T[])type.GetCustomAttributes(typeof(T), inherit)).SingleOrDefault;
+			return ((T[])type.GetCustomAttributes(typeof(T), inherit)).SingleOrDefault();
 		}
 
 		/// <summary>
@@ -55,20 +50,9 @@ namespace Icm.Reflection
 		/// <param name="type"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static bool IsNullable(Type type)
+		public static bool IsNullable(this Type type)
 		{
-			return type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(Nullable<>));
+			return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
 		}
-
-
 	}
-
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Icm.Reflection
 {
@@ -39,7 +40,7 @@ namespace Icm.Reflection
 		/// </remarks>
 		public static IEnumerable<Type> GetAllImplementors<T>()
 		{
-			return GetAllImplementors<T>(AppDomain.CurrentDomain.GetAssemblies);
+			return GetAllImplementors<T>(AppDomain.CurrentDomain.GetAssemblies());
 		}
 
 		/// <summary>
@@ -54,13 +55,13 @@ namespace Icm.Reflection
 		/// </remarks>
 		public static IEnumerable<Type> GetAllImplementors<T>(IEnumerable<System.Reflection.Assembly> assemblies)
 		{
-			dynamic type = typeof(T);
+			var type = typeof(T);
 			return assemblies.SelectMany(s =>
 			{
 				try {
 					return s.GetTypes();
-				} catch (Exception ex) {
-					return new Type[];
+				} catch (Exception) {
+					return new Type[0];
 				}
 			}).Where(p => type.IsAssignableFrom(p) && !p.IsAbstract);
 		}
@@ -77,7 +78,7 @@ namespace Icm.Reflection
 		/// </remarks>
 		public static IEnumerable<Type> GetAllImplementors<T>(System.Reflection.Assembly assembly)
 		{
-			return GetAllImplementors<T>({ assembly });
+			return GetAllImplementors<T>(new[] { assembly });
 		}
 
 		/// <summary>
@@ -101,15 +102,11 @@ namespace Icm.Reflection
 		/// <remarks></remarks>
 		public static Dictionary<string, T> GetInstanceDictionaryOfAllImplementors<T>(params object[] args)
 		{
-			dynamic types = GetAllImplementors<T>();
+			var types = GetAllImplementors<T>();
 
-			Dictionary<string, T> instances = new Dictionary<string, T>();
-			foreach (void type_loopVariable in types) {
-				type = type_loopVariable;
-				instances.Add(type.Name, (T)Activator.CreateInstance(type, args));
-			}
-
-			return instances;
+		    return types.ToDictionary(
+                type => type.Name, 
+                type => (T) Activator.CreateInstance(type, args));
 		}
 
 		/// <summary>
@@ -122,7 +119,7 @@ namespace Icm.Reflection
 		/// <remarks></remarks>
 		public static IEnumerable<T> GetInstanceListOfAllImplementors<T>(System.Reflection.Assembly assembly, params object[] args)
 		{
-			return GetInstanceDictionaryOfAllImplementors<T>({ assembly }, args).Values;
+			return GetInstanceDictionaryOfAllImplementors<T>(new[] { assembly }, args).Values;
 		}
 
 		/// <summary>
@@ -139,7 +136,7 @@ namespace Icm.Reflection
 
 		public static Dictionary<string, T> GetInstanceDictionaryOfAllImplementors<T>(System.Reflection.Assembly assembly, params object[] args)
 		{
-			return GetInstanceDictionaryOfAllImplementors<T>({ assembly }, args);
+			return GetInstanceDictionaryOfAllImplementors<T>(new[] { assembly }, args);
 		}
 
 		/// <summary>
@@ -151,11 +148,10 @@ namespace Icm.Reflection
 		/// <remarks></remarks>
 		public static Dictionary<string, T> GetInstanceDictionaryOfAllImplementors<T>(IEnumerable<System.Reflection.Assembly> assemblies, params object[] args)
 		{
-			dynamic types = GetAllImplementors<T>(assemblies);
+			var types = GetAllImplementors<T>(assemblies);
 
 			Dictionary<string, T> instances = new Dictionary<string, T>();
-			foreach (void type_loopVariable in types) {
-				type = type_loopVariable;
+			foreach (var type in types) {
 				instances.Add(type.Name, (T)Activator.CreateInstance(type, args));
 			}
 

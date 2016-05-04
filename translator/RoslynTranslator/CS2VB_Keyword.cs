@@ -13,10 +13,7 @@
 // limitations under the License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CodeAnalysis;
 using CS = Microsoft.CodeAnalysis.CSharp;
 using CSS = Microsoft.CodeAnalysis.CSharp.Syntax;
 using VB = Microsoft.CodeAnalysis.VisualBasic;
@@ -166,9 +163,9 @@ namespace Gekka.Roslyn.Translator
             public readonly CS.SyntaxKind CS;
             public readonly VB.SyntaxKind VB;
 
-            public System.AttributeTargets Targets;
+            public AttributeTargets Targets;
 
-            public KeywordPair(CS.SyntaxKind cs, VB.SyntaxKind vb, System.AttributeTargets target = AttributeTargets.All)
+            public KeywordPair(CS.SyntaxKind cs, VB.SyntaxKind vb, AttributeTargets target = AttributeTargets.All)
             {
                 CS = cs;
                 VB = vb;
@@ -180,10 +177,10 @@ namespace Gekka.Roslyn.Translator
         {
             public VB.SyntaxKind ExitTargetKeyword;
 
-            public BreakPair(CS.SyntaxKind cs, VB.SyntaxKind vb, VB.SyntaxKind exitTargetKeyword, System.AttributeTargets target = AttributeTargets.All)
+            public BreakPair(CS.SyntaxKind cs, VB.SyntaxKind vb, VB.SyntaxKind exitTargetKeyword, AttributeTargets target = AttributeTargets.All)
                 : base(cs, vb, target)
             {
-                this.ExitTargetKeyword = exitTargetKeyword;
+                ExitTargetKeyword = exitTargetKeyword;
             }
         }
     }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Icm.Reflection
@@ -16,8 +17,7 @@ namespace Icm.Reflection
 		/// <param name="excludedMembers"></param>
 		/// <param name="excludedTypes"></param>
 		/// <remarks></remarks>
-		[Extension()]
-		public static void CopyTo(object objSource, object objDest, IEnumerable<string> excludedMembers = null, IEnumerable<string> excludedTypes = null)
+		public static void CopyTo(this object objSource, object objDest, IEnumerable<string> excludedMembers = null, IEnumerable<string> excludedTypes = null)
 		{
 			CopyToAux(objSource, objDest, excludedMembers, excludedTypes);
 		}
@@ -31,8 +31,7 @@ namespace Icm.Reflection
 		/// <param name="excludedMembers"></param>
 		/// <param name="excludedTypes"></param>
 		/// <remarks></remarks>
-		[Extension()]
-		public static void CopyTo<T>(T objSource, T objDest, IEnumerable<string> excludedMembers = null, IEnumerable<string> excludedTypes = null)
+		public static void CopyTo<T>(this T objSource, T objDest, IEnumerable<string> excludedMembers = null, IEnumerable<string> excludedTypes = null)
 		{
 			CopyToAux(objSource, objDest, excludedMembers, excludedTypes);
 		}
@@ -46,8 +45,7 @@ namespace Icm.Reflection
 		/// <param name="excludedTypes"></param>
 		/// <returns></returns>
 		/// <remarks></remarks>
-		[Extension()]
-		public static T Clone<T>(T obj, IEnumerable<string> excludedMembers = null, IEnumerable<string> excludedTypes = null) where T : new()
+		public static T Clone<T>(this T obj, IEnumerable<string> excludedMembers = null, IEnumerable<string> excludedTypes = null) where T : new()
 		{
 			T result = new T();
 
@@ -64,14 +62,13 @@ namespace Icm.Reflection
 		/// <param name="objDest">Target object</param>
 		/// <param name="destKeyProperties"></param>
 		/// <remarks></remarks>
-		[Extension()]
-		public static void CopyEntityTo<T>(T objSource, T objDest, params string[] destKeyProperties)
+		public static void CopyEntityTo<T>(this T objSource, T objDest, params string[] destKeyProperties)
 		{
-			CopyTo(objSource, objDest, excludedMembers: {
+			CopyTo(objSource, objDest, excludedMembers: new[] {
 				"EntityKey",
 				"EntityState",
 				"RelationshipManager"
-			}.Union(destKeyProperties), excludedTypes: { "ICollection" });
+			}.Union(destKeyProperties), excludedTypes: new[] { "ICollection" });
 		}
 
 		/// <summary>
@@ -81,14 +78,13 @@ namespace Icm.Reflection
 		/// <param name="objDest"></param>
 		/// <param name="destKeyProperties"></param>
 		/// <remarks></remarks>
-		[Extension()]
-		public static void CopyEntityTo(object objSource, object objDest, params string[] destKeyProperties)
+		public static void CopyEntityTo(this object objSource, object objDest, params string[] destKeyProperties)
 		{
-			CopyTo(objSource, objDest, excludedMembers: {
-				"EntityKey",
+			CopyTo(objSource, objDest, excludedMembers: new[] {
+                "EntityKey",
 				"EntityState",
 				"RelationshipManager"
-			}.Union(destKeyProperties), excludedTypes: { "ICollection" });
+			}.Union(destKeyProperties), excludedTypes: new[] { "ICollection" });
 		}
 
 		/// <summary>
@@ -107,10 +103,10 @@ namespace Icm.Reflection
 				Debug.Print("---- Property {0} excluded", propName);
 			} else if (excludedTypes.Any(exclType => prop.PropertyType.Name.StartsWith(exclType))) {
 				Debug.Print("---- Property {0} excluded for being of type {1}", propName, prop.PropertyType.Name);
-			} else if (HasProp(objSource, propName)) {
-				if (prop.GetIndexParameters.Count == 0) {
-					Debug.Print("-- Copying property {0} with value [{1}] (old: [{2}])", propName, GetProp(objSource, propName), GetProp(objDest, propName));
-					SetProp(objDest, propName, GetProp(objSource, propName));
+			} else if (ObjectReflectionExtensions.HasProp(objSource, propName)) {
+				if (!prop.GetIndexParameters().Any()) {
+					Debug.Print("-- Copying property {0} with value [{1}] (old: [{2}])", propName, objSource.GetProp(propName), objDest.GetProp(propName));
+                    objDest.SetProp(propName, objSource.GetProp(propName));
 				} else {
 					Debug.Print("---- Property {0} is indexed", propName);
 				}
@@ -136,9 +132,9 @@ namespace Icm.Reflection
 				Debug.Print("---- Field {0} excluded", fieldName);
 			} else if (excludedTypes.Any(exclType => field.FieldType.Name.StartsWith(exclType))) {
 				Debug.Print("---- Field {0} excluded for being of type {1}", fieldName, field.FieldType.Name);
-			} else if (HasField(objSource, fieldName)) {
-				Debug.Print("-- Copying field {0} with value [{1}] (old: [{2}])", fieldName, GetField(objSource, fieldName), GetField(objDest, fieldName));
-				SetField(objDest, fieldName, GetField(objSource, fieldName));
+			} else if (objSource.HasField(fieldName)) {
+				Debug.Print("-- Copying field {0} with value [{1}] (old: [{2}])", fieldName, objSource.GetField(fieldName), objDest.GetField(fieldName));
+                objDest.SetField(fieldName, objSource.GetField(fieldName));
 			} else {
 				Debug.Print("---- Field {0} does not exist at source", fieldName);
 			}
@@ -146,31 +142,16 @@ namespace Icm.Reflection
 
 		private static void CopyToAux(object objSource, object objDest, IEnumerable<string> excludedMembers, IEnumerable<string> excludedTypes)
 		{
-			dynamic destFields = objDest.GetType.GetFields;
-			excludedMembers = excludedMembers ?? {
-				
-			};
-			excludedTypes = excludedTypes ?? {
-				
-			};
-			foreach (void destField_loopVariable in destFields) {
-				destField = destField_loopVariable;
+			var destFields = objDest.GetType().GetFields();
+			excludedMembers = excludedMembers ?? new string [0];
+			excludedTypes = excludedTypes ?? new string[0];
+			foreach (var destField in destFields) {
 				CopyField(objSource, objDest, destField, excludedMembers, excludedTypes);
 			}
-			dynamic destProps = objDest.GetType.GetProperties();
-			foreach (void destProp_loopVariable in destProps) {
-				destProp = destProp_loopVariable;
+			var destProps = objDest.GetType().GetProperties();
+			foreach (var destProp in destProps) {
 				CopyProp(objSource, objDest, destProp, excludedMembers, excludedTypes);
 			}
 		}
-
 	}
-
 }
-
-//=======================================================
-//Service provided by Telerik (www.telerik.com)
-//Conversion powered by NRefactory.
-//Twitter: @telerik
-//Facebook: facebook.com/telerik
-//=======================================================
